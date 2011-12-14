@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  machine: MyString
+  application: MyString
+  process: MyString
+  port: 1
+
+two:
+  machine: MyString
+  application: MyString
+  process: MyString
+  port: 1
