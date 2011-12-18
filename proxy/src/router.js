@@ -1,6 +1,7 @@
 var Http = require('http')
 ,   Url  = require('url')
 ,   FS   = require('fs')
+,   Buf  = require('./buffer')
 ,   Router
 ,   Environment
 ;
@@ -32,10 +33,8 @@ Router = function(callback){
       'pathname' : d_req.url
     });
 
-
-    d_req.pause();
-
     env = new Environment(agent, d_req, d_res);
+    env.buffer  = Buf.createBuffer(d_req);
     env.upstream_url = url;
     env.url     = Url.parse(url);
     env.headers = d_req.headers;
@@ -59,7 +58,7 @@ Environment.prototype.respond = function(status) {
   var file
   ;
 
-  file = "errors/"+status+".html";
+  file = __dirname + "/../errors/"+status+".html";
 
   if (status == 'maintenance') {
     status = 503;
@@ -67,6 +66,7 @@ Environment.prototype.respond = function(status) {
 
   if (this.method == 'HEAD') {
     this.d_res.writeHead(status);
+    this.d_res.end();
     return;
   }
 
@@ -81,7 +81,7 @@ Environment.prototype.forward = function(host, port) {
   ,   env = this
   ;
 
-  console.log('FWD: '+this.upstream_url);
+  console.log('FWD['+host+':'+port+']: '+this.method+' '+this.upstream_url);
 
   options = {
     'agent'   : this.agent,
@@ -101,7 +101,16 @@ Environment.prototype.forward = function(host, port) {
 
   this.u_req.on('response', function(u_res){
     env.d_res.writeHead(u_res.statusCode, u_res.headers);
-    u_res.pipe(env.d_res);
+
+    if (u_res.statusCode >= 100 && u_res.statusCode < 200) {
+      env.d_res.end();
+    } else if (u_res.headers['content-length'] === undefined && u_res.headers['transfer-encoding'] === undefined) {
+      env.d_res.end();
+    } else if (u_res.headers['content-length'] === '0') {
+      env.d_res.end();
+    } else {
+      u_res.pipe(env.d_res);
+    }
     // handle trailers
   });
 
@@ -109,12 +118,7 @@ Environment.prototype.forward = function(host, port) {
     env.respond(503);
   });
 
-  if (this.d_req.readable) {
-    this.d_req.pipe(this.u_req);
-    this.d_req.resume();
-  } else {
-    this.u_req.end();
-  }
+  env.buffer.pipe(this.u_req);
   // handle trailers
 };
 

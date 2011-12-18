@@ -1,2 +1,0 @@
-writer:     bundle exec thin -p 8000 -R config.ru start
-controller: node src/controller.js $PORT

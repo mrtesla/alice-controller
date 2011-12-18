@@ -1,0 +1,14 @@
+<ul>
+  <li><%= link_to 'Create machine', new_core_machine_path %></li>
+</ul>
+
+<table>
+  <% @machines.each do |machine| %>
+    <tr>
+
+      <td><%= machine.name %></td>
+
+
+    </tr>
+  <% end %>
+</table>

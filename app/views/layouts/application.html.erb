@@ -3,13 +3,16 @@
 <head>
   <title>Alice</title>
   <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
-  <%= render 'ember/templates' %>
 </head>
 <body>
 
-<%= yield %>
-<%= javascript_include_tag "application" %>
+<div id="wrapper">
+  <h1>Alice</h1>
+
+  <%= yield %>
+</div>
 
 </body>
 </html>

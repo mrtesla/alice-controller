@@ -2,23 +2,23 @@ class Http::PathRule < ActiveRecord::Base
 
   serialize :actions, JSON
 
-  validates :application_id,
+  validates :core_application_id,
     presence: true
 
   validates :path,
     presence:   true,
-    uniqueness: { scope: :application_id }
+    uniqueness: { scope: :core_application_id }
 
   validates :actions,
     presence: true
 
-  belongs_to :application
+  belongs_to :core_application
 
   after_save    :send_to_redis
   after_destroy :send_to_redis
 
   def self.send_to_redis
-    Http::Application.all.each do |application|
+    Core::Application.all.each do |application|
       send_to_redis_for_application(application)
     end
   end
@@ -26,7 +26,7 @@ class Http::PathRule < ActiveRecord::Base
   def self.send_to_redis_for_application(application)
     values = []
 
-    where(application_id: application.id).each do |rule|
+    where(core_application_id: application.id).each do |rule|
       values.push rule.path
       values.push rule.actions_before_type_cast
     end
@@ -42,7 +42,7 @@ class Http::PathRule < ActiveRecord::Base
 private
 
   def send_to_redis
-    self.class.send_to_redis_for_application(self.application)
+    self.class.send_to_redis_for_application(self.core_application)
   end
 
 end

@@ -1,9 +1,9 @@
 class Http::Backend < ActiveRecord::Base
 
-  validates :machine_id,
+  validates :core_machine_id,
     presence:   true
 
-  validates :application_id,
+  validates :core_application_id,
     presence:   true
 
   validates :process,
@@ -11,10 +11,10 @@ class Http::Backend < ActiveRecord::Base
 
   validates :port,
     presence:   true,
-    uniqueness: { scope: :machine_id }
+    uniqueness: { scope: :core_machine_id }
 
-  belongs_to :machine
-  belongs_to :application
+  belongs_to :core_machine
+  belongs_to :core_application
 
   after_save    :send_to_redis
   after_destroy :send_to_redis
@@ -23,11 +23,11 @@ class Http::Backend < ActiveRecord::Base
     by_lookup_key = {}
 
     all.each do |backend|
-      lookup_key = [backend.application.name, backend.process].join(':')
+      lookup_key = [backend.core_application.name, backend.process].join(':')
 
       by_lookup_key[lookup_key] ||= []
       by_lookup_key[lookup_key].push [
-        backend.machine.host,
+        backend.core_machine.host,
         backend.port
       ].join(' ')
     end

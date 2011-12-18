@@ -1,5 +1,9 @@
 Alice::Application.routes.draw do
-  ActiveAdmin.routes(self)
+  namespace :core do
+    resources :machines
+    resources :applications
+  end
 
-  devise_for :admin_users, ActiveAdmin::Devise.config
+  match '_ping/router', to: 'ping#router'
+  match '_ping/passer', to: 'ping#passer'
 end

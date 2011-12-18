@@ -1,20 +1,20 @@
 class Http::Router < ActiveRecord::Base
 
-  validates :machine_id,
+  validates :core_machine_id,
     presence:   true
 
   validates :port,
     presence:   true,
-    uniqueness: { scope: :machine_id }
+    uniqueness: { scope: :core_machine_id }
 
-  belongs_to :machine
+  belongs_to :core_machine
 
   after_save    :send_to_redis
   after_destroy :send_to_redis
 
   def self.send_to_redis
     values = all.map do |router|
-      [router.machine.host, router.port].join(' ')
+      [router.core_machine.host, router.port].join(' ')
     end
 
     REDIS.multi do

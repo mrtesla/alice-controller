@@ -11,50 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111214124701) do
+ActiveRecord::Schema.define(:version => 20111216192538) do
 
-  create_table "active_admin_comments", :force => true do |t|
-    t.integer  "resource_id",   :null => false
-    t.string   "resource_type", :null => false
-    t.integer  "author_id"
-    t.string   "author_type"
-    t.text     "body"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "namespace"
-  end
-
-  add_index "active_admin_comments", ["author_type", "author_id"], :name => "index_active_admin_comments_on_author_type_and_author_id"
-  add_index "active_admin_comments", ["namespace"], :name => "index_active_admin_comments_on_namespace"
-  add_index "active_admin_comments", ["resource_type", "resource_id"], :name => "index_admin_notes_on_resource_type_and_resource_id"
-
-  create_table "admin_users", :force => true do |t|
-    t.string   "email",                                 :default => "", :null => false
-    t.string   "encrypted_password",     :limit => 128, :default => "", :null => false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                         :default => 0
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "admin_users", ["email"], :name => "index_admin_users_on_email", :unique => true
-  add_index "admin_users", ["reset_password_token"], :name => "index_admin_users_on_reset_password_token", :unique => true
-
-  create_table "http_applications", :force => true do |t|
+  create_table "core_applications", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  create_table "core_machines", :force => true do |t|
+    t.string   "host"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "http_backends", :force => true do |t|
-    t.integer  "machine_id"
-    t.integer  "application_id"
+    t.integer  "core_machine_id"
+    t.integer  "core_application_id"
     t.string   "process"
     t.integer  "port"
     t.datetime "created_at"
@@ -68,21 +41,16 @@ ActiveRecord::Schema.define(:version => 20111214124701) do
     t.datetime "updated_at"
   end
 
-  create_table "http_machines", :force => true do |t|
-    t.string   "host"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "http_passers", :force => true do |t|
-    t.integer  "machine_id"
+    t.integer  "core_machine_id"
     t.integer  "port"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "last_seen_at"
   end
 
   create_table "http_path_rules", :force => true do |t|
-    t.integer  "application_id"
+    t.integer  "core_application_id"
     t.string   "path"
     t.text     "actions"
     t.datetime "created_at"
@@ -90,10 +58,11 @@ ActiveRecord::Schema.define(:version => 20111214124701) do
   end
 
   create_table "http_routers", :force => true do |t|
-    t.integer  "machine_id"
+    t.integer  "core_machine_id"
     t.integer  "port"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "last_seen_at"
   end
 
 end

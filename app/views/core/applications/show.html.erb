@@ -1,0 +1,48 @@
+<h2><%= @application.name %></h2>
+
+
+<h3>Backends</h3>
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Address</th>
+      <th class="right">Throughput</th>
+    </tr>
+  </thead>
+  <% last_process = nil %>
+  <% @application.http_backends.includes(:core_machine).each do |backend| %>
+    <tr>
+
+      <% if backend.process != last_process %>
+        <% last_process = backend.process %>
+        <th><%= backend.process %></th>
+      <% else %>
+        <th class="no-border"></th>
+      <% end %>
+
+      <td><%= backend.core_machine.host %>:<%= backend.port %></td>
+      <td class="right"><em><%= rand(500) %></em> rpm</td>
+
+    </tr>
+  <% end %>
+</table>
+
+<h3>Paths</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Pattern</th>
+      <th class="right">Throughput</th>
+    </tr>
+  </thead>
+  <% @application.http_path_rules.each do |rule| %>
+    <tr>
+
+      <td><%= rule.path %></td>
+      <td class="right"><em><%= rand(500) %></em> rpm</td>
+
+    </tr>
+  <% end %>
+</table>
+

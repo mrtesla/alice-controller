@@ -1,4 +1,3 @@
-
 namespace :db do
 
   desc "Rebuild the Redis database from the MySQL database"
