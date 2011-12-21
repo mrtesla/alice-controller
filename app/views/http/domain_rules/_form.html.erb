@@ -1,29 +1,12 @@
-<%= form_for(@http_domain_rule) do |f| %>
-  <% if @http_domain_rule.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@http_domain_rule.errors.count, "error") %> prohibited this http_domain_rule from being saved:</h2>
-
-      <ul>
-      <% @http_domain_rule.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
+<%= semantic_form_for @http_domain_rule do |f| %>
+  <%= f.semantic_errors %>
+  <%= f.inputs do %>
+    <%= f.input :core_application %>
+    <%= f.input :domain %>
+    <%= f.input :actions, as: :text %>
   <% end %>
-
-  <div class="field">
-    <%= f.label :core_application_id %><br />
-    <%= f.number_field :core_application_id %>
-  </div>
-  <div class="field">
-    <%= f.label :domain %><br />
-    <%= f.text_field :domain %>
-  </div>
-  <div class="field">
-    <%= f.label :actions %><br />
-    <%= f.text_area :actions %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <%= f.buttons do %>
+    <%= f.commit_button :button_html => {:class => "primary"} %>
+  <% end %>
 <% end %>
+

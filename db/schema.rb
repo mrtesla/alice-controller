@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(:version => 20111221212734) do
   create_table "http_domain_rules", :force => true do |t|
     t.integer  "core_application_id"
     t.string   "domain"
-    t.text     "actions"
+    t.text     "actions",             :default => "[]"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -55,7 +55,7 @@ ActiveRecord::Schema.define(:version => 20111221212734) do
   create_table "http_path_rules", :force => true do |t|
     t.integer  "core_application_id"
     t.string   "path"
-    t.text     "actions"
+    t.text     "actions",             :default => "[]"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

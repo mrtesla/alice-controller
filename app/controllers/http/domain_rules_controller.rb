@@ -40,6 +40,11 @@ class Http::DomainRulesController < ApplicationController
   # POST /http/domain_rules
   # POST /http/domain_rules.json
   def create
+    if actions = params[:http_domain_rule].try(:[], :actions)
+      actions = JSON.load(actions) if String === actions
+      params[:http_domain_rule][:actions] = actions
+    end
+
     @http_domain_rule = Http::DomainRule.new(params[:http_domain_rule])
 
     respond_to do |format|
@@ -56,6 +61,11 @@ class Http::DomainRulesController < ApplicationController
   # PUT /http/domain_rules/1
   # PUT /http/domain_rules/1.json
   def update
+    if actions = params[:http_domain_rule].try(:[], :actions)
+      actions = JSON.load(actions) if String === actions
+      params[:http_domain_rule][:actions] = actions
+    end
+
     @http_domain_rule = Http::DomainRule.find(params[:id])
 
     respond_to do |format|

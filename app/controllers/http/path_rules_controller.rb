@@ -40,6 +40,11 @@ class Http::PathRulesController < ApplicationController
   # POST /http/path_rules
   # POST /http/path_rules.json
   def create
+    if actions = params[:http_path_rule].try(:[], :actions)
+      actions = JSON.load(actions) if String === actions
+      params[:http_path_rule][:actions] = actions
+    end
+
     @http_path_rule = Http::PathRule.new(params[:http_path_rule])
 
     respond_to do |format|
@@ -56,6 +61,11 @@ class Http::PathRulesController < ApplicationController
   # PUT /http/path_rules/1
   # PUT /http/path_rules/1.json
   def update
+    if actions = params[:http_path_rule].try(:[], :actions)
+      actions = JSON.load(actions) if String === actions
+      params[:http_path_rule][:actions] = actions
+    end
+
     @http_path_rule = Http::PathRule.find(params[:id])
 
     respond_to do |format|

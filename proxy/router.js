@@ -197,12 +197,12 @@ var _ping = function(){
   ,   req
   ;
 
-  body = JSON.stringify({'host': 'localhost', 'port': port});
+  body = JSON.stringify([{'type': 'router', 'machine': 'localhost', 'port': port}]);
 
   req = Http.request({
     host: 'localhost',
     port: 5000,
-    path: '/_ping/router.json',
+    path: '/api_v1/register.json',
     method: 'POST',
     headers: {
       'Content-Type':   'application/json',
@@ -220,5 +220,5 @@ var _ping = function(){
   req.end();
 };
 
-setInterval(_ping, 60000);
+setInterval(_ping, 600000); // every 10 minutes
 _ping();
