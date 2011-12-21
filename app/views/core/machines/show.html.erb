@@ -1,10 +1,30 @@
+<div class="page-header row with-tabs">
+  <h1>Machine: <%= @core_machine.host %></h1>
+
+  <ul class="tabs" data-tabs="tabs">
+    <li class="active"><a href="#routers">Routers</a></li>
+    <li><a href="#passers">Passers</a></li>
+    <li><a href="#backends">Backends</a></li>
+  </ul>
+</div>
+
+<div class="tab-content">
+
+  <div id="routers" class="active row">
+    <%= render 'http/routers/list', http_routers: @core_machine.http_routers %>
+  </div>
+
+  <div id="passers" class="row">
+    <%= render 'http/passers/list', http_passers: @core_machine.http_passers %>
+  </div>
+
+  <div id="backends" class="row">
+    <%= render 'http/backends/list', http_backends: @core_machine.http_backends %>
+  </div>
+
+</div>
+
+
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Host:</b>
-  <%= @core_machine.host %>
-</p>
 
-
-<%= link_to 'Edit', edit_core_machine_path(@core_machine) %> |
-<%= link_to 'Back', core_machines_path %>

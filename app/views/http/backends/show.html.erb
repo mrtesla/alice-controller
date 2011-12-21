@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Core machine:</b>
+  <%= @http_backend.core_machine_id %>
+</p>
+
+<p>
+  <b>Core application:</b>
+  <%= @http_backend.core_application_id %>
+</p>
+
+<p>
+  <b>Process:</b>
+  <%= @http_backend.process %>
+</p>
+
+<p>
+  <b>Instance:</b>
+  <%= @http_backend.instance %>
+</p>
+
+<p>
+  <b>Port:</b>
+  <%= @http_backend.port %>
+</p>
+
+
+<%= link_to 'Edit', edit_http_backend_path(@http_backend) %> |
+<%= link_to 'Back', http_backends_path %>

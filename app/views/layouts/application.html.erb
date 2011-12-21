@@ -8,11 +8,29 @@
 </head>
 <body>
 
-<div class="topbar">
+<div class="topbar" data-dropdown="dropdown">
   <div class="fill">
     <div class="container">
       <a class="brand" href="#">Alice</a>
-      <%= tabs %>
+      <ul class="nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle">Core</a>
+          <ul class="dropdown-menu">
+            <li><a href="/core/applications">Applications</a></li>
+            <li><a href="/core/machines">Machines</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle">HTTP</a>
+          <ul class="dropdown-menu">
+            <li><a href="/http/routers">Routers</a></li>
+            <li><a href="/http/passers">Passers</a></li>
+            <li><a href="/http/backends">Backends</a></li>
+            <li><a href="/http/domain_rules">Domain rules</a></li>
+            <li><a href="/http/path_rules">Path rules</a></li>
+          </ul>
+        </li>
+      </ul>
     </div>
   </div>
 </div>

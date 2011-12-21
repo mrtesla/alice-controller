@@ -1,0 +1,22 @@
+<div class="span10">
+
+  <table class="zebra-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% http_backends.each do |http_backend| %>
+        <tr>
+          <td><%= link_to "#{http_backend.core_machine.host}:#{http_backend.port}", http_backend %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+</div>
+<div class="span4">
+  <%#= link_to 'Edit', edit_core_machine_path(@core_machine), class: 'btn large' %>
+</div>

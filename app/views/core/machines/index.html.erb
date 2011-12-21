@@ -1,37 +1,6 @@
-<h1>Listing core_machines</h1>
-
-<table>
-  <tr>
-    <th>Host</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @core_machines.each do |core_machine| %>
-  <tr>
-    <td><%= core_machine.host %></td>
-    <td><%= link_to 'Show', core_machine %></td>
-    <td><%= link_to 'Edit', edit_core_machine_path(core_machine) %></td>
-    <td><%= link_to 'Destroy', core_machine, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Machine', new_core_machine_path %>
-
-
-
-    <div class="page-header">
-      <h1>Page name <small>Supporting text or tagline</small></h1>
-    </div>
-    <div class="row">
-      <div class="span10">
-        <h2>Main content</h2>
-      </div>
-      <div class="span4">
-        <h3>Secondary content</h3>
-      </div>
-    </div>
+<div class="page-header">
+  <h1>Machines <small>are the raw diamonds of the cloud</small></h1>
+</div>
+<div class="row">
+  <%= render 'list', core_machines: @core_machines %>
+</div>

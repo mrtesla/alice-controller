@@ -1,0 +1,2 @@
+module Http::PathRulesHelper
+end

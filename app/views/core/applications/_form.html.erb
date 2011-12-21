@@ -1,5 +1,9 @@
-<div>
-  <%= f.label :name %>
-  <%= f.text_field :name %>
-</div>
-
+<%= semantic_form_for @core_application do |f| %>
+  <%= f.semantic_errors %>
+  <%= f.inputs do %>
+    <%= f.input :name, :hint => "The applications's name" %>
+  <% end %>
+  <%= f.buttons do %>
+    <%= f.commit_button :button_html => {:class => "primary"} %>
+  <% end %>
+<% end %>

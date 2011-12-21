@@ -1,0 +1,20 @@
+<div class="span10">
+  <table class="zebra-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% core_applications.each do |core_application| %>
+        <tr>
+          <td><%= link_to core_application.name, core_application %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<div class="span4">
+  <%= link_to 'New Application', new_core_application_path, class: 'btn large success' %>
+</div>

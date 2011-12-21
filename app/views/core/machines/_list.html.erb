@@ -1,0 +1,20 @@
+<div class="span10">
+  <table class="zebra-striped">
+    <thead>
+      <tr>
+        <th>Host</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% core_machines.each do |core_machine| %>
+        <tr>
+          <td><%= link_to core_machine.host, core_machine %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<div class="span4">
+  <%= link_to 'New Machine', new_core_machine_path, class: 'btn large success' %>
+</div>

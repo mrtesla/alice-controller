@@ -7,7 +7,11 @@ class Http::Passer < ActiveRecord::Base
     presence:   true,
     uniqueness: { scope: :core_machine_id }
 
-  belongs_to :core_machine
+  belongs_to :core_machine,
+    class_name:  'Core::Machine',
+    foreign_key: 'core_machine_id'
+
+  default_scope order(:port)
 
   after_save    :send_to_redis
   after_destroy :send_to_redis

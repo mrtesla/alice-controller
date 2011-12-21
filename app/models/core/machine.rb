@@ -5,16 +5,18 @@ class Core::Machine < ActiveRecord::Base
     uniqueness: true
 
   has_many :http_routers,
-    dependent: :destroy
+    class_name:  'Http::Router',
+    foreign_key: 'core_machine_id',
+    dependent:   :destroy
 
   has_many :http_passers,
-    dependent: :destroy
+    class_name:  'Http::Passer',
+    foreign_key: 'core_machine_id',
+    dependent:   :destroy
 
   has_many :http_backends,
-    dependent: :destroy
-
-  def name
-    host
-  end
+    class_name:  'Http::Backend',
+    foreign_key: 'core_machine_id',
+    dependent:   :destroy
 
 end

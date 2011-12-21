@@ -1,14 +1,6 @@
-<ul>
-  <li><%= link_to 'Create application', new_core_application_path %></li>
-</ul>
-
-<table>
-  <% @applications.each do |application| %>
-    <tr>
-
-      <td><%= application.name %></td>
-
-
-    </tr>
-  <% end %>
-</table>
+<div class="page-header row">
+  <h1>Applications <small>are what we want to focus on</small></h1>
+</div>
+<div class="row fit-height">
+  <%= render 'list', core_applications: @core_applications %>
+</div>

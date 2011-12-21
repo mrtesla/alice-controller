@@ -9,12 +9,20 @@ class Http::Backend < ActiveRecord::Base
   validates :process,
     presence:   true
 
+  validates :instance,
+    presence:   true,
+    uniqueness: { scope: :core_application_id }
+
   validates :port,
     presence:   true,
     uniqueness: { scope: :core_machine_id }
 
-  belongs_to :core_machine
-  belongs_to :core_application
+  belongs_to :core_machine,
+    class_name:  'Core::Machine',
+    foreign_key: 'core_machine_id'
+  belongs_to :core_application,
+    class_name:  'Core::Application',
+    foreign_key: 'core_application_id'
 
   after_save    :send_to_redis
   after_destroy :send_to_redis

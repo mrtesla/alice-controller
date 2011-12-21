@@ -1,0 +1,22 @@
+<div class="span10">
+
+  <table class="zebra-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% http_passers.each do |http_passer| %>
+        <tr>
+          <td><%= link_to "#{http_passer.core_machine.host}:#{http_passer.port}", http_passer %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+</div>
+<div class="span4">
+  <%#= link_to 'Edit', edit_core_machine_path(@core_machine), class: 'btn large' %>
+</div>

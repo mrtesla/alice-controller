@@ -24,7 +24,7 @@ describe Core::MachinesController do
   # Core::Machine. As you add validations to Core::Machine, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    { host: 'localhost' }
   end
 
   describe "GET index" do
@@ -39,14 +39,14 @@ describe Core::MachinesController do
     it "assigns the requested machine as @machine" do
       machine = Core::Machine.create! valid_attributes
       get :show, :id => machine.id
-      assigns(:machine).should eq(machine)
+      assigns(:core_machine).should eq(machine)
     end
   end
 
   describe "GET new" do
     it "assigns a new machine as @machine" do
       get :new
-      assigns(:machine).should be_a_new(Core::Machine)
+      assigns(:core_machine).should be_a_new(Core::Machine)
     end
   end
 
@@ -54,7 +54,7 @@ describe Core::MachinesController do
     it "assigns the requested machine as @machine" do
       machine = Core::Machine.create! valid_attributes
       get :edit, :id => machine.id
-      assigns(:machine).should eq(machine)
+      assigns(:core_machine).should eq(machine)
     end
   end
 
@@ -62,18 +62,18 @@ describe Core::MachinesController do
     describe "with valid params" do
       it "creates a new Core::Machine" do
         expect {
-          post :create, :machine => valid_attributes
+          post :create, :core_machine => valid_attributes
         }.to change(Core::Machine, :count).by(1)
       end
 
       it "assigns a newly created machine as @machine" do
-        post :create, :machine => valid_attributes
-        assigns(:machine).should be_a(Core::Machine)
-        assigns(:machine).should be_persisted
+        post :create, :core_machine => valid_attributes
+        assigns(:core_machine).should be_a(Core::Machine)
+        assigns(:core_machine).should be_persisted
       end
 
       it "redirects to the created machine" do
-        post :create, :machine => valid_attributes
+        post :create, :core_machine => valid_attributes
         response.should redirect_to(Core::Machine.last)
       end
     end
@@ -82,14 +82,14 @@ describe Core::MachinesController do
       it "assigns a newly created but unsaved machine as @machine" do
         # Trigger the behavior that occurs when invalid params are submitted
         Core::Machine.any_instance.stub(:save).and_return(false)
-        post :create, :machine => {}
-        assigns(:machine).should be_a_new(Core::Machine)
+        post :create, :core_machine => {}
+        assigns(:core_machine).should be_a_new(Core::Machine)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Core::Machine.any_instance.stub(:save).and_return(false)
-        post :create, :machine => {}
+        post :create, :core_machine => {}
         response.should render_template("new")
       end
     end
@@ -104,18 +104,18 @@ describe Core::MachinesController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Core::Machine.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => machine.id, :machine => {'these' => 'params'}
+        put :update, :id => machine.id, :core_machine => {'these' => 'params'}
       end
 
       it "assigns the requested machine as @machine" do
         machine = Core::Machine.create! valid_attributes
-        put :update, :id => machine.id, :machine => valid_attributes
-        assigns(:machine).should eq(machine)
+        put :update, :id => machine.id, :core_machine => valid_attributes
+        assigns(:core_machine).should eq(machine)
       end
 
       it "redirects to the machine" do
         machine = Core::Machine.create! valid_attributes
-        put :update, :id => machine.id, :machine => valid_attributes
+        put :update, :id => machine.id, :core_machine => valid_attributes
         response.should redirect_to(machine)
       end
     end
@@ -125,15 +125,15 @@ describe Core::MachinesController do
         machine = Core::Machine.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Core::Machine.any_instance.stub(:save).and_return(false)
-        put :update, :id => machine.id, :machine => {}
-        assigns(:machine).should eq(machine)
+        put :update, :id => machine.id, :core_machine => {}
+        assigns(:core_machine).should eq(machine)
       end
 
       it "re-renders the 'edit' template" do
         machine = Core::Machine.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Core::Machine.any_instance.stub(:save).and_return(false)
-        put :update, :id => machine.id, :machine => {}
+        put :update, :id => machine.id, :core_machine => {}
         response.should render_template("edit")
       end
     end

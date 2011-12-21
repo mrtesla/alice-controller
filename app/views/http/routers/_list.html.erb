@@ -1,0 +1,22 @@
+<div class="span10">
+
+  <table class="zebra-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% http_routers.each do |http_router| %>
+        <tr>
+          <td><%= link_to "#{http_router.core_machine.host}:#{http_router.port}", http_router %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+</div>
+<div class="span4">
+  <%#= link_to 'Edit', edit_core_machine_path(@core_machine), class: 'btn large' %>
+</div>

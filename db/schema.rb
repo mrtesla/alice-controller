@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111221104407) do
+ActiveRecord::Schema.define(:version => 20111221212734) do
 
   create_table "core_applications", :force => true do |t|
     t.string   "name"
@@ -29,12 +29,15 @@ ActiveRecord::Schema.define(:version => 20111221104407) do
     t.integer  "core_machine_id"
     t.integer  "core_application_id"
     t.string   "process"
+    t.integer  "instance"
     t.integer  "port"
+    t.datetime "last_seen_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "http_domain_rules", :force => true do |t|
+    t.integer  "core_application_id"
     t.string   "domain"
     t.text     "actions"
     t.datetime "created_at"
@@ -44,9 +47,9 @@ ActiveRecord::Schema.define(:version => 20111221104407) do
   create_table "http_passers", :force => true do |t|
     t.integer  "core_machine_id"
     t.integer  "port"
+    t.datetime "last_seen_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "last_seen_at"
   end
 
   create_table "http_path_rules", :force => true do |t|
@@ -60,9 +63,9 @@ ActiveRecord::Schema.define(:version => 20111221104407) do
   create_table "http_routers", :force => true do |t|
     t.integer  "core_machine_id"
     t.integer  "port"
+    t.datetime "last_seen_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.datetime "last_seen_at"
   end
 
 end

@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Core machine:</b>
+  <%= @http_passer.core_machine_id %>
+</p>
+
+<p>
+  <b>Port:</b>
+  <%= @http_passer.port %>
+</p>
+
+
+<%= link_to 'Edit', edit_http_passer_path(@http_passer) %> |
+<%= link_to 'Back', http_passers_path %>

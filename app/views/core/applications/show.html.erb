@@ -1,48 +1,28 @@
-<h2><%= @application.name %></h2>
+<div class="page-header row with-tabs">
+  <h1>Application: <%= @core_application.name %></h1>
+
+  <ul class="tabs" data-tabs="tabs">
+    <li class="active"><a href="#domain_rules">Domain rules</a></li>
+    <li><a href="#path_rules">Path rules</a></li>
+    <li><a href="#backends">Backends</a></li>
+  </ul>
+</div>
+
+<div class="tab-content">
+
+  <div id="domain_rules" class="row active">
+    <%= render 'http/domain_rules/list', http_domain_rules: @core_application.http_domain_rules %>
+  </div>
+
+  <div id="path_rules" class="row">
+    <%= render 'http/path_rules/list', http_path_rules: @core_application.http_path_rules %>
+  </div>
+
+  <div id="backends" class="row">
+    <%= render 'http/backends/list', http_backends: @core_application.http_backends %>
+  </div>
+
+</div>
 
 
-<h3>Backends</h3>
-<table>
-  <thead>
-    <tr>
-      <th></th>
-      <th>Address</th>
-      <th class="right">Throughput</th>
-    </tr>
-  </thead>
-  <% last_process = nil %>
-  <% @application.http_backends.includes(:core_machine).each do |backend| %>
-    <tr>
-
-      <% if backend.process != last_process %>
-        <% last_process = backend.process %>
-        <th><%= backend.process %></th>
-      <% else %>
-        <th class="no-border"></th>
-      <% end %>
-
-      <td><%= backend.core_machine.host %>:<%= backend.port %></td>
-      <td class="right"><em><%= rand(500) %></em> rpm</td>
-
-    </tr>
-  <% end %>
-</table>
-
-<h3>Paths</h3>
-<table>
-  <thead>
-    <tr>
-      <th>Pattern</th>
-      <th class="right">Throughput</th>
-    </tr>
-  </thead>
-  <% @application.http_path_rules.each do |rule| %>
-    <tr>
-
-      <td><%= rule.path %></td>
-      <td class="right"><em><%= rand(500) %></em> rpm</td>
-
-    </tr>
-  <% end %>
-</table>
-
+<p id="notice"><%= notice %></p>

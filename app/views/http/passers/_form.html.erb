@@ -1,0 +1,25 @@
+<%= form_for(@http_passer) do |f| %>
+  <% if @http_passer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@http_passer.errors.count, "error") %> prohibited this http_passer from being saved:</h2>
+
+      <ul>
+      <% @http_passer.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :core_machine_id %><br />
+    <%= f.number_field :core_machine_id %>
+  </div>
+  <div class="field">
+    <%= f.label :port %><br />
+    <%= f.number_field :port %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

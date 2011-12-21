@@ -1,0 +1,2 @@
+module Http::PassersHelper
+end

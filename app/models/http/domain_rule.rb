@@ -2,12 +2,19 @@ class Http::DomainRule < ActiveRecord::Base
 
   serialize :actions, JSON
 
+  validates :core_application_id,
+    presence: true
+
   validates :domain,
     presence:   true,
     uniqueness: true
 
   validates :actions,
     presence: true
+
+  belongs_to :core_application,
+    class_name:  'Core::Application',
+    foreign_key: 'core_application_id'
 
   after_save    :send_to_redis
   after_destroy :send_to_redis

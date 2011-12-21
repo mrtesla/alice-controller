@@ -1,0 +1,37 @@
+<%= form_for(@http_backend) do |f| %>
+  <% if @http_backend.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@http_backend.errors.count, "error") %> prohibited this http_backend from being saved:</h2>
+
+      <ul>
+      <% @http_backend.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :core_machine_id %><br />
+    <%= f.number_field :core_machine_id %>
+  </div>
+  <div class="field">
+    <%= f.label :core_application_id %><br />
+    <%= f.number_field :core_application_id %>
+  </div>
+  <div class="field">
+    <%= f.label :process %><br />
+    <%= f.text_field :process %>
+  </div>
+  <div class="field">
+    <%= f.label :instance %><br />
+    <%= f.number_field :instance %>
+  </div>
+  <div class="field">
+    <%= f.label :port %><br />
+    <%= f.number_field :port %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

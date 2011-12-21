@@ -1,0 +1,25 @@
+<div class="span10">
+
+  <table class="zebra-striped">
+    <thead>
+      <tr>
+        <th>Path</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% http_path_rules.each do |http_path_rule| %>
+        <tr>
+          <td><%= link_to "#{http_path_rule.core_application.name}#{http_path_rule.path}", http_path_rule %></td>
+          <td><%= http_path_rule.actions %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+</div>
+<div class="span4">
+  <%#= link_to 'Edit', edit_core_machine_path(@core_machine), class: 'btn large' %>
+</div>
+

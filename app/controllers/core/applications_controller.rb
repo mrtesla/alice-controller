@@ -1,35 +1,83 @@
 class Core::ApplicationsController < ApplicationController
-
-  respond_to :html
-
+  # GET /core/applications
+  # GET /core/applications.json
   def index
-    @applications = Core::Application.all
-    respond_with(@applications)
+    @core_applications = Core::Application.all
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @core_applications }
+    end
   end
 
+  # GET /core/applications/1
+  # GET /core/applications/1.json
   def show
-    @application = Core::Application.find(params[:id])
-    respond_with @application
+    @core_application = Core::Application.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @core_application }
+    end
   end
 
+  # GET /core/applications/new
+  # GET /core/applications/new.json
   def new
-    @application = Core::Application.new
-    respond_with @application
+    @core_application = Core::Application.new
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @core_application }
+    end
   end
 
+  # GET /core/applications/1/edit
   def edit
+    @core_application = Core::Application.find(params[:id])
   end
 
+  # POST /core/applications
+  # POST /core/applications.json
   def create
-    @application = Core::Application.new(params[:core_application])
-    @application.save
-    respond_with @application
+    @core_application = Core::Application.new(params[:core_application])
+
+    respond_to do |format|
+      if @core_application.save
+        format.html { redirect_to @core_application, notice: 'Application was successfully created.' }
+        format.json { render json: @core_application, status: :created, location: @core_application }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @core_application.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
+  # PUT /core/applications/1
+  # PUT /core/applications/1.json
   def update
+    @core_application = Core::Application.find(params[:id])
+
+    respond_to do |format|
+      if @core_application.update_attributes(params[:core_application])
+        format.html { redirect_to @core_application, notice: 'Application was successfully updated.' }
+        format.json { head :ok }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @core_application.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
+  # DELETE /core/applications/1
+  # DELETE /core/applications/1.json
   def destroy
-  end
+    @core_application = Core::Application.find(params[:id])
+    @core_application.destroy
 
+    respond_to do |format|
+      format.html { redirect_to core_applications_url }
+      format.json { head :ok }
+    end
+  end
 end
