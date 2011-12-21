@@ -1,5 +1,9 @@
-<div>
-  <%= f.label :host %>
-  <%= f.text_field :host %>
-</div>
-
+<%= semantic_form_for @core_machine do |f| %>
+  <%= f.semantic_errors %>
+  <%= f.inputs do %>
+    <%= f.input :host, :hint => "The machine's host name" %>
+  <% end %>
+  <%= f.buttons do %>
+    <%= f.commit_button :button_html => {:class => "primary"} %>
+  <% end %>
+<% end %>

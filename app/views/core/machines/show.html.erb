@@ -1,68 +1,10 @@
-<h2><%= @machine.host %></h2>
+<p id="notice"><%= notice %></p>
 
-<h3>Routers</h3>
-<table>
-  <thead>
-    <tr>
-      <th>Address</th>
-      <th>Last seen</th>
-      <th class="right">Throughput</th>
-    </tr>
-  </thead>
-  <% @machine.routers.each do |router| %>
-    <tr>
+<p>
+  <b>Host:</b>
+  <%= @core_machine.host %>
+</p>
 
-      <td><%= @machine.host %>:<%= router.port %></td>
-      <td><%= router.last_seen_at %></td>
-      <td class="right"><em><%= rand(500) %></em> rpm</td>
 
-    </tr>
-  <% end %>
-</table>
-
-<h3>Passers</h3>
-<table>
-  <thead>
-    <tr>
-      <th>Address</th>
-      <th>Last seen</th>
-      <th class="right">Throughput</th>
-    </tr>
-  </thead>
-  <% @machine.passers.each do |passer| %>
-    <tr>
-
-      <td><%= @machine.host %>:<%= passer.port %></td>
-      <td><%= passer.last_seen_at %></td>
-      <td class="right"><em><%= rand(500) %></em> rpm</td>
-
-    </tr>
-  <% end %>
-</table>
-
-<h3>Backends</h3>
-<table>
-  <thead>
-    <tr>
-      <th></th>
-      <th>Address</th>
-      <th class="right">Throughput</th>
-    </tr>
-  </thead>
-  <% last_process = nil %>
-  <% @machine.backends.each do |backend| %>
-    <tr>
-
-      <% if backend.process != last_process %>
-        <% last_process = backend.process %>
-        <th><%= backend.process %></th>
-      <% else %>
-        <th class="no-border"></th>
-      <% end %>
-
-      <td><%= backend.machine.host %>:<%= backend.port %></td>
-      <td class="right"><em><%= rand(500) %></em> rpm</td>
-
-    </tr>
-  <% end %>
-</table>
+<%= link_to 'Edit', edit_core_machine_path(@core_machine) %> |
+<%= link_to 'Back', core_machines_path %>

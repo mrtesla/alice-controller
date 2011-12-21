@@ -1,7 +1,5 @@
-<%= form_for @machine do |f| %>
-  <%= render 'form', f: f %>
+<h1>New core_machine</h1>
 
-  <div>
-    <%= f.submit %>
-  </div>
-<% end %>
+<%= render 'form' %>
+
+<%= link_to 'Back', core_machines_path %>
