@@ -7,12 +7,12 @@ var Http = require('http')
 ;
 
 
-exports.create = function(callback){
-  return new Router(callback);
+exports.create = function(type, callback){
+  return new Router(type, callback);
 };
 
 
-Router = function(callback){
+Router = function(type, callback){
   this._callback   = callback;
 
   this.agent  = new Http.Agent
@@ -32,6 +32,12 @@ Router = function(callback){
       'host'     : d_req.headers.host,
       'pathname' : d_req.url
     });
+
+    if (d_req.url == ('/_alice/probe/'+type) && d_req.method == 'HEAD') {
+      d_res.writeHead(200);
+      d_res.end();
+      return;
+    }
 
     env = new Environment(agent, d_req, d_res);
     env.buffer  = Buf.createBuffer(d_req);

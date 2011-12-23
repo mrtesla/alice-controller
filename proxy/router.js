@@ -185,7 +185,7 @@ _select_passer_for_machine = function(env){
 
 
 redis = Redis.createClient();
-router = Router.create(_route_domain);
+router = Router.create('router', _route_domain);
 
 var port = process.argv[2] || process.env['PORT'] || '5200';
 port = parseInt(port, 10);
@@ -221,4 +221,4 @@ var _ping = function(){
 };
 
 setInterval(_ping, 600000); // every 10 minutes
-_ping();
+setTimeout(_ping,   30000);

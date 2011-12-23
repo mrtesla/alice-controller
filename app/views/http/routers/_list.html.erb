@@ -4,6 +4,7 @@
     <thead>
       <tr>
         <th>Name</th>
+        <th>State</th>
       </tr>
     </thead>
 
@@ -11,6 +12,7 @@
       <% http_routers.each do |http_router| %>
         <tr>
           <td><%= link_to "#{http_router.core_machine.host}:#{http_router.port}", http_router %></td>
+          <td><span class="label <%= http_router.error_level %>"><%= http_router.state_message %></span></td>
         </tr>
       <% end %>
     </tbody>

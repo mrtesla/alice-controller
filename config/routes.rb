@@ -13,6 +13,8 @@ Alice::Application.routes.draw do
   end
 
   namespace :api_v1 do
-    match 'register', to: 'endpoints#register'
+    post 'register',     to: 'endpoints#register'
+    post 'probe_report', to: 'endpoints#probe_report'
+    get  'endpoints',    to: 'endpoints#index'
   end
 end

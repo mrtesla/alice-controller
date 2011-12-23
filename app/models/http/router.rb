@@ -29,6 +29,26 @@ class Http::Router < ActiveRecord::Base
     end
   end
 
+  def error_level
+    if down_since
+      'important'
+    elsif last_seen_at and last_seen_at < 1.minutes.ago
+      'warning'
+    else
+      'success'
+    end
+  end
+
+  def state_message
+    if down_since
+      "down since #{down_since.to_s(:short)}"
+    elsif last_seen_at and last_seen_at < 1.minutes.ago
+      "last seen at #{last_seen_at.to_s(:short)}"
+    else
+      "up"
+    end
+  end
+
 private
 
   def send_to_redis

@@ -4,6 +4,7 @@
     <thead>
       <tr>
         <th>Name</th>
+        <th>State</th>
       </tr>
     </thead>
 
@@ -11,6 +12,7 @@
       <% http_passers.each do |http_passer| %>
         <tr>
           <td><%= link_to "#{http_passer.core_machine.host}:#{http_passer.port}", http_passer %></td>
+          <td><span class="label <%= http_passer.error_level %>"><%= http_passer.state_message %></span></td>
         </tr>
       <% end %>
     </tbody>

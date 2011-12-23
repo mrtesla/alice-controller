@@ -5,13 +5,12 @@ var Router = require('./src/router')
 var router
 ;
 
-router = Router.create(function(env){
+router = Router.create('passer', function(env){
 
   var backend
   ;
 
   backend = env.headers['x-pluto-backend-port'];
-  // console.log('backend: ',backend);
   delete env.headers['x-pluto-backend-port'];
   if (!backend) {
     // return 503
@@ -56,5 +55,5 @@ var _ping = function(){
 };
 
 setInterval(_ping, 600000); // every 10 minutes
-_ping();
+setTimeout(_ping,   30000);
 
