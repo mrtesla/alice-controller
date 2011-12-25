@@ -51,6 +51,8 @@ class Http::RoutersController < ApplicationController
         format.json { render json: @http_router.errors, status: :unprocessable_entity }
       end
     end
+
+    Http::Router.send_to_redis
   end
 
   # PUT /http/routers/1
@@ -67,6 +69,8 @@ class Http::RoutersController < ApplicationController
         format.json { render json: @http_router.errors, status: :unprocessable_entity }
       end
     end
+
+    Http::Router.send_to_redis
   end
 
   # DELETE /http/routers/1
@@ -79,5 +83,7 @@ class Http::RoutersController < ApplicationController
       format.html { redirect_to http_routers_url }
       format.json { head :ok }
     end
+
+    Http::Router.send_to_redis
   end
 end

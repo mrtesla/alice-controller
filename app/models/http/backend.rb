@@ -24,13 +24,12 @@ class Http::Backend < ActiveRecord::Base
     class_name:  'Core::Application',
     foreign_key: 'core_application_id'
 
-  after_save    :send_to_redis
-  after_destroy :send_to_redis
+  after_save :reclaim_port
 
   def self.send_to_redis
     by_lookup_key = {}
 
-    all.each do |backend|
+    where(down_since: nil).includes(:core_application, :core_machine).each do |backend|
       lookup_key = [backend.core_application.name, backend.process].join(':')
 
       by_lookup_key[lookup_key] ||= []
@@ -70,10 +69,11 @@ class Http::Backend < ActiveRecord::Base
     end
   end
 
-private
-
   def send_to_redis
     self.class.send_to_redis
   end
 
+  def reclaim_port
+    self.core_machine.claim_port_for(self)
+  end
 end

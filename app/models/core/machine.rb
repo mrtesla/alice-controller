@@ -19,4 +19,24 @@ class Core::Machine < ActiveRecord::Base
     foreign_key: 'core_machine_id',
     dependent:   :destroy
 
+  def claim_port_for(endpoint)
+    routers  = http_routers.where(port: endpoint.port)
+    passers  = http_passers.where(port: endpoint.port)
+    backends = http_backends.where(port: endpoint.port)
+
+    if Http::Router === endpoint
+      routers = routers.where("id != ?", endpoint.id)
+    end
+    if Http::Passer === endpoint
+      passers = passers.where("id != ?", endpoint.id)
+    end
+    if Http::Backend === endpoint
+      backends = backends.where("id != ?", endpoint.id)
+    end
+
+    routers.destroy_all
+    passers.destroy_all
+    backends.destroy_all
+  end
+
 end

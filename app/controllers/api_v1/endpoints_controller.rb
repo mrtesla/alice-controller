@@ -66,6 +66,10 @@ class ApiV1::EndpointsController < ApplicationController
       backend.save
     end
 
+    Http::Router.send_to_redis
+    Http::Passer.send_to_redis
+    Http::Backend.send_to_redis
+
     render :json => { :status => 'OK' }
   end
 
@@ -113,6 +117,10 @@ class ApiV1::EndpointsController < ApplicationController
 
         end
       end
+
+      Http::Router.send_to_redis
+      Http::Passer.send_to_redis
+      Http::Backend.send_to_redis
     end
 
     render :json => { :status => 'OK' }

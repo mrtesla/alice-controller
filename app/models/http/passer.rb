@@ -13,8 +13,7 @@ class Http::Passer < ActiveRecord::Base
 
   default_scope order(:port)
 
-  after_save    :send_to_redis
-  after_destroy :send_to_redis
+  after_save :reclaim_port
 
   def self.send_to_redis
     Core::Machine.all.each do |machine|
@@ -23,7 +22,7 @@ class Http::Passer < ActiveRecord::Base
   end
 
   def self.send_to_redis_for_machine(machine)
-    values = machine.http_passers.map do |passer|
+    values = machine.http_passers.where(down_since: nil).map do |passer|
       passer.port.to_s
     end
 
@@ -55,10 +54,12 @@ class Http::Passer < ActiveRecord::Base
     end
   end
 
-private
-
   def send_to_redis
     self.class.send_to_redis_for_machine(core_machine)
+  end
+
+  def reclaim_port
+    self.core_machine.claim_port_for(self)
   end
 
 end

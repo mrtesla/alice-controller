@@ -51,6 +51,8 @@ class Http::PassersController < ApplicationController
         format.json { render json: @http_passer.errors, status: :unprocessable_entity }
       end
     end
+
+    Http::Passer.send_to_redis
   end
 
   # PUT /http/passers/1
@@ -67,6 +69,8 @@ class Http::PassersController < ApplicationController
         format.json { render json: @http_passer.errors, status: :unprocessable_entity }
       end
     end
+
+    Http::Passer.send_to_redis
   end
 
   # DELETE /http/passers/1
@@ -79,5 +83,7 @@ class Http::PassersController < ApplicationController
       format.html { redirect_to http_passers_url }
       format.json { head :ok }
     end
+
+    Http::Passer.send_to_redis
   end
 end

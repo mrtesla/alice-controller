@@ -13,11 +13,10 @@ class Http::Router < ActiveRecord::Base
 
   default_scope order(:port)
 
-  after_save    :send_to_redis
-  after_destroy :send_to_redis
+  after_save :reclaim_port
 
   def self.send_to_redis
-    values = all.map do |router|
+    values = self.where(down_since: nil).includes(:core_machine).map do |router|
       [router.core_machine.host, router.port].join(' ')
     end
 
@@ -49,10 +48,12 @@ class Http::Router < ActiveRecord::Base
     end
   end
 
-private
-
   def send_to_redis
     self.class.send_to_redis
+  end
+
+  def reclaim_port
+    self.core_machine.claim_port_for(self)
   end
 
 end

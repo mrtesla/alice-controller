@@ -51,6 +51,8 @@ class Http::BackendsController < ApplicationController
         format.json { render json: @http_backend.errors, status: :unprocessable_entity }
       end
     end
+
+    Http::Backend.send_to_redis
   end
 
   # PUT /http/backends/1
@@ -67,6 +69,8 @@ class Http::BackendsController < ApplicationController
         format.json { render json: @http_backend.errors, status: :unprocessable_entity }
       end
     end
+
+    Http::Backend.send_to_redis
   end
 
   # DELETE /http/backends/1
@@ -79,5 +83,7 @@ class Http::BackendsController < ApplicationController
       format.html { redirect_to http_backends_url }
       format.json { head :ok }
     end
+
+    Http::Backend.send_to_redis
   end
 end

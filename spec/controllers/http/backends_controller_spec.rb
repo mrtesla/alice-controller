@@ -20,11 +20,13 @@ require 'spec_helper'
 
 describe Http::BackendsController do
 
+  let(:machine)     { Core::Machine.create(host: 'example.com') }
+  let(:application) { Core::Application.create(name: 'client_example') }
   # This should return the minimal set of attributes required to create a valid
   # Http::Backend. As you add validations to Http::Backend, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    { port: 5000, instance: 1, process: 'web', core_machine_id: machine.id, core_application_id: application.id }
   end
 
   describe "GET index" do
@@ -39,14 +41,14 @@ describe Http::BackendsController do
     it "assigns the requested backend as @backend" do
       backend = Http::Backend.create! valid_attributes
       get :show, :id => backend.id
-      assigns(:backend).should eq(backend)
+      assigns(:http_backend).should eq(backend)
     end
   end
 
   describe "GET new" do
     it "assigns a new backend as @backend" do
       get :new
-      assigns(:backend).should be_a_new(Http::Backend)
+      assigns(:http_backend).should be_a_new(Http::Backend)
     end
   end
 
@@ -54,7 +56,7 @@ describe Http::BackendsController do
     it "assigns the requested backend as @backend" do
       backend = Http::Backend.create! valid_attributes
       get :edit, :id => backend.id
-      assigns(:backend).should eq(backend)
+      assigns(:http_backend).should eq(backend)
     end
   end
 
@@ -62,18 +64,18 @@ describe Http::BackendsController do
     describe "with valid params" do
       it "creates a new Http::Backend" do
         expect {
-          post :create, :backend => valid_attributes
+          post :create, :http_backend => valid_attributes
         }.to change(Http::Backend, :count).by(1)
       end
 
       it "assigns a newly created backend as @backend" do
-        post :create, :backend => valid_attributes
-        assigns(:backend).should be_a(Http::Backend)
-        assigns(:backend).should be_persisted
+        post :create, :http_backend => valid_attributes
+        assigns(:http_backend).should be_a(Http::Backend)
+        assigns(:http_backend).should be_persisted
       end
 
       it "redirects to the created backend" do
-        post :create, :backend => valid_attributes
+        post :create, :http_backend => valid_attributes
         response.should redirect_to(Http::Backend.last)
       end
     end
@@ -82,14 +84,14 @@ describe Http::BackendsController do
       it "assigns a newly created but unsaved backend as @backend" do
         # Trigger the behavior that occurs when invalid params are submitted
         Http::Backend.any_instance.stub(:save).and_return(false)
-        post :create, :backend => {}
-        assigns(:backend).should be_a_new(Http::Backend)
+        post :create, :http_backend => {}
+        assigns(:http_backend).should be_a_new(Http::Backend)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Http::Backend.any_instance.stub(:save).and_return(false)
-        post :create, :backend => {}
+        post :create, :http_backend => {}
         response.should render_template("new")
       end
     end
@@ -104,18 +106,18 @@ describe Http::BackendsController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Http::Backend.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => backend.id, :backend => {'these' => 'params'}
+        put :update, :id => backend.id, :http_backend => {'these' => 'params'}
       end
 
       it "assigns the requested backend as @backend" do
         backend = Http::Backend.create! valid_attributes
-        put :update, :id => backend.id, :backend => valid_attributes
-        assigns(:backend).should eq(backend)
+        put :update, :id => backend.id, :http_backend => valid_attributes
+        assigns(:http_backend).should eq(backend)
       end
 
       it "redirects to the backend" do
         backend = Http::Backend.create! valid_attributes
-        put :update, :id => backend.id, :backend => valid_attributes
+        put :update, :id => backend.id, :http_backend => valid_attributes
         response.should redirect_to(backend)
       end
     end
@@ -125,15 +127,15 @@ describe Http::BackendsController do
         backend = Http::Backend.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Http::Backend.any_instance.stub(:save).and_return(false)
-        put :update, :id => backend.id, :backend => {}
-        assigns(:backend).should eq(backend)
+        put :update, :id => backend.id, :http_backend => {}
+        assigns(:http_backend).should eq(backend)
       end
 
       it "re-renders the 'edit' template" do
         backend = Http::Backend.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Http::Backend.any_instance.stub(:save).and_return(false)
-        put :update, :id => backend.id, :backend => {}
+        put :update, :id => backend.id, :http_backend => {}
         response.should render_template("edit")
       end
     end
