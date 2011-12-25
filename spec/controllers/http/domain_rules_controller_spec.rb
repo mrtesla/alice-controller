@@ -21,7 +21,6 @@ require 'spec_helper'
 describe Http::DomainRulesController do
 
   let(:application) { Core::Application.create(name: 'client_example') }
-
   # This should return the minimal set of attributes required to create a valid
   # Http::DomainRule. As you add validations to Http::DomainRule, be sure to
   # update the return value of this method accordingly.

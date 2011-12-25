@@ -20,11 +20,12 @@ require 'spec_helper'
 
 describe Http::PassersController do
 
+  let(:machine)     { Core::Machine.create(host: 'example.com') }
   # This should return the minimal set of attributes required to create a valid
   # Http::Passer. As you add validations to Http::Passer, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    { port: 5000, core_machine_id: machine.id }
   end
 
   describe "GET index" do
@@ -39,14 +40,14 @@ describe Http::PassersController do
     it "assigns the requested passer as @passer" do
       passer = Http::Passer.create! valid_attributes
       get :show, :id => passer.id
-      assigns(:passer).should eq(passer)
+      assigns(:http_passer).should eq(passer)
     end
   end
 
   describe "GET new" do
     it "assigns a new passer as @passer" do
       get :new
-      assigns(:passer).should be_a_new(Http::Passer)
+      assigns(:http_passer).should be_a_new(Http::Passer)
     end
   end
 
@@ -54,7 +55,7 @@ describe Http::PassersController do
     it "assigns the requested passer as @passer" do
       passer = Http::Passer.create! valid_attributes
       get :edit, :id => passer.id
-      assigns(:passer).should eq(passer)
+      assigns(:http_passer).should eq(passer)
     end
   end
 
@@ -62,18 +63,18 @@ describe Http::PassersController do
     describe "with valid params" do
       it "creates a new Http::Passer" do
         expect {
-          post :create, :passer => valid_attributes
+          post :create, :http_passer => valid_attributes
         }.to change(Http::Passer, :count).by(1)
       end
 
       it "assigns a newly created passer as @passer" do
-        post :create, :passer => valid_attributes
-        assigns(:passer).should be_a(Http::Passer)
-        assigns(:passer).should be_persisted
+        post :create, :http_passer => valid_attributes
+        assigns(:http_passer).should be_a(Http::Passer)
+        assigns(:http_passer).should be_persisted
       end
 
       it "redirects to the created passer" do
-        post :create, :passer => valid_attributes
+        post :create, :http_passer => valid_attributes
         response.should redirect_to(Http::Passer.last)
       end
     end
@@ -82,14 +83,14 @@ describe Http::PassersController do
       it "assigns a newly created but unsaved passer as @passer" do
         # Trigger the behavior that occurs when invalid params are submitted
         Http::Passer.any_instance.stub(:save).and_return(false)
-        post :create, :passer => {}
-        assigns(:passer).should be_a_new(Http::Passer)
+        post :create, :http_passer => {}
+        assigns(:http_passer).should be_a_new(Http::Passer)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Http::Passer.any_instance.stub(:save).and_return(false)
-        post :create, :passer => {}
+        post :create, :http_passer => {}
         response.should render_template("new")
       end
     end
@@ -104,18 +105,18 @@ describe Http::PassersController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Http::Passer.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => passer.id, :passer => {'these' => 'params'}
+        put :update, :id => passer.id, :http_passer => {'these' => 'params'}
       end
 
       it "assigns the requested passer as @passer" do
         passer = Http::Passer.create! valid_attributes
-        put :update, :id => passer.id, :passer => valid_attributes
-        assigns(:passer).should eq(passer)
+        put :update, :id => passer.id, :http_passer => valid_attributes
+        assigns(:http_passer).should eq(passer)
       end
 
       it "redirects to the passer" do
         passer = Http::Passer.create! valid_attributes
-        put :update, :id => passer.id, :passer => valid_attributes
+        put :update, :id => passer.id, :http_passer => valid_attributes
         response.should redirect_to(passer)
       end
     end
@@ -125,15 +126,15 @@ describe Http::PassersController do
         passer = Http::Passer.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Http::Passer.any_instance.stub(:save).and_return(false)
-        put :update, :id => passer.id, :passer => {}
-        assigns(:passer).should eq(passer)
+        put :update, :id => passer.id, :http_passer => {}
+        assigns(:http_passer).should eq(passer)
       end
 
       it "re-renders the 'edit' template" do
         passer = Http::Passer.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Http::Passer.any_instance.stub(:save).and_return(false)
-        put :update, :id => passer.id, :passer => {}
+        put :update, :id => passer.id, :http_passer => {}
         response.should render_template("edit")
       end
     end

@@ -20,11 +20,12 @@ require 'spec_helper'
 
 describe Http::PathRulesController do
 
+  let(:application) { Core::Application.create(name: 'client_example') }
   # This should return the minimal set of attributes required to create a valid
   # Http::PathRule. As you add validations to Http::PathRule, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    { core_application_id: application.id, path: '/*', actions: '[["forward", "web"]]' }
   end
 
   describe "GET index" do
@@ -39,14 +40,14 @@ describe Http::PathRulesController do
     it "assigns the requested path_rule as @path_rule" do
       path_rule = Http::PathRule.create! valid_attributes
       get :show, :id => path_rule.id
-      assigns(:path_rule).should eq(path_rule)
+      assigns(:http_path_rule).should eq(path_rule)
     end
   end
 
   describe "GET new" do
     it "assigns a new path_rule as @path_rule" do
       get :new
-      assigns(:path_rule).should be_a_new(Http::PathRule)
+      assigns(:http_path_rule).should be_a_new(Http::PathRule)
     end
   end
 
@@ -54,7 +55,7 @@ describe Http::PathRulesController do
     it "assigns the requested path_rule as @path_rule" do
       path_rule = Http::PathRule.create! valid_attributes
       get :edit, :id => path_rule.id
-      assigns(:path_rule).should eq(path_rule)
+      assigns(:http_path_rule).should eq(path_rule)
     end
   end
 
@@ -62,18 +63,18 @@ describe Http::PathRulesController do
     describe "with valid params" do
       it "creates a new Http::PathRule" do
         expect {
-          post :create, :path_rule => valid_attributes
+          post :create, :http_path_rule => valid_attributes
         }.to change(Http::PathRule, :count).by(1)
       end
 
       it "assigns a newly created path_rule as @path_rule" do
-        post :create, :path_rule => valid_attributes
-        assigns(:path_rule).should be_a(Http::PathRule)
-        assigns(:path_rule).should be_persisted
+        post :create, :http_path_rule => valid_attributes
+        assigns(:http_path_rule).should be_a(Http::PathRule)
+        assigns(:http_path_rule).should be_persisted
       end
 
       it "redirects to the created path_rule" do
-        post :create, :path_rule => valid_attributes
+        post :create, :http_path_rule => valid_attributes
         response.should redirect_to(Http::PathRule.last)
       end
     end
@@ -82,14 +83,14 @@ describe Http::PathRulesController do
       it "assigns a newly created but unsaved path_rule as @path_rule" do
         # Trigger the behavior that occurs when invalid params are submitted
         Http::PathRule.any_instance.stub(:save).and_return(false)
-        post :create, :path_rule => {}
-        assigns(:path_rule).should be_a_new(Http::PathRule)
+        post :create, :http_path_rule => {}
+        assigns(:http_path_rule).should be_a_new(Http::PathRule)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Http::PathRule.any_instance.stub(:save).and_return(false)
-        post :create, :path_rule => {}
+        post :create, :http_path_rule => {}
         response.should render_template("new")
       end
     end
@@ -104,18 +105,18 @@ describe Http::PathRulesController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Http::PathRule.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => path_rule.id, :path_rule => {'these' => 'params'}
+        put :update, :id => path_rule.id, :http_path_rule => {'these' => 'params'}
       end
 
       it "assigns the requested path_rule as @path_rule" do
         path_rule = Http::PathRule.create! valid_attributes
-        put :update, :id => path_rule.id, :path_rule => valid_attributes
-        assigns(:path_rule).should eq(path_rule)
+        put :update, :id => path_rule.id, :http_path_rule => valid_attributes
+        assigns(:http_path_rule).should eq(path_rule)
       end
 
       it "redirects to the path_rule" do
         path_rule = Http::PathRule.create! valid_attributes
-        put :update, :id => path_rule.id, :path_rule => valid_attributes
+        put :update, :id => path_rule.id, :http_path_rule => valid_attributes
         response.should redirect_to(path_rule)
       end
     end
@@ -125,15 +126,15 @@ describe Http::PathRulesController do
         path_rule = Http::PathRule.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Http::PathRule.any_instance.stub(:save).and_return(false)
-        put :update, :id => path_rule.id, :path_rule => {}
-        assigns(:path_rule).should eq(path_rule)
+        put :update, :id => path_rule.id, :http_path_rule => {}
+        assigns(:http_path_rule).should eq(path_rule)
       end
 
       it "re-renders the 'edit' template" do
         path_rule = Http::PathRule.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Http::PathRule.any_instance.stub(:save).and_return(false)
-        put :update, :id => path_rule.id, :path_rule => {}
+        put :update, :id => path_rule.id, :http_path_rule => {}
         response.should render_template("edit")
       end
     end

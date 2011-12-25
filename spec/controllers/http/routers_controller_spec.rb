@@ -20,11 +20,12 @@ require 'spec_helper'
 
 describe Http::RoutersController do
 
+  let(:machine)     { Core::Machine.create(host: 'example.com') }
   # This should return the minimal set of attributes required to create a valid
   # Http::Router. As you add validations to Http::Router, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    { port: 5000, core_machine_id: machine.id }
   end
 
   describe "GET index" do
@@ -39,14 +40,14 @@ describe Http::RoutersController do
     it "assigns the requested router as @router" do
       router = Http::Router.create! valid_attributes
       get :show, :id => router.id
-      assigns(:router).should eq(router)
+      assigns(:http_router).should eq(router)
     end
   end
 
   describe "GET new" do
     it "assigns a new router as @router" do
       get :new
-      assigns(:router).should be_a_new(Http::Router)
+      assigns(:http_router).should be_a_new(Http::Router)
     end
   end
 
@@ -54,7 +55,7 @@ describe Http::RoutersController do
     it "assigns the requested router as @router" do
       router = Http::Router.create! valid_attributes
       get :edit, :id => router.id
-      assigns(:router).should eq(router)
+      assigns(:http_router).should eq(router)
     end
   end
 
@@ -62,18 +63,18 @@ describe Http::RoutersController do
     describe "with valid params" do
       it "creates a new Http::Router" do
         expect {
-          post :create, :router => valid_attributes
+          post :create, :http_router => valid_attributes
         }.to change(Http::Router, :count).by(1)
       end
 
       it "assigns a newly created router as @router" do
-        post :create, :router => valid_attributes
-        assigns(:router).should be_a(Http::Router)
-        assigns(:router).should be_persisted
+        post :create, :http_router => valid_attributes
+        assigns(:http_router).should be_a(Http::Router)
+        assigns(:http_router).should be_persisted
       end
 
       it "redirects to the created router" do
-        post :create, :router => valid_attributes
+        post :create, :http_router => valid_attributes
         response.should redirect_to(Http::Router.last)
       end
     end
@@ -82,14 +83,14 @@ describe Http::RoutersController do
       it "assigns a newly created but unsaved router as @router" do
         # Trigger the behavior that occurs when invalid params are submitted
         Http::Router.any_instance.stub(:save).and_return(false)
-        post :create, :router => {}
-        assigns(:router).should be_a_new(Http::Router)
+        post :create, :http_router => {}
+        assigns(:http_router).should be_a_new(Http::Router)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Http::Router.any_instance.stub(:save).and_return(false)
-        post :create, :router => {}
+        post :create, :http_router => {}
         response.should render_template("new")
       end
     end
@@ -104,18 +105,18 @@ describe Http::RoutersController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Http::Router.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => router.id, :router => {'these' => 'params'}
+        put :update, :id => router.id, :http_router => {'these' => 'params'}
       end
 
       it "assigns the requested router as @router" do
         router = Http::Router.create! valid_attributes
-        put :update, :id => router.id, :router => valid_attributes
-        assigns(:router).should eq(router)
+        put :update, :id => router.id, :http_router => valid_attributes
+        assigns(:http_router).should eq(router)
       end
 
       it "redirects to the router" do
         router = Http::Router.create! valid_attributes
-        put :update, :id => router.id, :router => valid_attributes
+        put :update, :id => router.id, :http_router => valid_attributes
         response.should redirect_to(router)
       end
     end
@@ -125,15 +126,15 @@ describe Http::RoutersController do
         router = Http::Router.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Http::Router.any_instance.stub(:save).and_return(false)
-        put :update, :id => router.id, :router => {}
-        assigns(:router).should eq(router)
+        put :update, :id => router.id, :http_router => {}
+        assigns(:http_router).should eq(router)
       end
 
       it "re-renders the 'edit' template" do
         router = Http::Router.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Http::Router.any_instance.stub(:save).and_return(false)
-        put :update, :id => router.id, :router => {}
+        put :update, :id => router.id, :http_router => {}
         response.should render_template("edit")
       end
     end
