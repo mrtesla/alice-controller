@@ -3,7 +3,7 @@ class CreateHttpDomainRules < ActiveRecord::Migration
     create_table :http_domain_rules do |t|
       t.integer :core_application_id
       t.string :domain
-      t.text :actions, default: '[]'
+      t.text :actions
 
       t.timestamps
     end
