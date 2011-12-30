@@ -33,10 +33,12 @@ class Http::Backend < ActiveRecord::Base
       lookup_key = [backend.core_application.name, backend.process].join(':')
 
       by_lookup_key[lookup_key] ||= []
-      by_lookup_key[lookup_key].push [
+      by_lookup_key[lookup_key].push JSON.dump([
+        backend.id,
         backend.core_machine.host,
-        backend.port
-      ].join(' ')
+        backend.port,
+        backend.instance
+      ])
     end
 
     REDIS.multi do
@@ -76,4 +78,18 @@ class Http::Backend < ActiveRecord::Base
   def reclaim_port
     self.core_machine.claim_port_for(self)
   end
+
+  def request_count(start, window)
+    start  = start.to_i
+    rem    = start % window
+    start -= rem
+
+    key = "fnordmetric-alice-gauge-instance_requests_per_hour-#{window}-#{start}"
+    REDIS.zscore(key, "#{self.core_application.name}|#{self.process}:#{self.instance}") || 0
+  end
+
+  def rpm(start, window)
+    request_count(start, window).to_f / (window / 60)
+  end
+
 end

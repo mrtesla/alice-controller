@@ -23,7 +23,7 @@ class Http::Passer < ActiveRecord::Base
 
   def self.send_to_redis_for_machine(machine)
     values = machine.http_passers.where(down_since: nil).map do |passer|
-      passer.port.to_s
+      JSON.dump([passer.id, passer.port])
     end
 
     REDIS.multi do
@@ -60,6 +60,19 @@ class Http::Passer < ActiveRecord::Base
 
   def reclaim_port
     self.core_machine.claim_port_for(self)
+  end
+
+  def request_count(start, window)
+    start  = start.to_i
+    rem    = start % window
+    start -= rem
+
+    key = "fnordmetric-alice-gauge-passer_requests_per_hour-#{window}-#{start}"
+    REDIS.zscore(key, "#{self.core_machine.host}:#{self.port}") || 0
+  end
+
+  def rpm(start, window)
+    request_count(start, window).to_f / (window / 60)
   end
 
 end

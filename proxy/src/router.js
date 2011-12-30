@@ -33,7 +33,9 @@ Router = function(type, callback){
       'pathname' : d_req.url
     });
 
-    if (d_req.url == ('/_alice/probe/'+type) && d_req.method == 'HEAD') {
+    //console.log('['+ d_req.method+']: '+url);
+
+    if (d_req.url == ('/_alice/probe/'+type)) {
       d_res.writeHead(200);
       d_res.end();
       return;
@@ -45,6 +47,7 @@ Router = function(type, callback){
     env.url     = Url.parse(url);
     env.headers = d_req.headers;
     env.method  = d_req.method;
+    env.time    = new Date().getTime();
 
     callback(env);
   });

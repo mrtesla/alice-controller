@@ -4,6 +4,7 @@
     <thead>
       <tr>
         <th>Path</th>
+        <th>RPM</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -12,6 +13,7 @@
       <% http_path_rules.each do |http_path_rule| %>
         <tr>
           <td><%= link_to "#{http_path_rule.core_application.name}#{http_path_rule.path}", http_path_rule %></td>
+          <td><%= http_path_rule.rpm(Time.now, 3600).round(2) %></td>
           <td><%= http_path_rule.actions %></td>
         </tr>
       <% end %>

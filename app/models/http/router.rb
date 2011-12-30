@@ -56,4 +56,17 @@ class Http::Router < ActiveRecord::Base
     self.core_machine.claim_port_for(self)
   end
 
+  def request_count(start, window)
+    start  = start.to_i
+    rem    = start % window
+    start -= rem
+
+    key = "fnordmetric-alice-gauge-router_requests_per_hour-#{window}-#{start}"
+    REDIS.zscore(key, "#{self.core_machine.host}:#{self.port}") || 0
+  end
+
+  def rpm(start, window)
+    request_count(start, window).to_f / (window / 60)
+  end
+
 end

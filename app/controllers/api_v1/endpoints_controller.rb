@@ -16,6 +16,16 @@ class ApiV1::EndpointsController < ApplicationController
     render :json => endpoints
   end
 
+  def routers
+    endpoints = {}
+    endpoints['routers'] = Http::Router.includes(:core_machine).where(down_since: nil).all.map do |router|
+      host = router.core_machine.host
+      host = '127.0.0.1' if host == 'localhost'
+      { id: router.id, host: host, port: router.port }
+    end
+    render :json => endpoints
+  end
+
   def probe_report
     (params[:routers] || []).each do |id, status|
       router = (Http::Router.find(id) rescue nil)
@@ -74,6 +84,8 @@ class ApiV1::EndpointsController < ApplicationController
   end
 
   def register
+    router_id = nil
+
     ActiveRecord::Base.transaction do
       (params[:_json] || []).each do |endpoint|
         case endpoint[:type]
@@ -85,6 +97,7 @@ class ApiV1::EndpointsController < ApplicationController
           router  = (router.first or router.build)
           router.last_seen_at = Time.now
           router.save!
+          router_id = router.id
 
         when 'passer'
           machine = Core::Machine.find_by_host(endpoint[:machine])
@@ -121,6 +134,10 @@ class ApiV1::EndpointsController < ApplicationController
       Http::Router.send_to_redis
       Http::Passer.send_to_redis
       Http::Backend.send_to_redis
+    end
+
+    if router_id
+      response.headers['X-Alice-Router-Id'] = router_id.to_s
     end
 
     render :json => { :status => 'OK' }

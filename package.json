@@ -3,11 +3,12 @@
     "description" : "Alice - Http router",
     "author": "Simon Menke <simon.menke@gmail.com>",
     "contributors": [],
-    "main": "./src/router.js",
+    "main": "./proxy/src/router.js",
     "scripts": {},
     "devDependencies": {
-        "redis":   ">=0.7.1",
-        "hiredis": ">=0.1.13"
+        "redis":      ">=0.7.1",
+        "hiredis":    ">=0.1.13",
+        "handlebars": ">=0"
     },
     "repository": {
     }

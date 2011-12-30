@@ -24,7 +24,7 @@ class Http::DomainRule < ActiveRecord::Base
 
     all.map do |rule|
       values.push rule.domain
-      values.push rule.actions_before_type_cast
+      values.push JSON.dump([rule.id, rule.actions])
     end
 
     REDIS.multi do
@@ -33,6 +33,18 @@ class Http::DomainRule < ActiveRecord::Base
         REDIS.hmset "alice.http|domains", *values
       end
     end
+  end
+
+  def request_count(start, window)
+    start  = start.to_i
+    rem    = start % window
+    start -= rem
+
+    REDIS.hget("alice.stats|domains|reqs", "#{self.id}|#{start}|#{window}") || 0
+  end
+
+  def rpm(start, window)
+    request_count(start, window).to_f / (window / 60)
   end
 
 private

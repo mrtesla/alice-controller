@@ -4,4 +4,4 @@ log/*.log
 tmp/
 .sass-cache/
 
-/proxy/node_modules
+/node_modules

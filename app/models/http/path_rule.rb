@@ -30,7 +30,7 @@ class Http::PathRule < ActiveRecord::Base
 
     where(core_application_id: application.id).each do |rule|
       values.push rule.path
-      values.push rule.actions_before_type_cast
+      values.push JSON.dump([rule.id, rule.actions])
     end
 
     REDIS.multi do
@@ -39,6 +39,18 @@ class Http::PathRule < ActiveRecord::Base
         REDIS.hmset "alice.http|paths:#{application.name}", *values
       end
     end
+  end
+
+  def request_count(start, window)
+    start  = start.to_i
+    rem    = start % window
+    start -= rem
+
+    REDIS.hget("alice.stats|paths|reqs", "#{self.id}|#{start}|#{window}") || 0
+  end
+
+  def rpm(start, window)
+    request_count(start, window).to_f / (window / 60)
   end
 
 private

@@ -16,5 +16,8 @@ Alice::Application.routes.draw do
     post 'register',     to: 'endpoints#register'
     post 'probe_report', to: 'endpoints#probe_report'
     get  'endpoints',    to: 'endpoints#index'
+    get  'routers',      to: 'endpoints#routers'
   end
+
+  mount FnordMetric.embedded, at: '/stats'
 end

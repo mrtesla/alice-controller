@@ -7,6 +7,8 @@ gem 'jquery-rails'
 gem 'sqlite3'
 gem 'redis'
 gem 'thin'
+gem 'fnordmetric', git:  'git://github.com/fd/fnordmetric.git'
+# gem 'fnordmetric', path: ENV['HOME'] + '/Projects/fnordmetric'
 
 # Gems used only for assets and not required
 # in production environments by default.
