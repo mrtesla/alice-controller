@@ -123,7 +123,7 @@ class ApiV1::EndpointsController < ApplicationController
           backend.port         = port
           backend.core_machine = machine
           backend.last_seen_at = Time.now
-          backend.save!
+          backend.save
 
         else
           raise ActiveRecord::RecordNotFound
