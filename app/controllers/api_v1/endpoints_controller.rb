@@ -109,7 +109,7 @@ class ApiV1::EndpointsController < ApplicationController
 
         when 'backend'
           machine     = Core::Machine.find_by_host(endpoint[:machine])
-          applidation = Core::Application.find_by_name(endpoint[:applidation])
+          applidation = Core::Application.find_by_name(endpoint[:application])
           process     = endpoint[:process]
           instance    = endpoint[:instance].to_i
           port        = endpoint[:port].to_i
