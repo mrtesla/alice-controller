@@ -43,4 +43,5 @@ end
 
 group :staging, :development do
   gem 'mysql2'
+  gem "therubyracer"
 end
