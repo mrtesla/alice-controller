@@ -11,7 +11,7 @@ class Http::Backend < ActiveRecord::Base
 
   validates :instance,
     presence:   true,
-    uniqueness: { scope: :core_application_id }
+    uniqueness: { scope: [:core_application_id, :process] }
 
   validates :port,
     presence:   true,
