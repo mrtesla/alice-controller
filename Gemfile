@@ -4,7 +4,6 @@ gem 'rails', '3.1.1'
 gem 'formtastic-bootstrap'
 gem 'jquery-rails'
 
-gem 'sqlite3'
 gem 'redis'
 gem 'thin'
 gem 'fnordmetric', git:  'git://github.com/fd/fnordmetric.git'
@@ -39,4 +38,9 @@ end
 group :test, :development do
   gem "rspec-rails"
   gem 'shoulda-matchers'
+  gem 'sqlite3'
+end
+
+group :staging, :development do
+  gem 'mysql2'
 end
