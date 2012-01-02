@@ -1,5 +1,9 @@
 Alice::Application.routes.draw do
+
+  root to: 'root#index'
+
   devise_for :users
+  resources :users
 
   namespace :core do
     resources :machines
@@ -32,4 +36,5 @@ Alice::Application.routes.draw do
   end
 
   mount FnordMetric.embedded, at: '/stats'
+
 end

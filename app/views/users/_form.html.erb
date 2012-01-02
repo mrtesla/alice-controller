@@ -1,0 +1,11 @@
+<%= semantic_form_for @user do |f| %>
+  <%= f.semantic_errors %>
+  <%= f.inputs do %>
+    <%= f.input :email, :hint => "The user's email" %>
+    <%= f.input :password %>
+    <%= f.input :password_confirmation %>
+  <% end %>
+  <%= f.buttons do %>
+    <%= f.commit_button :button_html => {:class => "primary"} %>
+  <% end %>
+<% end %>

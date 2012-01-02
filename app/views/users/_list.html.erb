@@ -1,0 +1,20 @@
+<div class="span10">
+  <table class="zebra-striped">
+    <thead>
+      <tr>
+        <th>Email</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% users.each do |user| %>
+        <tr>
+          <td><%= link_to user.email, user %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<div class="span4">
+  <%= link_to 'New User', new_user_path, class: 'btn large success' %>
+</div>
