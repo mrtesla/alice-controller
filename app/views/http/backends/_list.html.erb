@@ -12,7 +12,7 @@
     <tbody>
       <% http_backends.each do |http_backend| %>
         <tr>
-          <td><%= link_to "#{http_backend.core_machine.host}:#{http_backend.port}", http_backend %></td>
+          <td><%= link_to "#{http_backend.core_application.name}:#{http_backend.process}:#{http_backend.instance}", http_backend %></td>
           <td><%= http_backend.rpm(Time.now, 3600).round(2) %></td>
           <td><span class="label <%= http_backend.error_level %>"><%= http_backend.state_message %></span></td>
         </tr>

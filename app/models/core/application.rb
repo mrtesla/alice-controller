@@ -19,4 +19,6 @@ class Core::Application < ActiveRecord::Base
     foreign_key: 'core_application_id',
     dependent:   :destroy
 
+  default_scope order(:name)
+
 end
