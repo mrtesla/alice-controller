@@ -21,4 +21,25 @@ class Core::Application < ActiveRecord::Base
 
   default_scope order(:name)
 
+  after_save    :send_to_redis
+  after_destroy :remove_from_redis
+
+  def self.send_to_redis
+    all.each do |app|
+      app.send_to_redis
+    end
+  end
+
+  def send_to_redis
+    if maintenance_mode?
+      REDIS.set "alice.http|applications:#{self.name}|maintenance_mode", "1"
+    else
+      REDIS.del "alice.http|applications:#{self.name}|maintenance_mode"
+    end
+  end
+
+  def remove_from_redis
+    REDIS.del "alice.http|applications:#{self.name}|maintenance_mode"
+  end
+
 end

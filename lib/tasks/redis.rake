@@ -6,6 +6,7 @@ namespace :db do
       REDIS.del(key)
     end
 
+    Core::Application.send_to_redis
     Http::Router.send_to_redis
     Http::Passer.send_to_redis
     Http::Backend.send_to_redis
