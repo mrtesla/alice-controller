@@ -1,5 +1,12 @@
 <div class="page-header row with-tabs">
-  <h1>Application: <%= @core_application.name %></h1>
+  <div class="row">
+    <div class="span10">
+      <h1>Application: <%= @core_application.name %></h1>
+    </div>
+    <div class="span4">
+      <%= link_to 'Edit', edit_core_application_path(@core_application), class: 'btn large primary' %>
+    </div>
+  </div>
 
   <ul class="tabs" data-tabs="tabs">
     <li class="active"><a href="#domain_rules">Domain rules</a></li>

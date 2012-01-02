@@ -11,12 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120102163229) do
+ActiveRecord::Schema.define(:version => 20120102215357) do
 
   create_table "core_applications", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "maintenance_mode", :default => false
   end
 
   create_table "core_machines", :force => true do |t|
