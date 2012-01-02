@@ -1,4 +1,12 @@
 Alice::Application.routes.draw do
+  namespace :core do
+    resources :machines
+    resources :applications do
+      resources :path_rules
+      resources :domain_rules
+    end
+  end
+
   namespace :http do
     resources :domain_rules
     resources :path_rules
@@ -7,9 +15,11 @@ Alice::Application.routes.draw do
     resources :routers
   end
 
-  namespace :core do
-    resources :machines
-    resources :applications
+  scope path: '/core/applications/:application_id', as: 'core_application' do
+    namespace :http do
+      resources :domain_rules, only: [:new, :create]
+      resources :path_rules,   only: [:new, :create]
+    end
   end
 
   namespace :api_v1 do

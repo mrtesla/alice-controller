@@ -24,7 +24,8 @@ class Http::PathRulesController < ApplicationController
   # GET /http/path_rules/new
   # GET /http/path_rules/new.json
   def new
-    @http_path_rule = Http::PathRule.new
+    @http_path_rule = Http::PathRule.new(core_application_id: params[:application_id])
+    @http_path_rule.actions = [["forward", "web"]]
 
     respond_to do |format|
       format.html # new.html.erb

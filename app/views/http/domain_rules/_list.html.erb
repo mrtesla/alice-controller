@@ -22,5 +22,5 @@
 
 </div>
 <div class="span4">
-  <%= link_to 'New Domain Rule', new_http_domain_rule_path, class: 'btn large success' %>
+  <%= link_to 'New Domain Rule', (defined?(new_link) ? new_link : new_http_domain_rule_path), class: 'btn large success' %>
 </div>
