@@ -2,6 +2,7 @@
   <%= f.semantic_errors %>
   <%= f.inputs do %>
     <%= f.input :name, :hint => "The applications's name" %>
+    <%= f.input :maintenance_mode %>
   <% end %>
   <%= f.buttons do %>
     <%= f.commit_button :button_html => {:class => "primary"} %>
