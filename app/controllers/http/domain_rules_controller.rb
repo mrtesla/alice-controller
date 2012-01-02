@@ -24,8 +24,8 @@ class Http::DomainRulesController < ApplicationController
   # GET /http/domain_rules/new
   # GET /http/domain_rules/new.json
   def new
-    @http_path_rule = Http::DomainRule.new(core_application_id: params[:application_id])
-    @http_path_rule.actions = [["forward", @http_path_rule.core_application.name]]
+    @http_domain_rule = Http::DomainRule.new(core_application_id: params[:application_id])
+    @http_domain_rule.actions = [["forward", @http_domain_rule.core_application.name]]
 
     respond_to do |format|
       format.html # new.html.erb
