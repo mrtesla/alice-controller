@@ -1,4 +1,6 @@
 Alice::Application.routes.draw do
+  devise_for :users
+
   namespace :core do
     resources :machines
     resources :applications do

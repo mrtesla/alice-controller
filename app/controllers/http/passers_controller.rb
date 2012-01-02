@@ -1,4 +1,6 @@
 class Http::PassersController < ApplicationController
+  before_filter :authenticate_user!
+
   # GET /http/passers
   # GET /http/passers.json
   def index

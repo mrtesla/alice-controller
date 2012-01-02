@@ -1,4 +1,6 @@
 class Core::MachinesController < ApplicationController
+  before_filter :authenticate_user!
+
   # GET /core/machines
   # GET /core/machines.json
   def index

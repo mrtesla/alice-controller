@@ -1,4 +1,6 @@
 class Http::BackendsController < ApplicationController
+  before_filter :authenticate_user!
+
   # GET /http/backends
   # GET /http/backends.json
   def index

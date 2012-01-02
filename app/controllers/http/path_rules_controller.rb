@@ -1,4 +1,6 @@
 class Http::PathRulesController < ApplicationController
+  before_filter :authenticate_user!
+
   # GET /http/path_rules
   # GET /http/path_rules.json
   def index

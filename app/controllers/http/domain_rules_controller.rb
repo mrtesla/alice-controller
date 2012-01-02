@@ -1,4 +1,6 @@
 class Http::DomainRulesController < ApplicationController
+  before_filter :authenticate_user!
+
   # GET /http/domain_rules
   # GET /http/domain_rules.json
   def index

@@ -1,4 +1,6 @@
 class Core::ApplicationsController < ApplicationController
+  before_filter :authenticate_user!
+
   # GET /core/applications
   # GET /core/applications.json
   def index
