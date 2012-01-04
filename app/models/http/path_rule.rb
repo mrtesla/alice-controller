@@ -16,6 +16,8 @@ class Http::PathRule < ActiveRecord::Base
     class_name:  'Core::Application',
     foreign_key: 'core_application_id'
 
+  default_scope order(:path)
+
   after_save    :send_to_redis
   after_destroy :send_to_redis
 
