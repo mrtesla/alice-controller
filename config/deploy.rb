@@ -63,3 +63,8 @@ end
 after "deploy", :overwrite_rvmrc
 after "deploy", :set_shared_permissions
 after "deploy", "deploy:cleanup"
+
+if ENV['AIRBRAKE_KEY']
+  require './config/boot'
+  require 'airbrake/capistrano'
+end
