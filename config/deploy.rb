@@ -21,9 +21,9 @@ set :current_dir, "apps/#{application}"
 set :shared_dir,  "shared/#{application}"
 set :version_dir, "releases/#{application}"
 
-role :app, "machine-009.mrhenry.be"
-role :web, "machine-009.mrhenry.be"
-role :db,  "machine-009.mrhenry.be", :primary => true
+role :app, "machine-003.mrhenry.be"
+role :web, "machine-003.mrhenry.be"
+role :db,  "machine-003.mrhenry.be", :primary => true
 
 namespace :deploy do
   [:restart, :start, :stop].each do |t|

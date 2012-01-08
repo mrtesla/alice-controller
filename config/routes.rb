@@ -29,10 +29,11 @@ Alice::Application.routes.draw do
   end
 
   namespace :api_v1 do
-    post 'register',     to: 'endpoints#register'
-    post 'probe_report', to: 'endpoints#probe_report'
-    get  'endpoints',    to: 'endpoints#index'
-    get  'routers',      to: 'endpoints#routers'
+    post 'register',              to: 'endpoints#register'
+    post 'probe_report',          to: 'endpoints#probe_report'
+    get  'endpoints',             to: 'endpoints#index'
+    get  'routers',               to: 'endpoints#routers'
+    put  'register_static_paths', to: 'applications#register_static_paths'
   end
 
   mount FnordMetric.embedded, at: '/stats'
