@@ -30,16 +30,28 @@ class Core::Application < ActiveRecord::Base
     end
   end
 
+  def bust_cache!
+    REDIS.hincrby "alice.http|flags:#{self.name}", "cache_version", '1'
+  end
+
   def send_to_redis
-    if maintenance_mode?
-      REDIS.set "alice.http|applications:#{self.name}|maintenance_mode", "1"
+    if suspended_mode?
+      REDIS.hset "alice.http|flags:#{self.name}", "suspended", "1"
     else
-      REDIS.del "alice.http|applications:#{self.name}|maintenance_mode"
+      REDIS.hdel "alice.http|flags:#{self.name}", "suspended"
     end
+
+    if maintenance_mode?
+      REDIS.hset "alice.http|flags:#{self.name}", "maintenance", "1"
+    else
+      REDIS.hdel "alice.http|flags:#{self.name}", "maintenance"
+    end
+
+    bust_cache!
   end
 
   def remove_from_redis
-    REDIS.del "alice.http|applications:#{self.name}|maintenance_mode"
+    REDIS.del "alice.http|flags:#{self.name}"
   end
 
 end

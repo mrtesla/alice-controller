@@ -41,6 +41,8 @@ class Http::PathRule < ActiveRecord::Base
         REDIS.hmset "alice.http|paths:#{application.name}", *values
       end
     end
+
+    application.bust_cache!
   end
 
   def request_count(start, window)
