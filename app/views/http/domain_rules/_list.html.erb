@@ -4,7 +4,6 @@
     <thead>
       <tr>
         <th>Domain</th>
-        <th>RPM</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -12,8 +11,7 @@
     <tbody>
       <% http_domain_rules.each do |http_domain_rule| %>
         <tr>
-          <td><%= link_to "#{http_domain_rule.core_application.name}:#{http_domain_rule.domain}", http_domain_rule %></td>
-          <td><%= http_domain_rule.rpm(Time.now, 3600).round(2) %></td>
+          <td><%= link_to http_domain_rule.ui_name, http_domain_rule %></td>
           <td><%= http_domain_rule.actions %></td>
         </tr>
       <% end %>

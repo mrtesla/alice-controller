@@ -11,13 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120102215357) do
+ActiveRecord::Schema.define(:version => 20120111182054) do
 
   create_table "core_applications", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "maintenance_mode", :default => false
+    t.boolean  "suspended_mode",   :default => false
   end
 
   create_table "core_machines", :force => true do |t|
@@ -42,7 +43,7 @@ ActiveRecord::Schema.define(:version => 20120102215357) do
   create_table "http_domain_rules", :force => true do |t|
     t.integer  "core_application_id"
     t.string   "domain"
-    t.text     "actions",             :default => "[]"
+    t.text     "actions"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -58,11 +59,13 @@ ActiveRecord::Schema.define(:version => 20120102215357) do
   end
 
   create_table "http_path_rules", :force => true do |t|
-    t.integer  "core_application_id"
+    t.integer  "owner_id"
     t.string   "path"
-    t.text     "actions",             :default => "[]"
+    t.text     "actions"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "static",     :default => false
+    t.string   "owner_type"
   end
 
   create_table "http_routers", :force => true do |t|

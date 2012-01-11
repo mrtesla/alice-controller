@@ -11,8 +11,8 @@ class Core::Application < ActiveRecord::Base
 
   has_many :http_path_rules,
     class_name:  'Http::PathRule',
-    foreign_key: 'core_application_id',
-    dependent:   :destroy
+    dependent:   :destroy,
+    as:          :owner
 
   has_many :http_domain_rules,
     class_name:  'Http::DomainRule',

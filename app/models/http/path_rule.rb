@@ -2,24 +2,31 @@ class Http::PathRule < ActiveRecord::Base
 
   serialize :actions, JSON
 
-  validates :core_application_id,
+  validates :owner_id,
+    presence: true
+  validates :owner_type,
     presence: true
 
   validates :path,
     presence:   true,
-    uniqueness: { scope: :core_application_id }
+    uniqueness: { scope: [:owner_type, :owner_id] }
 
   validates :actions,
     presence: true
 
-  belongs_to :core_application,
-    class_name:  'Core::Application',
-    foreign_key: 'core_application_id'
+  belongs_to :owner, polymorphic: true
+  # belongs_to :core_application,
+  #   class_name:  'Core::Application',
+  #   foreign_key: 'core_application_id'
 
   default_scope order(:path)
 
   after_save    :send_to_redis
   after_destroy :send_to_redis
+
+  def ui_name
+    http_path_rule.path
+  end
 
   def self.send_to_redis
     Core::Application.all.each do |application|
@@ -30,7 +37,7 @@ class Http::PathRule < ActiveRecord::Base
   def self.send_to_redis_for_application(application)
     values = []
 
-    where(core_application_id: application.id).each do |rule|
+    where(owner: application).each do |rule|
       values.push rule.path
       values.push JSON.dump([rule.id, rule.actions])
     end
@@ -45,22 +52,10 @@ class Http::PathRule < ActiveRecord::Base
     application.bust_cache!
   end
 
-  def request_count(start, window)
-    start  = start.to_i
-    rem    = start % window
-    start -= rem
-
-    REDIS.hget("alice.stats|paths|reqs", "#{self.id}|#{start}|#{window}") || 0
-  end
-
-  def rpm(start, window)
-    request_count(start, window).to_f / (window / 60)
-  end
-
 private
 
   def send_to_redis
-    self.class.send_to_redis_for_application(self.core_application)
+    self.class.send_to_redis_for_application(self.owner)
   end
 
 end

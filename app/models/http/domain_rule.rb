@@ -21,6 +21,10 @@ class Http::DomainRule < ActiveRecord::Base
   after_save    :send_to_redis
   after_destroy :send_to_redis
 
+  def ui_name
+    self.domain
+  end
+
   def self.send_to_redis
     values = []
 
@@ -35,18 +39,6 @@ class Http::DomainRule < ActiveRecord::Base
         REDIS.hmset "alice.http|domains", *values
       end
     end
-  end
-
-  def request_count(start, window)
-    start  = start.to_i
-    rem    = start % window
-    start -= rem
-
-    REDIS.hget("alice.stats|domains|reqs", "#{self.id}|#{start}|#{window}") || 0
-  end
-
-  def rpm(start, window)
-    request_count(start, window).to_f / (window / 60)
   end
 
 private
