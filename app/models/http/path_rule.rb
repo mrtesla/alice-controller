@@ -25,7 +25,7 @@ class Http::PathRule < ActiveRecord::Base
   after_destroy :send_to_redis
 
   def ui_name
-    http_path_rule.path
+    path
   end
 
   def self.send_to_redis

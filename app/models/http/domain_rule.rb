@@ -22,7 +22,7 @@ class Http::DomainRule < ActiveRecord::Base
   after_destroy :send_to_redis
 
   def ui_name
-    self.domain
+    domain
   end
 
   def self.send_to_redis
