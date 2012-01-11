@@ -9,9 +9,6 @@ Alice::Application.routes.draw do
     resources :machines
     resources :applications do
       delete 'cache', on: :member, action: 'bust_cache'
-
-      resources :path_rules
-      resources :domain_rules
     end
   end
 
