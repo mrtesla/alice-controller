@@ -71,6 +71,18 @@ class Core::ApplicationsController < ApplicationController
     end
   end
 
+  # DELETE /core/applications/1/cache
+  # DELETE /core/applications/1/cache.json
+  def bust_cache
+    @core_application = Core::Application.find(params[:id])
+    @core_application.bust_cache!
+
+    respond_to do |format|
+      format.html { redirect_to @core_application, notice: 'Cache was successfully busted.' }
+      format.json { head :ok }
+    end
+  end
+
   # DELETE /core/applications/1
   # DELETE /core/applications/1.json
   def destroy
