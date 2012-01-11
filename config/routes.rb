@@ -1,5 +1,7 @@
 Alice::Application.routes.draw do
 
+  namespace :core do resources :releases end
+
   root to: 'root#index'
 
   devise_for :users

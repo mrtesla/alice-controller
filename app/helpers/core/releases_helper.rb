@@ -1,0 +1,2 @@
+module Core::ReleasesHelper
+end
