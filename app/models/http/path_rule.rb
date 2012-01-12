@@ -37,7 +37,7 @@ class Http::PathRule < ActiveRecord::Base
   def self.send_to_redis_for_application(application)
     values = []
 
-    where(owner: application).each do |rule|
+    application.http_path_rules.each do |rule|
       values.push rule.path
       values.push JSON.dump([rule.id, rule.actions])
     end
