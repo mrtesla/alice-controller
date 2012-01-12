@@ -1,7 +1,6 @@
 <%= semantic_form_for @http_path_rule do |f| %>
   <%= f.semantic_errors %>
   <%= f.inputs do %>
-    <%= f.input :core_application %>
     <%= f.input :path %>
     <%= f.input :actions, as: :text %>
   <% end %>
