@@ -56,6 +56,8 @@ class Core::Application < ActiveRecord::Base
       REDIS.hdel "alice.http|flags:#{self.name}", "maintenance"
     end
 
+    Http::PathRule.send_to_redis_for_application(self)
+
     bust_cache!
   end
 

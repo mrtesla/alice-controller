@@ -53,6 +53,7 @@ class Http::PathRulesController < ApplicationController
 
     respond_to do |format|
       if @http_path_rule.save
+        @http_path_rule.send_to_redis
         format.html { redirect_to @http_path_rule, notice: 'Path rule was successfully created.' }
         format.json { render json: @http_path_rule, status: :created, location: @http_path_rule }
       else
@@ -74,6 +75,7 @@ class Http::PathRulesController < ApplicationController
 
     respond_to do |format|
       if @http_path_rule.update_attributes(params[:http_path_rule])
+        @http_path_rule.send_to_redis
         format.html { redirect_to @http_path_rule, notice: 'Path rule was successfully updated.' }
         format.json { head :ok }
       else
@@ -88,6 +90,7 @@ class Http::PathRulesController < ApplicationController
   def destroy
     @http_path_rule = Http::PathRule.find(params[:id])
     @http_path_rule.destroy
+    @http_path_rule.send_to_redis
 
     respond_to do |format|
       format.html { redirect_to http_path_rules_url }

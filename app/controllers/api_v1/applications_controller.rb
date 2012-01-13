@@ -16,9 +16,9 @@ class ApiV1::ApplicationsController < ApplicationController
       params[:rules].each do |(path, actions)|
         application.http_path_rules.create(path: path, actions: actions, static: true)
       end
-
-      Http::PathRule.send_to_redis_for_application(application)
     end
+
+    application.send_to_redis
 
     render :json => { :status => 'OK' }
   end
