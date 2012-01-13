@@ -23,4 +23,30 @@ class ApiV1::ApplicationsController < ApplicationController
     render :json => { :status => 'OK' }
   end
 
+  def maintenance_mode_on
+    application = Core::Application.where(name: params[:application]).first
+
+    unless application
+      render :json => { :status => 'FAIL' }, :status => 404
+      return
+    end
+
+    application.maintenance_mode = true
+
+    render :json => { :status => 'OK' }
+  end
+
+  def maintenance_mode_off
+    application = Core::Application.where(name: params[:application]).first
+
+    unless application
+      render :json => { :status => 'FAIL' }, :status => 404
+      return
+    end
+
+    application.maintenance_mode = false
+
+    render :json => { :status => 'OK' }
+  end
+
 end

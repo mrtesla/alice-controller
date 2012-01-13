@@ -36,7 +36,9 @@ Alice::Application.routes.draw do
     get  'routers',               to: 'endpoints#routers'
     put  'register_static_paths', to: 'applications#register_static_paths'
 
-    post 'releases', to: 'releases#create'
+    post   'releases',                              to: 'releases#create'
+    post   'applications/:application/maintenance', to: 'applications#maintenance_mode_on'
+    delete 'applications/:application/maintenance', to: 'applications#maintenance_mode_off'
   end
 
   mount FnordMetric.embedded, at: '/stats'
