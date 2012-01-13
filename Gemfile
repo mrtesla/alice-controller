@@ -27,7 +27,11 @@ end
 # gem 'unicorn'
 
 # Deploy with Capistrano
-gem 'capistrano'
+group :deploy do
+  gem 'capistrano'
+  # gem 'capistrano-alice', path: ENV['HOME'] + '/Projects/capistrano-alice'
+  gem 'capistrano-alice', git: 'git://github.com/integrityio/capistrano-alice.git'
+end
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'

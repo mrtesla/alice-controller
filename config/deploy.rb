@@ -2,8 +2,13 @@ $:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 require "rvm/capistrano"
 require "bundler/capistrano"
 
+
 set :rvm_ruby_string, '1.9.2'
 
+set :alice_host, "machine-003.mrhenry.be"
+set :alice_port, 4080
+# set :alice_application, "alice.production"
+set :bundle_without, [:development, :test, :deploy]
 
 set :application, "alice"
 set :repository,  "git://github.com/integrityio/alice.git"

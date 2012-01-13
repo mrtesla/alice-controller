@@ -18,6 +18,13 @@ GIT
       thin
       yajl-ruby
 
+GIT
+  remote: git://github.com/integrityio/capistrano-alice.git
+  revision: 116d51892f26397b14184b51fd324ba5be73343f
+  specs:
+    capistrano-alice (0.0.1)
+      yajl-ruby
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -204,6 +211,7 @@ DEPENDENCIES
   airbrake
   bootstrap-sass
   capistrano
+  capistrano-alice!
   coffee-rails (~> 3.1.1)
   devise
   fnordmetric!
