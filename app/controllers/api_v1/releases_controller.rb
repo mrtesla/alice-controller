@@ -4,6 +4,7 @@ class ApiV1::ReleasesController < ApplicationController
 
   def create
     application = Core::Application.where(name: params[:application]).first
+    release     = nil
 
     unless application
       render :json => { :status => 'FAIL' }, :status => 404
