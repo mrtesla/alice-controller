@@ -18,15 +18,24 @@ class ApiV1::ReleasesController < ApplicationController
       end
     end
 
+    application.send_to_redis
+
     # should return environment for rake tasks
-    render :json => { :status => 'OK' }
+    render :json => { status: 'OK', release: { id: release.id, number: release.number } }
   end
 
   def destroy
 
+    application.send_to_redis
   end
 
   def activate
+    release     = Core::Release.find(params[:id])
+    application = release.core_application
 
+    application.active_core_release = release
+    application.save!
+
+    render :json => { status: 'OK' }
   end
 end

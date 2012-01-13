@@ -36,10 +36,13 @@ Alice::Application.routes.draw do
     get  'routers',               to: 'endpoints#routers'
     put  'register_static_paths', to: 'applications#register_static_paths'
 
-    post   'releases',
+    post 'releases',
       to: 'releases#create'
 
-    post   'applications/:application/maintenance',
+    post 'releases/:id/activate',
+      to: 'releases#activate'
+
+    post 'applications/:application/maintenance',
       to: 'applications#maintenance_mode_on',
       constraints: { application: /.*/ }
 
