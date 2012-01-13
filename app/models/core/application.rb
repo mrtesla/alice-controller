@@ -4,6 +4,10 @@ class Core::Application < ActiveRecord::Base
     presence:   true,
     uniqueness: true
 
+  belongs_to :active_core_release,
+    class_name:  'Core::Release',
+    foreign_key: 'active_core_release_id'
+
   has_many :core_releases,
     class_name:  'Core::Release',
     foreign_key: 'core_application_id',
@@ -57,6 +61,23 @@ class Core::Application < ActiveRecord::Base
 
   def remove_from_redis
     REDIS.del "alice.http|flags:#{self.name}"
+  end
+
+  def resolved_http_path_rules
+    release = self.active_core_release
+    paths   = {}
+
+    if release
+      release.http_path_rules.each do |rule|
+        paths[rule.path] = rule
+      end
+    end
+
+    self.http_path_rules.each do |rule|
+      paths[rule.path] = rule
+    end
+
+    paths.values.sort_by(&:path)
   end
 
 end

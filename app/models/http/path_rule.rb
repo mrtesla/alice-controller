@@ -15,9 +15,6 @@ class Http::PathRule < ActiveRecord::Base
     presence: true
 
   belongs_to :owner, polymorphic: true
-  # belongs_to :core_application,
-  #   class_name:  'Core::Application',
-  #   foreign_key: 'core_application_id'
 
   default_scope order(:path)
 

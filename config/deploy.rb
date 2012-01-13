@@ -53,10 +53,6 @@ after 'deploy:update_code' do
 end
 
 after 'deploy:update_code' do
-  run "cd #{release_path}; RAILS_ENV=production bundle exec rake assets:precompile"
-end
-
-after 'deploy:update_code' do
   run "cd #{release_path}; source ./.envrc ; RAILS_ENV=production bundle exec rake db:migrate"
 end
 

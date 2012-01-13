@@ -37,7 +37,7 @@
   <div id="path_rules" class="row">
     <%=
       render 'http/path_rules/list',
-        http_path_rules: @core_application.http_path_rules,
+        http_path_rules: @core_application.resolved_http_path_rules,
         new_link:        new_core_application_http_path_rule_path(@core_application)
     %>
   </div>
