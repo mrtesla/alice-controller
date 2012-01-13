@@ -52,7 +52,9 @@ class Http::PathRule < ActiveRecord::Base
 private
 
   def send_to_redis
-    self.class.send_to_redis_for_application(self.owner)
+    if Core::Application === self.owner
+      self.class.send_to_redis_for_application(self.owner)
+    end
   end
 
 end
