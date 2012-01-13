@@ -42,13 +42,13 @@ Alice::Application.routes.draw do
     post 'releases/:id/activate',
       to: 'releases#activate'
 
-    post 'applications/:application/maintenance',
+    post 'applications/:application_name/maintenance',
       to: 'applications#maintenance_mode_on',
-      constraints: { application: /.*/ }
+      constraints: { application_name: /.*/ }
 
-    delete 'applications/:application/maintenance',
+    delete 'applications/:application_name/maintenance',
       to: 'applications#maintenance_mode_off',
-      constraints: { application: /.*/ }
+      constraints: { application_name: /.*/ }
 
   end
 

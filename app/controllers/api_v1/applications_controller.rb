@@ -24,7 +24,7 @@ class ApiV1::ApplicationsController < ApplicationController
   end
 
   def maintenance_mode_on
-    application = Core::Application.where(name: params[:application]).first
+    application = Core::Application.where(name: params[:application_name]).first
 
     unless application
       render :json => { :status => 'FAIL' }, :status => 404
@@ -38,7 +38,7 @@ class ApiV1::ApplicationsController < ApplicationController
   end
 
   def maintenance_mode_off
-    application = Core::Application.where(name: params[:application]).first
+    application = Core::Application.where(name: params[:application_name]).first
 
     unless application
       render :json => { :status => 'FAIL' }, :status => 404
