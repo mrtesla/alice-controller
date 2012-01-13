@@ -26,8 +26,14 @@ class ApiV1::ReleasesController < ApplicationController
   end
 
   def destroy
+    release     = Core::Release.find(params[:id])
+    application = release.core_application
+
+    release.destroy
 
     application.send_to_redis
+
+    render :json => { status: 'OK' }
   end
 
   def activate
