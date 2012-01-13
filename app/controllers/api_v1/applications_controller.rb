@@ -32,6 +32,7 @@ class ApiV1::ApplicationsController < ApplicationController
     end
 
     application.maintenance_mode = true
+    application.save
 
     render :json => { :status => 'OK' }
   end
@@ -45,6 +46,7 @@ class ApiV1::ApplicationsController < ApplicationController
     end
 
     application.maintenance_mode = false
+    application.save
 
     render :json => { :status => 'OK' }
   end
