@@ -5,7 +5,7 @@ class Core::Release < ActiveRecord::Base
 
   validates :number,
     presence:   true,
-    uniqueness: true
+    uniqueness: { scope: :core_application_id }
 
   belongs_to :core_application,
     class_name:  'Core::Application',
@@ -21,7 +21,7 @@ class Core::Release < ActiveRecord::Base
     dependent:   :destroy,
     as:          :owner
 
-  default_scope order(:number)
+  default_scope order('number DESC')
 
   before_validation :set_next_number, :on => :create
 
