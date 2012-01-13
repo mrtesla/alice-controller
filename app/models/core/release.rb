@@ -23,7 +23,7 @@ class Core::Release < ActiveRecord::Base
 
   default_scope order(:number)
 
-  before_create :set_next_number
+  before_validation :set_next_number, :on => :create
 
   def ui_name
     "##{number}"
