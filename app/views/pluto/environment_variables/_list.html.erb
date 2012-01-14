@@ -1,0 +1,24 @@
+<div class="span10">
+
+  <table class="zebra-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% pluto_environment_variables.each do |variable| %>
+        <tr>
+          <td><%= link_to variable.ui_name, variable %></td>
+          <td><%= variable.value %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+</div>
+<div class="span4">
+  <%= link_to 'New Variable', (defined?(new_link) ? new_link : new_pluto_environment_variable_path), class: 'btn large success' %>
+</div>

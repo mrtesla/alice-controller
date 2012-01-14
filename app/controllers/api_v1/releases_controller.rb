@@ -17,12 +17,23 @@ class ApiV1::ReleasesController < ApplicationController
       params[:path_rules].each do |(path, actions)|
         release.http_path_rules.create(path: path, actions: actions)
       end
+
+      params[:environment].each do |name, value|
+        release.pluto_environment_variables.create(name: name, value: value)
+      end
     end
 
     application.send_to_redis
 
-    # should return environment for rake tasks
-    render :json => { status: 'OK', release: { id: release.id, number: release.number } }
+    release = {
+      id:          release.id,
+      number:      release.number,
+      environment: application.resolved_pluto_environment_variables.inject({}) do |h, var|
+        h[var.name] = var.value
+        h
+      end
+    }
+    render :json => { status: 'OK', release: release }
   end
 
   def destroy

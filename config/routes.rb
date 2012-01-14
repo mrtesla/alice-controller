@@ -1,7 +1,5 @@
 Alice::Application.routes.draw do
 
-  namespace :core do resources :releases end
-
   root to: 'root#index'
 
   devise_for :users
@@ -12,20 +10,29 @@ Alice::Application.routes.draw do
     resources :applications do
       delete 'cache', on: :member, action: 'bust_cache'
     end
+    resources :releases
   end
 
   namespace :http do
-    resources :domain_rules
-    resources :path_rules
+    resources :domain_rules, except: [:new, :create]
+    resources :path_rules,   except: [:new, :create]
     resources :backends
     resources :passers
     resources :routers
+  end
+
+  namespace :pluto do
+    resources :environment_variables, except: [:new, :create]
   end
 
   scope path: '/core/applications/:application_id', as: 'core_application' do
     namespace :http do
       resources :domain_rules, only: [:new, :create]
       resources :path_rules,   only: [:new, :create]
+    end
+
+    namespace :pluto do
+      resources :environment_variables, only: [:new, :create]
     end
   end
 

@@ -21,6 +21,11 @@ class Core::Release < ActiveRecord::Base
     dependent:   :destroy,
     as:          :owner
 
+  has_many :pluto_environment_variables,
+    class_name:  'Pluto::EnvironmentVariable',
+    dependent:   :destroy,
+    as:          :owner
+
   default_scope order('number DESC')
 
   before_validation :set_next_number, :on => :create

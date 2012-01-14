@@ -1,0 +1,10 @@
+<%= semantic_form_for @pluto_environment_variable do |f| %>
+  <%= f.semantic_errors %>
+  <%= f.inputs do %>
+    <%= f.input :name %>
+    <%= f.input :value, as: :text %>
+  <% end %>
+  <%= f.buttons do %>
+    <%= f.commit_button :button_html => {:class => "primary"} %>
+  <% end %>
+<% end %>

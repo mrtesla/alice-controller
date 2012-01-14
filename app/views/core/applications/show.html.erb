@@ -11,6 +11,7 @@
 
   <ul class="tabs" data-tabs="tabs">
     <li class="active"><a href="#releases">Releases</a></li>
+    <li><a href="#environment_variables">Environment Variables</a></li>
     <li><a href="#domain_rules">Domain rules</a></li>
     <li><a href="#path_rules">Path rules</a></li>
     <li><a href="#backends">Backends</a></li>
@@ -23,6 +24,14 @@
     <%=
       render 'core/releases/list',
         core_releases: @core_application.core_releases
+    %>
+  </div>
+
+  <div id="environment_variables" class="row active">
+    <%=
+      render 'pluto/environment_variables/list',
+        pluto_environment_variables: @core_application.resolved_pluto_environment_variables,
+        new_link:                    new_core_application_pluto_environment_variable_path(@core_application)
     %>
   </div>
 

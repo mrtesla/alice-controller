@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120112083309) do
+ActiveRecord::Schema.define(:version => 20120114145158) do
 
   create_table "core_applications", :force => true do |t|
     t.string   "name"
@@ -84,6 +84,15 @@ ActiveRecord::Schema.define(:version => 20120112083309) do
     t.datetime "updated_at"
     t.datetime "down_since"
     t.string   "error_message"
+  end
+
+  create_table "pluto_environment_variables", :force => true do |t|
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.string   "name"
+    t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|

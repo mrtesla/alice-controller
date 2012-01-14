@@ -28,6 +28,11 @@ class Core::Application < ActiveRecord::Base
     foreign_key: 'core_application_id',
     dependent:   :destroy
 
+  has_many :pluto_environment_variables,
+    class_name:  'Pluto::EnvironmentVariable',
+    dependent:   :destroy,
+    as:          :owner
+
   default_scope order(:name)
 
   after_save    :send_to_redis
@@ -80,6 +85,23 @@ class Core::Application < ActiveRecord::Base
     end
 
     paths.values.sort_by(&:path)
+  end
+
+  def resolved_pluto_environment_variables
+    release = self.active_core_release
+    env     = {}
+
+    if release
+      release.pluto_environment_variables.each do |var|
+        env[var.name] = var
+      end
+    end
+
+    self.pluto_environment_variables.each do |var|
+      env[var.name] = var
+    end
+
+    env.values.sort_by(&:name)
   end
 
 end
