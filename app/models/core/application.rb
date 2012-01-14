@@ -70,8 +70,8 @@ class Core::Application < ActiveRecord::Base
     REDIS.del "alice.http|flags:#{self.name}"
   end
 
-  def resolved_http_path_rules
-    release = self.active_core_release
+  def resolved_http_path_rules(release=nil)
+    release = self.active_core_release unless release
     paths   = {}
 
     if release
@@ -87,8 +87,8 @@ class Core::Application < ActiveRecord::Base
     paths.values.sort_by(&:path)
   end
 
-  def resolved_pluto_environment_variables
-    release = self.active_core_release
+  def resolved_pluto_environment_variables(release=nil)
+    release = self.active_core_release unless release
     env     = {}
 
     if release

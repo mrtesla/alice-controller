@@ -25,10 +25,11 @@ class ApiV1::ReleasesController < ApplicationController
 
     application.send_to_redis
 
+    env = application.resolved_pluto_environment_variables(release)
     release = {
       id:          release.id,
       number:      release.number,
-      environment: application.resolved_pluto_environment_variables.inject({}) do |h, var|
+      environment: env.inject({}) do |h, var|
         h[var.name] = var.value
         h
       end
