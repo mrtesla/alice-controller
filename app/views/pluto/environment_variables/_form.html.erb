@@ -1,4 +1,4 @@
-<%= semantic_form_for @pluto_environment_variable do |f| %>
+<%= semantic_form_for [@pluto_environment_variable.owner, @pluto_environment_variable] do |f| %>
   <%= f.semantic_errors %>
   <%= f.inputs do %>
     <%= f.input :name %>

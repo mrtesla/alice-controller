@@ -44,7 +44,7 @@ class Pluto::EnvironmentVariablesController < ApplicationController
 
     respond_to do |format|
       if @pluto_environment_variable.save
-        format.html { redirect_to @pluto_environment_variable, notice: 'Environment variable was successfully created.' }
+        format.html { redirect_to @pluto_environment_variable.owner, notice: 'Environment variable was successfully created.' }
         format.json { render json: @pluto_environment_variable, status: :created, location: @pluto_environment_variable }
       else
         format.html { render action: "new" }
@@ -60,7 +60,7 @@ class Pluto::EnvironmentVariablesController < ApplicationController
 
     respond_to do |format|
       if @pluto_environment_variable.update_attributes(params[:pluto_environment_variable])
-        format.html { redirect_to @pluto_environment_variable, notice: 'Environment variable was successfully updated.' }
+        format.html { redirect_to @pluto_environment_variable.owner, notice: 'Environment variable was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -76,7 +76,7 @@ class Pluto::EnvironmentVariablesController < ApplicationController
     @pluto_environment_variable.destroy
 
     respond_to do |format|
-      format.html { redirect_to pluto_environment_variables_url }
+      format.html { redirect_to @pluto_environment_variable.owner }
       format.json { head :ok }
     end
   end
