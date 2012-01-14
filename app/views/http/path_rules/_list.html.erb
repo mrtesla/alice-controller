@@ -9,10 +9,14 @@
     </thead>
 
     <tbody>
-      <% http_path_rules.each do |http_path_rule| %>
+      <% http_path_rules.each do |object| %>
         <tr>
-          <td><%= link_to http_path_rule.ui_name, [:edit, @core_application, http_path_rule] %></td>
-          <td><%= http_path_rule.actions %></td>
+          <% if object.owner_type == 'Core::Application' %>
+            <td><%= link_to object.ui_name, [:edit, @core_application, object] %></td>
+          <% else %>
+            <td><%= object.ui_name %></td>
+          <% end %>
+          <td><%= object.actions %></td>
         </tr>
       <% end %>
     </tbody>

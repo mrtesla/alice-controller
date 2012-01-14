@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/integrityio/capistrano-alice.git
-  revision: 9994fa63e07513ea709306097345a9425ca68979
+  revision: f4c29cf1b8adb6a45ceda4d3f1fe0c9712deeaf5
   specs:
     capistrano-alice (0.0.1)
       yajl-ruby
@@ -174,9 +174,9 @@ GEM
       tilt (~> 1.3.2)
     shoulda-matchers (1.0.0)
     sinatra (1.3.2)
-      rack (~> 1.3, >= 1.3.6)
+      rack (>= 1.3.6, ~> 1.3)
       rack-protection (~> 1.2)
-      tilt (~> 1.3, >= 1.3.3)
+      tilt (>= 1.3.3, ~> 1.3)
     sprockets (2.0.3)
       hike (~> 1.2)
       rack (~> 1.0)

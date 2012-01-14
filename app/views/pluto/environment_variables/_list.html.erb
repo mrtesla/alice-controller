@@ -11,7 +11,11 @@
     <tbody>
       <% pluto_environment_variables.each do |variable| %>
         <tr>
-          <td><%= link_to variable.ui_name, [:edit, @core_application, variable] %></td>
+          <% if variable.owner_type == 'Core::Application' %>
+            <td><%= link_to variable.ui_name, [:edit, @core_application, variable] %></td>
+          <% else %>
+            <td><%= variable.ui_name %></td>
+          <% end %>
           <td><%= variable.value %></td>
         </tr>
       <% end %>
