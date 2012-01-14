@@ -40,6 +40,9 @@ Alice::Application.routes.draw do
     post 'releases',
       to: 'releases#create'
 
+    delete 'releases/:id',
+      to: 'releases#destroy'
+
     post 'releases/:id/activate',
       to: 'releases#activate'
 
