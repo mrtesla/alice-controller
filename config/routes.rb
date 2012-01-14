@@ -14,25 +14,19 @@ Alice::Application.routes.draw do
   end
 
   namespace :http do
-    resources :domain_rules, except: [:new, :create]
-    resources :path_rules,   except: [:new, :create]
     resources :backends
     resources :passers
     resources :routers
   end
 
-  namespace :pluto do
-    resources :environment_variables, except: [:new, :create]
-  end
-
   scope path: '/core/applications/:application_id', as: 'core_application' do
     namespace :http do
-      resources :domain_rules, only: [:new, :create]
-      resources :path_rules,   only: [:new, :create]
+      resources :domain_rules
+      resources :path_rules
     end
 
     namespace :pluto do
-      resources :environment_variables, only: [:new, :create]
+      resources :environment_variables, except: [:show]
     end
   end
 

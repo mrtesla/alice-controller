@@ -1,5 +1,6 @@
 class Http::PathRulesController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :load_core_application
 
   # GET /http/path_rules
   # GET /http/path_rules.json
@@ -54,7 +55,7 @@ class Http::PathRulesController < ApplicationController
     respond_to do |format|
       if @http_path_rule.save
         @http_path_rule.send_to_redis
-        format.html { redirect_to @http_path_rule, notice: 'Path rule was successfully created.' }
+        format.html { redirect_to @core_application, notice: 'Path rule was successfully created.' }
         format.json { render json: @http_path_rule, status: :created, location: @http_path_rule }
       else
         format.html { render action: "new" }
@@ -76,7 +77,7 @@ class Http::PathRulesController < ApplicationController
     respond_to do |format|
       if @http_path_rule.update_attributes(params[:http_path_rule])
         @http_path_rule.send_to_redis
-        format.html { redirect_to @http_path_rule, notice: 'Path rule was successfully updated.' }
+        format.html { redirect_to @core_application, notice: 'Path rule was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -93,7 +94,7 @@ class Http::PathRulesController < ApplicationController
     @http_path_rule.send_to_redis
 
     respond_to do |format|
-      format.html { redirect_to http_path_rules_url }
+      format.html { redirect_to @core_application }
       format.json { head :ok }
     end
   end

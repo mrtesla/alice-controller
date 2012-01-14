@@ -11,7 +11,7 @@
     <tbody>
       <% pluto_environment_variables.each do |variable| %>
         <tr>
-          <td><%= link_to variable.ui_name, variable %></td>
+          <td><%= link_to variable.ui_name, [:edit, @core_application, variable] %></td>
           <td><%= variable.value %></td>
         </tr>
       <% end %>
@@ -20,5 +20,5 @@
 
 </div>
 <div class="span4">
-  <%= link_to 'New Variable', (defined?(new_link) ? new_link : new_pluto_environment_variable_path), class: 'btn large success' %>
+  <%= link_to 'New Variable', [:new, @core_application, :pluto_environment_variable], class: 'btn large success' %>
 </div>

@@ -1,5 +1,6 @@
 class Http::DomainRulesController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :load_core_application
 
   # GET /http/domain_rules
   # GET /http/domain_rules.json
@@ -54,7 +55,7 @@ class Http::DomainRulesController < ApplicationController
 
     respond_to do |format|
       if @http_domain_rule.save
-        format.html { redirect_to @http_domain_rule, notice: 'Domain rule was successfully created.' }
+        format.html { redirect_to @core_application, notice: 'Domain rule was successfully created.' }
         format.json { render json: @http_domain_rule, status: :created, location: @http_domain_rule }
       else
         format.html { render action: "new" }
@@ -75,7 +76,7 @@ class Http::DomainRulesController < ApplicationController
 
     respond_to do |format|
       if @http_domain_rule.update_attributes(params[:http_domain_rule])
-        format.html { redirect_to @http_domain_rule, notice: 'Domain rule was successfully updated.' }
+        format.html { redirect_to @core_application, notice: 'Domain rule was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -91,7 +92,7 @@ class Http::DomainRulesController < ApplicationController
     @http_domain_rule.destroy
 
     respond_to do |format|
-      format.html { redirect_to http_domain_rules_url }
+      format.html { redirect_to @core_application }
       format.json { head :ok }
     end
   end

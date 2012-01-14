@@ -1,4 +1,6 @@
 class Core::ReleasesController < ApplicationController
+  before_filter :authenticate_user!
+
   # GET /core/releases
   # GET /core/releases.json
   def index
