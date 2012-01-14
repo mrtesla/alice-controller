@@ -1,6 +1,6 @@
 class Http::DomainRule < ActiveRecord::Base
 
-  serialize :actions, JSON
+  serialize :actions, JSONColumn.new([])
 
   validates :core_application_id,
     presence: true

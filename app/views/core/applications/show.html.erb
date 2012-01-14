@@ -30,24 +30,21 @@
   <div id="environment_variables" class="row">
     <%=
       render 'pluto/environment_variables/list',
-        pluto_environment_variables: @core_application.resolved_pluto_environment_variables,
-        new_link:                    new_core_application_pluto_environment_variable_path(@core_application)
+        pluto_environment_variables: @core_application.resolved_pluto_environment_variables
     %>
   </div>
 
   <div id="domain_rules" class="row">
     <%=
       render 'http/domain_rules/list',
-        http_domain_rules: @core_application.http_domain_rules,
-        new_link:          new_core_application_http_domain_rule_path(@core_application)
+        http_domain_rules: @core_application.http_domain_rules
     %>
   </div>
 
   <div id="path_rules" class="row">
     <%=
       render 'http/path_rules/list',
-        http_path_rules: @core_application.resolved_http_path_rules,
-        new_link:        new_core_application_http_path_rule_path(@core_application)
+        http_path_rules: @core_application.resolved_http_path_rules
     %>
   </div>
 

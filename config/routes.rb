@@ -26,7 +26,7 @@ Alice::Application.routes.draw do
     end
 
     namespace :pluto do
-      resources :environment_variables, except: [:show]
+      resources :environment_variables
     end
   end
 

@@ -11,7 +11,7 @@
     <tbody>
       <% http_domain_rules.each do |http_domain_rule| %>
         <tr>
-          <td><%= link_to http_domain_rule.ui_name, http_domain_rule %></td>
+          <td><%= link_to http_domain_rule.ui_name, [:edit, @core_application, http_domain_rule] %></td>
           <td><%= http_domain_rule.actions %></td>
         </tr>
       <% end %>
@@ -20,5 +20,5 @@
 
 </div>
 <div class="span4">
-  <%= link_to 'New Domain Rule', (defined?(new_link) ? new_link : new_http_domain_rule_path), class: 'btn large success' %>
+  <%= link_to 'New Domain Rule', [:new, @core_application, :http_domain_rule], class: 'btn large success' %>
 </div>

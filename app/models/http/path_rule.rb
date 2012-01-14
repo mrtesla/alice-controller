@@ -1,6 +1,6 @@
 class Http::PathRule < ActiveRecord::Base
 
-  serialize :actions, JSON
+  serialize :actions, JSONColumn.new([])
 
   validates :owner_id,
     presence: true

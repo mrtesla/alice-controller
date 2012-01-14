@@ -11,7 +11,7 @@
     <tbody>
       <% http_path_rules.each do |http_path_rule| %>
         <tr>
-          <td><%= link_to http_path_rule.ui_name, http_path_rule %></td>
+          <td><%= link_to http_path_rule.ui_name, [:edit, @core_application, http_path_rule] %></td>
           <td><%= http_path_rule.actions %></td>
         </tr>
       <% end %>
@@ -20,6 +20,6 @@
 
 </div>
 <div class="span4">
-  <%= link_to 'New Path Rule', (defined?(new_link) ? new_link : new_http_path_rule_path), class: 'btn large success' %>
+  <%= link_to 'New Path Rule', [:new, @core_application, :http_path_rule], class: 'btn large success' %>
 </div>
 
