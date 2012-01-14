@@ -25,6 +25,9 @@ class ApiV1::ReleasesController < ApplicationController
 
     application.send_to_redis
 
+    # reload environment_variables
+    release.pluto_environment_variables(true)
+
     env = application.resolved_pluto_environment_variables(release)
     release = {
       id:          release.id,
