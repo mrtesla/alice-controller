@@ -18,7 +18,7 @@ class ApiV1::ReleasesController < ApplicationController
         release.http_path_rules.create(path: path, actions: actions)
       end
 
-      params[:environment].each do |name, value|
+      (params[:environment] || {}).each do |name, value|
         release.pluto_environment_variables.create(name: name, value: value)
       end
     end
