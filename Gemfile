@@ -31,7 +31,7 @@ end
 group :deploy do
   gem 'capistrano'
   # gem 'capistrano-alice', path: ENV['HOME'] + '/Projects/capistrano-alice'
-  gem 'capistrano-alice', git: 'git://github.com/integrityio/capistrano-alice.git'
+  gem 'capistrano-alice', git: 'git://github.com/mrtesla/capistrano-alice.git'
 end
 
 # To use debugger

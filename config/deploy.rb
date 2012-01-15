@@ -9,7 +9,7 @@ set :alice_port, 4080
 set :bundle_without, [:development, :test, :deploy]
 
 set :application, "alice"
-set :repository,  "git://github.com/integrityio/alice.git"
+set :repository,  "git://github.com/mrtesla/alice.git"
 set :scm, :git
 set :branch, "master"
 set :deploy_via, :remote_cache
