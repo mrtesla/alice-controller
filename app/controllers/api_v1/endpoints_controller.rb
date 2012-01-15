@@ -106,7 +106,9 @@ class ApiV1::EndpointsController < ApplicationController
         backend.error_message = nil
       else
         if backend.down_since
-          changes[:backends][:still_down] << "#{backend.core_application.name}:#{backend.process}:#{backend.instance}"
+          unless backend.core_application.suspended_mode?
+            changes[:backends][:still_down] << "#{backend.core_application.name}:#{backend.process}:#{backend.instance}"
+          end
         else
           must_deliver_email = true
           changes[:backends][:down] << "#{backend.core_application.name}:#{backend.process}:#{backend.instance}"
@@ -126,9 +128,17 @@ class ApiV1::EndpointsController < ApplicationController
     render :json => { :status => 'OK' }
 
     # deliver email
+    changes.each do |key, groups|
+      changes.delete key if groups.empty? or groups.values.all? { |g| g.empty? }
+    end
+
     last_email = REDIS.get("alice.http|last_process_changes_email").to_i
     if Time.at(last_email) < 20.minutes.ago
       must_deliver_email = true
+    end
+
+    if changes.empty?
+      must_deliver_email = false
     end
 
     if must_deliver_email
