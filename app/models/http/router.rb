@@ -61,7 +61,7 @@ class Http::Router < ActiveRecord::Base
     rem    = start % window
     start -= rem
 
-    key = "fnordmetric-alice-gauge-router_requests_per_hour-#{window}-#{start}"
+    key = "fnordmetric-alice-gauge-router_requests_per_day-#{window}-#{start}"
     REDIS.zscore(key, "#{self.core_machine.host}:#{self.port}") || 0
   end
 
