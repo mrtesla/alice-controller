@@ -66,7 +66,7 @@ class Http::Router < ActiveRecord::Base
   end
 
   def rpm(start, window)
-    request_count(start, window).to_f / (window / 60)
+    request_count(start, window).to_f / (window / (24 * 60))
   end
 
 end
