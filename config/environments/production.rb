@@ -57,4 +57,15 @@ Alice::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+
+  if ENV['SMTP_ADDRESS']
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      :address              => ENV['SMTP_ADDRESS'],
+      :domain               => ENV['SMTP_DOMAIN'],
+      :user_name            => ENV['SMTP_USERNAME'],
+      :password             => ENV['SMTP_PASSWORD'],
+      :authentication       => :login,
+    }
+  end
 end

@@ -1,0 +1,28 @@
+<div class="span10">
+
+  <table class="zebra-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% pluto_environment_variables.each do |variable| %>
+        <tr>
+          <% if variable.owner_type == 'Core::Application' %>
+            <td><%= link_to variable.ui_name, [:edit, @core_application, variable] %></td>
+          <% else %>
+            <td><%= variable.ui_name %></td>
+          <% end %>
+          <td><%= variable.value %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+</div>
+<div class="span4">
+  <%= link_to 'New Variable', [:new, @core_application, :pluto_environment_variable], class: 'btn large success' %>
+</div>

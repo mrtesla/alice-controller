@@ -4,7 +4,6 @@
     <thead>
       <tr>
         <th>Domain</th>
-        <th>RPM</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -12,8 +11,7 @@
     <tbody>
       <% http_domain_rules.each do |http_domain_rule| %>
         <tr>
-          <td><%= link_to "#{http_domain_rule.core_application.name}:#{http_domain_rule.domain}", http_domain_rule %></td>
-          <td><%= http_domain_rule.rpm(Time.now, 3600).round(2) %></td>
+          <td><%= link_to http_domain_rule.ui_name, [:edit, @core_application, http_domain_rule] %></td>
           <td><%= http_domain_rule.actions %></td>
         </tr>
       <% end %>
@@ -22,5 +20,5 @@
 
 </div>
 <div class="span4">
-  <%= link_to 'New Domain Rule', (defined?(new_link) ? new_link : new_http_domain_rule_path), class: 'btn large success' %>
+  <%= link_to 'New Domain Rule', [:new, @core_application, :http_domain_rule], class: 'btn large success' %>
 </div>

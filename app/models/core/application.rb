@@ -4,6 +4,15 @@ class Core::Application < ActiveRecord::Base
     presence:   true,
     uniqueness: true
 
+  belongs_to :active_core_release,
+    class_name:  'Core::Release',
+    foreign_key: 'active_core_release_id'
+
+  has_many :core_releases,
+    class_name:  'Core::Release',
+    foreign_key: 'core_application_id',
+    dependent:   :destroy
+
   has_many :http_backends,
     class_name:  'Http::Backend',
     foreign_key: 'core_application_id',
@@ -11,13 +20,18 @@ class Core::Application < ActiveRecord::Base
 
   has_many :http_path_rules,
     class_name:  'Http::PathRule',
-    foreign_key: 'core_application_id',
-    dependent:   :destroy
+    dependent:   :destroy,
+    as:          :owner
 
   has_many :http_domain_rules,
     class_name:  'Http::DomainRule',
     foreign_key: 'core_application_id',
     dependent:   :destroy
+
+  has_many :pluto_environment_variables,
+    class_name:  'Pluto::EnvironmentVariable',
+    dependent:   :destroy,
+    as:          :owner
 
   default_scope order(:name)
 
@@ -30,16 +44,64 @@ class Core::Application < ActiveRecord::Base
     end
   end
 
+  def bust_cache!
+    REDIS.hincrby "alice.http|flags:#{self.name}", "cache_version", '1'
+  end
+
   def send_to_redis
-    if maintenance_mode?
-      REDIS.set "alice.http|applications:#{self.name}|maintenance_mode", "1"
+    if suspended_mode?
+      REDIS.hset "alice.http|flags:#{self.name}", "suspended", "1"
     else
-      REDIS.del "alice.http|applications:#{self.name}|maintenance_mode"
+      REDIS.hdel "alice.http|flags:#{self.name}", "suspended"
     end
+
+    if maintenance_mode?
+      REDIS.hset "alice.http|flags:#{self.name}", "maintenance", "1"
+    else
+      REDIS.hdel "alice.http|flags:#{self.name}", "maintenance"
+    end
+
+    Http::PathRule.send_to_redis_for_application(self)
+
+    bust_cache!
   end
 
   def remove_from_redis
-    REDIS.del "alice.http|applications:#{self.name}|maintenance_mode"
+    REDIS.del "alice.http|flags:#{self.name}"
+  end
+
+  def resolved_http_path_rules(release=nil)
+    release = self.active_core_release unless release
+    paths   = {}
+
+    if release
+      release.http_path_rules.each do |rule|
+        paths[rule.path] = rule
+      end
+    end
+
+    self.http_path_rules.each do |rule|
+      paths[rule.path] = rule
+    end
+
+    paths.values.sort_by(&:path)
+  end
+
+  def resolved_pluto_environment_variables(release=nil)
+    release = self.active_core_release unless release
+    env     = {}
+
+    if release
+      release.pluto_environment_variables.each do |var|
+        env[var.name] = var
+      end
+    end
+
+    self.pluto_environment_variables.each do |var|
+      env[var.name] = var
+    end
+
+    env.values.sort_by(&:name)
   end
 
 end

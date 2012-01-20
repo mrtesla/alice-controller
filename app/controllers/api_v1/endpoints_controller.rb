@@ -27,16 +27,35 @@ class ApiV1::EndpointsController < ApplicationController
   end
 
   def probe_report
+    must_deliver_email = false
+    changes = {
+      routers: { up: [], down: [], still_down: [] },
+      passers: { up: [], down: [], still_down: [] },
+      backends: { up: [], down: [], still_down: [] }
+    }
+
     (params[:routers] || []).each do |id, status|
       router = (Http::Router.find(id) rescue nil)
 
       next unless router
 
       if status === true
+        if router.down_since
+          must_deliver_email = true
+          changes[:routers][:up] << "#{router.core_machine.host}:#{router.port}"
+        end
+
         router.last_seen_at  = Time.now
         router.down_since    = nil
         router.error_message = nil
       else
+        if router.down_since
+          changes[:routers][:still_down] << "#{router.core_machine.host}:#{router.port}"
+        else
+          must_deliver_email = true
+          changes[:routers][:down] << "#{router.core_machine.host}:#{router.port}"
+        end
+
         router.down_since  ||= Time.now
         router.error_message = status[:error]
       end
@@ -49,10 +68,22 @@ class ApiV1::EndpointsController < ApplicationController
       next unless passer
 
       if status === true
+        if passer.down_since
+          must_deliver_email = true
+          changes[:passers][:up] << "#{passer.core_machine.host}:#{passer.port}"
+        end
+
         passer.last_seen_at  = Time.now
         passer.down_since    = nil
         passer.error_message = nil
       else
+        if passer.down_since
+          changes[:passers][:still_down] << "#{passer.core_machine.host}:#{passer.port}"
+        else
+          must_deliver_email = true
+          changes[:passers][:down] << "#{passer.core_machine.host}:#{passer.port}"
+        end
+
         passer.down_since  ||= Time.now
         passer.error_message = status[:error]
       end
@@ -65,10 +96,24 @@ class ApiV1::EndpointsController < ApplicationController
       next unless backend
 
       if status === true
+        if backend.down_since
+          must_deliver_email = true
+          changes[:backends][:up] << "#{backend.core_application.name}:#{backend.process}:#{backend.instance}"
+        end
+
         backend.last_seen_at  = Time.now
         backend.down_since    = nil
         backend.error_message = nil
       else
+        if backend.down_since
+          unless backend.core_application.suspended_mode?
+            changes[:backends][:still_down] << "#{backend.core_application.name}:#{backend.process}:#{backend.instance}"
+          end
+        else
+          must_deliver_email = true
+          changes[:backends][:down] << "#{backend.core_application.name}:#{backend.process}:#{backend.instance}"
+        end
+
         backend.down_since  ||= Time.now
         backend.error_message = status[:error]
       end
@@ -81,6 +126,25 @@ class ApiV1::EndpointsController < ApplicationController
     Http::Backend.send_to_redis
 
     render :json => { :status => 'OK' }
+
+    # deliver email
+    changes.each do |key, groups|
+      changes.delete key if groups.empty? or groups.values.all? { |g| g.empty? }
+    end
+
+    last_email = REDIS.get("alice.http|last_process_changes_email").to_i
+    if Time.at(last_email) < 20.minutes.ago
+      must_deliver_email = true
+    end
+
+    if changes.empty?
+      must_deliver_email = false
+    end
+
+    if must_deliver_email
+      REDIS.set("alice.http|last_process_changes_email", Time.now.to_i)
+      Http::ProcessStateMailer.changes(changes).deliver
+    end
   end
 
   def register

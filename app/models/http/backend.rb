@@ -84,12 +84,12 @@ class Http::Backend < ActiveRecord::Base
     rem    = start % window
     start -= rem
 
-    key = "fnordmetric-alice-gauge-instance_requests_per_hour-#{window}-#{start}"
+    key = "fnordmetric-alice-gauge-instance_requests_per_day-#{window}-#{start}"
     REDIS.zscore(key, "#{self.core_application.name}|#{self.process}:#{self.instance}") || 0
   end
 
   def rpm(start, window)
-    request_count(start, window).to_f / (window / 60)
+    request_count(start, window).to_f / (window / (24 * 60))
   end
 
 end

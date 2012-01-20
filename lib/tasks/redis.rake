@@ -11,7 +11,6 @@ namespace :db do
     Http::Passer.send_to_redis
     Http::Backend.send_to_redis
     Http::DomainRule.send_to_redis
-    Http::PathRule.send_to_redis
   end
 
 end

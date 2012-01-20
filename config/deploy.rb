@@ -2,11 +2,14 @@ $:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 require "rvm/capistrano"
 require "bundler/capistrano"
 
-set :rvm_ruby_string, '1.9.2'
 
+set :alice_host, "machine-003.mrhenry.be"
+set :alice_port, 4080
+# set :alice_application, "alice.production"
+set :bundle_without, [:development, :test, :deploy]
 
 set :application, "alice"
-set :repository,  "git://github.com/integrityio/alice.git"
+set :repository,  "git://github.com/mrtesla/alice.git"
 set :scm, :git
 set :branch, "master"
 set :deploy_via, :remote_cache
@@ -53,13 +56,14 @@ after 'deploy:update_code' do
 end
 
 after 'deploy:update_code' do
-  run "cd #{release_path}; RAILS_ENV=production bundle exec rake assets:precompile"
-end
-
-after 'deploy:update_code' do
-  run "cd #{release_path}; source ./.envrc ; RAILS_ENV=production bundle exec rake db:migrate"
+  run "cd #{release_path}; bundle exec rake db:migrate"
 end
 
 after "deploy", :overwrite_rvmrc
 after "deploy", :set_shared_permissions
 after "deploy", "deploy:cleanup"
+
+if ENV['AIRBRAKE_KEY']
+  require './config/boot'
+  require 'airbrake/capistrano'
+end

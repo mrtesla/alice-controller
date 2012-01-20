@@ -1,0 +1,24 @@
+<div class="span10">
+
+  <table class="zebra-striped">
+    <thead>
+      <tr>
+        <th>Release</th>
+        <th>State</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% core_releases.each do |core_release| %>
+        <tr>
+          <td><%= link_to core_release.ui_name, core_release %></td>
+          <td></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+</div>
+<div class="span4">
+</div>
+

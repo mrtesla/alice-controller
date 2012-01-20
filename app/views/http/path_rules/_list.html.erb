@@ -4,17 +4,19 @@
     <thead>
       <tr>
         <th>Path</th>
-        <th>RPM</th>
         <th>Actions</th>
       </tr>
     </thead>
 
     <tbody>
-      <% http_path_rules.each do |http_path_rule| %>
+      <% http_path_rules.each do |object| %>
         <tr>
-          <td><%= link_to "#{http_path_rule.core_application.name}#{http_path_rule.path}", http_path_rule %></td>
-          <td><%= http_path_rule.rpm(Time.now, 3600).round(2) %></td>
-          <td><%= http_path_rule.actions %></td>
+          <% if object.owner_type == 'Core::Application' %>
+            <td><%= link_to object.ui_name, [:edit, @core_application, object] %></td>
+          <% else %>
+            <td><%= object.ui_name %></td>
+          <% end %>
+          <td><%= object.actions %></td>
         </tr>
       <% end %>
     </tbody>
@@ -22,6 +24,6 @@
 
 </div>
 <div class="span4">
-  <%= link_to 'New Path Rule', (defined?(new_link) ? new_link : new_http_path_rule_path), class: 'btn large success' %>
+  <%= link_to 'New Path Rule', [:new, @core_application, :http_path_rule], class: 'btn large success' %>
 </div>
 

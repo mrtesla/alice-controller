@@ -7,8 +7,10 @@ gem 'devise'
 
 gem 'redis'
 gem 'thin'
-gem 'fnordmetric', git:  'git://github.com/fd/fnordmetric.git'
+gem 'fnordmetric', git: 'git://github.com/paulasmuth/fnordmetric.git'
+# gem 'fnordmetric', git: 'git://github.com/fd/fnordmetric.git', ref: 'topics/middleware'
 # gem 'fnordmetric', path: ENV['HOME'] + '/Projects/fnordmetric'
+gem "airbrake"
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -26,7 +28,11 @@ end
 # gem 'unicorn'
 
 # Deploy with Capistrano
-gem 'capistrano'
+group :deploy do
+  gem 'capistrano'
+  # gem 'capistrano-alice', path: ENV['HOME'] + '/Projects/capistrano-alice'
+  gem 'capistrano-alice', git: 'git://github.com/mrtesla/capistrano-alice.git'
+end
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'

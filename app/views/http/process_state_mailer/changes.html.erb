@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1>Alice detected some process state changes</h1>
+
+    <% if @changes[:routers] %>
+      <h3>Routers</h3>
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>State</th>
+        </tr>
+        <% @changes[:routers][:up].each do |name| %>
+          <tr>
+            <td><%= name %></td>
+            <td>up</td>
+          </tr>
+        <% end %>
+        <% @changes[:routers][:down].each do |name| %>
+          <tr>
+            <td><%= name %></td>
+            <td>down</td>
+          </tr>
+        <% end %>
+        <% @changes[:routers][:still_down].each do |name| %>
+          <tr>
+            <td><%= name %></td>
+            <td>still down</td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
+
+    <% if @changes[:passers] %>
+      <h3>Passers</h3>
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>State</th>
+        </tr>
+        <% @changes[:passers][:up].each do |name| %>
+          <tr>
+            <td><%= name %></td>
+            <td>up</td>
+          </tr>
+        <% end %>
+        <% @changes[:passers][:down].each do |name| %>
+          <tr>
+            <td><%= name %></td>
+            <td>down</td>
+          </tr>
+        <% end %>
+        <% @changes[:passers][:still_down].each do |name| %>
+          <tr>
+            <td><%= name %></td>
+            <td>still down</td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
+
+    <% if @changes[:backends] %>
+      <h3>Backends</h3>
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>State</th>
+        </tr>
+        <% @changes[:backends][:up].each do |name| %>
+          <tr>
+            <td><%= name %></td>
+            <td>up</td>
+          </tr>
+        <% end %>
+        <% @changes[:backends][:down].each do |name| %>
+          <tr>
+            <td><%= name %></td>
+            <td>down</td>
+          </tr>
+        <% end %>
+        <% @changes[:backends][:still_down].each do |name| %>
+          <tr>
+            <td><%= name %></td>
+            <td>still down</td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
+
+  </body>
+</html>

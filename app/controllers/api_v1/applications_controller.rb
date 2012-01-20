@@ -16,9 +16,37 @@ class ApiV1::ApplicationsController < ApplicationController
       params[:rules].each do |(path, actions)|
         application.http_path_rules.create(path: path, actions: actions, static: true)
       end
-
-      Http::PathRule.send_to_redis_for_application(application)
     end
+
+    application.send_to_redis
+
+    render :json => { :status => 'OK' }
+  end
+
+  def maintenance_mode_on
+    application = Core::Application.where(name: params[:application_name]).first
+
+    unless application
+      render :json => { :status => 'FAIL' }, :status => 404
+      return
+    end
+
+    application.maintenance_mode = true
+    application.save
+
+    render :json => { :status => 'OK' }
+  end
+
+  def maintenance_mode_off
+    application = Core::Application.where(name: params[:application_name]).first
+
+    unless application
+      render :json => { :status => 'FAIL' }, :status => 404
+      return
+    end
+
+    application.maintenance_mode = false
+    application.save
 
     render :json => { :status => 'OK' }
   end

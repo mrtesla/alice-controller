@@ -1,8 +1,10 @@
 <%= semantic_form_for @core_application do |f| %>
   <%= f.semantic_errors %>
   <%= f.inputs do %>
-    <%= f.input :name, :hint => "The applications's name" %>
+    <%= f.input :name, :hint => "The applications's name",
+                :input_html => { :disabled => !@core_application.new_record? } %>
     <%= f.input :maintenance_mode %>
+    <%= f.input :suspended_mode %>
   <% end %>
   <%= f.buttons do %>
     <%= f.commit_button :button_html => {:class => "primary"} %>
