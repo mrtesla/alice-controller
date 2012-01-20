@@ -51,4 +51,17 @@ class ApiV1::ApplicationsController < ApplicationController
     render :json => { :status => 'OK' }
   end
 
+  def bust_cache
+    application = Core::Application.where(name: params[:application_name]).first
+
+    unless application
+      render :json => { :status => 'FAIL' }, :status => 404
+      return
+    end
+
+    application.bust_cache!
+
+    render :json => { :status => 'OK' }
+  end
+
 end

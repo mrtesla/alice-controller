@@ -54,6 +54,10 @@ Alice::Application.routes.draw do
       to: 'applications#maintenance_mode_off',
       constraints: { application_name: /.*/ }
 
+    delete 'applications/:application_name/cache',
+      to: 'applications#bust_cache',
+      constraints: { application_name: /.*/ }
+
   end
 
   mount FnordMetric.embedded, at: '/stats'
