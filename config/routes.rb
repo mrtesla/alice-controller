@@ -58,6 +58,10 @@ Alice::Application.routes.draw do
       to: 'applications#bust_cache',
       constraints: { application_name: /.*/ }
 
+    get 'machines/:machine/routers',
+      to: 'machines#routers',
+      constraints: { machine: /.*/ }
+
   end
 
   mount FnordMetric.embedded, at: '/stats'
