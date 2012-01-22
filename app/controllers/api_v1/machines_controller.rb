@@ -173,7 +173,7 @@ class ApiV1::MachinesController < ApplicationController
 
     # deliver email
     begin
-      sending_email = REDIS.setnx("alice.http|sending_email", 'true') == 1
+      sending_email = REDIS.setnx("alice.http|sending_email", 'true').to_i == 1
       return unless sending_email
 
       last_email = Time.at(REDIS.get("alice.http|last_process_changes_email").to_i)
