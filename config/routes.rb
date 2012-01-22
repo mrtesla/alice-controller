@@ -58,17 +58,17 @@ Alice::Application.routes.draw do
       to: 'applications#bust_cache',
       constraints: { application_name: /.*/ }
 
-    get 'machines/:machine/routers',
+    get 'machines/:machine_host/routers',
       to: 'machines#routers',
-      constraints: { machine: /.*/ }
+      constraints: { machine_host: /.*/ }
 
-    get 'machines/:machine/endpoints',
+    get 'machines/:machine_host/endpoints',
       to: 'machines#endpoints',
-      constraints: { machine: /.*/ }
+      constraints: { machine_host: /.*/ }
 
-    post 'machines/:machine/probe_report',
+    post 'machines/:machine_host/probe_report',
       to: 'machines#probe_report',
-      constraints: { machine: /.*/ }
+      constraints: { machine_host: /.*/ }
 
   end
 

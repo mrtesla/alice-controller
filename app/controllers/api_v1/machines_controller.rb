@@ -3,7 +3,7 @@ class ApiV1::MachinesController < ApplicationController
   layout false
 
   def routers
-    machine = Core::Machine.where(host: params[:machine]).first
+    machine = Core::Machine.where(host: params[:machine_host]).first
 
     unless machine
       render :json => { :status => 'FAIL' }, :status => 404
@@ -21,7 +21,7 @@ class ApiV1::MachinesController < ApplicationController
   end
 
   def endpoints
-    machine = Core::Machine.where(host: params[:machine]).first
+    machine = Core::Machine.where(host: params[:machine_host]).first
 
     unless machine
       render :json => { :status => 'FAIL' }, :status => 404
@@ -43,7 +43,7 @@ class ApiV1::MachinesController < ApplicationController
   end
 
   def probe_report
-    machine = Core::Machine.where(host: params[:machine]).first
+    machine = Core::Machine.where(host: params[:machine_host]).first
 
     unless machine
       render :json => { :status => 'FAIL' }, :status => 404
