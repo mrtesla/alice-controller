@@ -62,6 +62,14 @@ Alice::Application.routes.draw do
       to: 'machines#routers',
       constraints: { machine: /.*/ }
 
+    get 'machines/:machine/endpoints',
+      to: 'machines#endpoints',
+      constraints: { machine: /.*/ }
+
+    post 'machines/:machine/probe_report',
+      to: 'machines#probe_report',
+      constraints: { machine: /.*/ }
+
   end
 
   mount FnordMetric.embedded, at: '/stats'
