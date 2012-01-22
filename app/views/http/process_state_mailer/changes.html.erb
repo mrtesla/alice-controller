@@ -13,19 +13,19 @@
           <th>Name</th>
           <th>State</th>
         </tr>
-        <% @changes[:routers][:up].each do |name| %>
+        <% (@changes[:routers][:up] || []).each do |name| %>
           <tr>
             <td><%= name %></td>
             <td>up</td>
           </tr>
         <% end %>
-        <% @changes[:routers][:down].each do |name| %>
+        <% (@changes[:routers][:down] || []).each do |name| %>
           <tr>
             <td><%= name %></td>
             <td>down</td>
           </tr>
         <% end %>
-        <% @changes[:routers][:still_down].each do |name| %>
+        <% (@changes[:routers][:still_down] || []).each do |name| %>
           <tr>
             <td><%= name %></td>
             <td>still down</td>
@@ -41,19 +41,19 @@
           <th>Name</th>
           <th>State</th>
         </tr>
-        <% @changes[:passers][:up].each do |name| %>
+        <% (@changes[:passers][:up] || []).each do |name| %>
           <tr>
             <td><%= name %></td>
             <td>up</td>
           </tr>
         <% end %>
-        <% @changes[:passers][:down].each do |name| %>
+        <% (@changes[:passers][:down] || []).each do |name| %>
           <tr>
             <td><%= name %></td>
             <td>down</td>
           </tr>
         <% end %>
-        <% @changes[:passers][:still_down].each do |name| %>
+        <% (@changes[:passers][:still_down] || []).each do |name| %>
           <tr>
             <td><%= name %></td>
             <td>still down</td>
@@ -69,19 +69,19 @@
           <th>Name</th>
           <th>State</th>
         </tr>
-        <% @changes[:backends][:up].each do |name| %>
+        <% (@changes[:backends][:up] || []).each do |name| %>
           <tr>
             <td><%= name %></td>
             <td>up</td>
           </tr>
         <% end %>
-        <% @changes[:backends][:down].each do |name| %>
+        <% (@changes[:backends][:down] || []).each do |name| %>
           <tr>
             <td><%= name %></td>
             <td>down</td>
           </tr>
         <% end %>
-        <% @changes[:backends][:still_down].each do |name| %>
+        <% (@changes[:backends][:still_down] || []).each do |name| %>
           <tr>
             <td><%= name %></td>
             <td>still down</td>
