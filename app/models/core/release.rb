@@ -26,6 +26,11 @@ class Core::Release < ActiveRecord::Base
     dependent:   :destroy,
     as:          :owner
 
+  has_many :pluto_process_definitions,
+    class_name:  'Pluto::ProcessDefinition',
+    dependent:   :destroy,
+    as:          :owner
+
   default_scope order('number DESC')
 
   before_validation :set_next_number, :on => :create

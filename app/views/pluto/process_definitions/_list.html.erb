@@ -1,0 +1,31 @@
+<div class="span10">
+
+  <table class="zebra-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Concurrency</th>
+        <th>Command</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% pluto_process_definitions.each do |definition| %>
+        <tr>
+          <% if definition.owner_type == 'Core::Application' %>
+            <td><%= link_to definition.ui_name, [:edit, @core_application, definition] %></td>
+          <% else %>
+            <td><%= definition.ui_name %></td>
+          <% end %>
+          <td><%= definition.concurrency %></td>
+          <td><%= definition.command %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+</div>
+<div class="span4">
+  <%= link_to 'New Process Definition', [:new, @core_application, :pluto_process_definition], class: 'btn large success' %>
+</div>
+

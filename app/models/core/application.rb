@@ -33,6 +33,11 @@ class Core::Application < ActiveRecord::Base
     dependent:   :destroy,
     as:          :owner
 
+  has_many :pluto_process_definitions,
+    class_name:  'Pluto::ProcessDefinition',
+    dependent:   :destroy,
+    as:          :owner
+
   default_scope order(:name)
 
   after_save    :send_to_redis
@@ -104,4 +109,25 @@ class Core::Application < ActiveRecord::Base
     env.values.sort_by(&:name)
   end
 
+  def resolved_pluto_process_definitions(release=nil)
+    release = self.active_core_release unless release
+    definitions = {}
+
+    if release
+      release.pluto_process_definitions.each do |definition|
+        definitions[definition.name] = definition
+      end
+    end
+
+    self.pluto_process_definitions.each do |definition|
+      if definitions.key?(definition.name)
+        target = definitions[definition.name]
+        target.concurrency = definition.concurrency
+      else
+        definitions[definition.name] = definition
+      end
+    end
+
+    definitions.values.sort_by(&:name)
+  end
 end

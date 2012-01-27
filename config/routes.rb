@@ -1,5 +1,7 @@
 Alice::Application.routes.draw do
 
+  # namespace :pluto do resources :process_instances end
+
   root to: 'root#index'
 
   devise_for :users
@@ -27,6 +29,7 @@ Alice::Application.routes.draw do
 
     namespace :pluto do
       resources :environment_variables
+      resources :process_definitions
     end
   end
 

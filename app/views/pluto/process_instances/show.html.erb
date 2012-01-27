@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Pluto process defintion:</b>
+  <%= @pluto_process_instance.pluto_process_defintion_id %>
+</p>
+
+<p>
+  <b>Core machine:</b>
+  <%= @pluto_process_instance.core_machine_id %>
+</p>
+
+<p>
+  <b>Instance:</b>
+  <%= @pluto_process_instance.instance %>
+</p>
+
+<p>
+  <b>Running since:</b>
+  <%= @pluto_process_instance.running_since %>
+</p>
+
+<p>
+  <b>Down since:</b>
+  <%= @pluto_process_instance.down_since %>
+</p>
+
+<p>
+  <b>State:</b>
+  <%= @pluto_process_instance.state %>
+</p>
+
+<p>
+  <b>Last seen at:</b>
+  <%= @pluto_process_instance.last_seen_at %>
+</p>
+
+<p>
+  <b>Requested state:</b>
+  <%= @pluto_process_instance.requested_state %>
+</p>
+
+
+<%= link_to 'Edit', edit_pluto_process_instance_path(@pluto_process_instance) %> |
+<%= link_to 'Back', pluto_process_instances_path %>

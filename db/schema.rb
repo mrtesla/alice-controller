@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120114145158) do
+ActiveRecord::Schema.define(:version => 20120127105450) do
 
   create_table "core_applications", :force => true do |t|
     t.string   "name"
@@ -93,6 +93,29 @@ ActiveRecord::Schema.define(:version => 20120114145158) do
     t.string   "value"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "pluto_process_definitions", :force => true do |t|
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.string   "name"
+    t.integer  "concurrency", :default => 1
+    t.string   "command"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+  end
+
+  create_table "pluto_process_instances", :force => true do |t|
+    t.integer  "pluto_process_defintion_id"
+    t.integer  "core_machine_id"
+    t.integer  "instance"
+    t.datetime "running_since"
+    t.datetime "down_since"
+    t.string   "state"
+    t.datetime "last_seen_at"
+    t.string   "requested_state"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
   create_table "users", :force => true do |t|

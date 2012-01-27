@@ -21,6 +21,10 @@ class ApiV1::ReleasesController < ApplicationController
       (params[:environment] || {}).each do |name, value|
         release.pluto_environment_variables.create(name: name, value: value)
       end
+
+      (params[:processes] || {}).each do |name, command|
+        release.pluto_process_definitions.create(name: name, command: command)
+      end
     end
 
     application.send_to_redis

@@ -1,0 +1,10 @@
+<%= semantic_form_for [@core_application, @pluto_process_definition] do |f| %>
+  <%= f.semantic_errors %>
+  <%= f.inputs do %>
+    <%= f.input :name %>
+    <%= f.input :concurrency %>
+  <% end %>
+  <%= f.buttons do %>
+    <%= f.commit_button :button_html => {:class => "primary"} %>
+  <% end %>
+<% end %>
