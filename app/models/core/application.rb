@@ -100,11 +100,21 @@ class Core::Application < ActiveRecord::Base
       release.pluto_environment_variables.each do |var|
         env[var.name] = var
       end
+
+      env['ALICE_RELEASE'] = Pluto::EnvironmentVariable.new(
+        name:  'ALICE_RELEASE',
+        value: release.number.to_s
+      )
     end
 
     self.pluto_environment_variables.each do |var|
       env[var.name] = var
     end
+
+    env['ALICE_APPLICATION'] = Pluto::EnvironmentVariable.new(
+      name:  'ALICE_APPLICATION',
+      value: self.name
+    )
 
     env.values.sort_by(&:name)
   end
