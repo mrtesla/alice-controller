@@ -1,4 +1,9 @@
 <div class="page-header row with-tabs">
+  <%= breadcrumb([
+    ['Machines', core_machines_path],
+    [@core_machine.host, @core_machine]
+  ]) %>
+
   <h1>Machine: <%= @core_machine.host %></h1>
 
   <ul class="tabs" data-tabs="tabs">

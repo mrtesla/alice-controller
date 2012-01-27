@@ -1,2 +1,0 @@
-module Pluto::EnvironmentVariablesHelper
-end

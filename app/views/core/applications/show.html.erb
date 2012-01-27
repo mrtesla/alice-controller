@@ -1,4 +1,10 @@
 <div class="page-header row with-tabs">
+
+  <%= breadcrumb([
+    ['Applications', core_applications_path],
+    [@core_application.name, @core_application]
+  ]) %>
+
   <div class="row">
     <div class="span10">
       <h1>Application: <%= @core_application.name %></h1>
@@ -11,10 +17,20 @@
 
   <ul class="tabs" data-tabs="tabs">
     <li class="active"><a href="#releases">Releases</a></li>
-    <li><a href="#environment_variables">Environment Variables</a></li>
-    <li><a href="#domain_rules">Domain rules</a></li>
-    <li><a href="#path_rules">Path rules</a></li>
-    <li><a href="#backends">Backends</a></li>
+    <li class="dropdown" data-dropdown="dropdown">
+      <a href="#" class="dropdown-toggle">Pluto</a>
+      <ul class="dropdown-menu">
+        <li><a href="#environment_variables">Environment Variables</a></li>
+      </ul>
+    </li>
+    <li class="dropdown" data-dropdown="dropdown">
+      <a href="#" class="dropdown-toggle">HTTP</a>
+      <ul class="dropdown-menu">
+        <li><a href="#domain_rules">Domain rules</a></li>
+        <li><a href="#path_rules">Path rules</a></li>
+        <li><a href="#backends">Backends</a></li>
+      </ul>
+    </li>
   </ul>
 </div>
 

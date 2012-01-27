@@ -1,2 +1,0 @@
-module Http::RoutersHelper
-end
