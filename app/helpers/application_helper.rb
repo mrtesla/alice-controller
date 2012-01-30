@@ -26,7 +26,7 @@ module ApplicationHelper
       key   = 'info' if key == 'notice'
 
       if value
-        html << "<div class=\"alert-message #{key}\"><a class=\"close\" href=\"#\">&times;</a><p>#{h value}</p></div>"
+        html << "<div data-alert=\"alert\" class=\"alert-message #{key}\"><a class=\"close\" href=\"#\">&times;</a><p>#{h value}</p></div>"
       end
     end
 
