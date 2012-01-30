@@ -45,6 +45,24 @@ class Core::Release < ActiveRecord::Base
     "##{number}"
   end
 
+  def populate_process_instances
+    definitions = self.core_applications.resolved_pluto_process_definitions(self)
+    machines    = self.core_machines.all
+
+    definitions.each do |definition|
+      (1..definition.concurrency).each do |instance|
+        machine = machines.shift
+        machines.push machine
+        definition.pluto_process_instances.create(
+          core_machine:  machine,
+          instance:      instance,
+          running_since: nil,
+          down_since:    Time.at(0),
+          last_seen_at:  nil)
+      end
+    end
+  end
+
 private
 
   def set_next_number

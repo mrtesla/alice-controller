@@ -26,6 +26,8 @@ class ApiV1::ReleasesController < ApplicationController
       (params[:processes] || {}).each do |name, command|
         release.pluto_process_definitions.create(name: name, command: command)
       end
+
+      release.populate_process_instances
     end
 
     application.send_to_redis

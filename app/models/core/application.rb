@@ -132,6 +132,7 @@ class Core::Application < ActiveRecord::Base
     self.pluto_process_definitions.each do |definition|
       if definitions.key?(definition.name)
         target = definitions[definition.name]
+        target.parent      = definition
         target.concurrency = definition.concurrency
       else
         definitions[definition.name] = definition

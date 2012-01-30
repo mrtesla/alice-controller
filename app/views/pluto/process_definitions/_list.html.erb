@@ -12,8 +12,8 @@
     <tbody>
       <% pluto_process_definitions.each do |definition| %>
         <tr>
-          <% if definition.owner_type == 'Core::Application' %>
-            <td><%= link_to definition.ui_name, [:edit, @core_application, definition] %></td>
+          <% if definition.parent %>
+            <td><%= link_to definition.ui_name, [:edit, @core_application, definition.parent] %></td>
           <% else %>
             <td><%= definition.ui_name %></td>
           <% end %>
