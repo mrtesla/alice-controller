@@ -46,7 +46,10 @@ class Core::MachinesController < ApplicationController
 
     respond_to do |format|
       if @core_machine.save
-        format.html { redirect_to @core_machine, notice: 'Machine was successfully created.' }
+        format.html do
+          flash[:success] = 'Machine was successfully created.'
+          redirect_to @core_machine
+        end
         format.json { render json: @core_machine, status: :created, location: @core_machine }
       else
         format.html { render action: "new" }
@@ -62,7 +65,10 @@ class Core::MachinesController < ApplicationController
 
     respond_to do |format|
       if @core_machine.update_attributes(params[:core_machine])
-        format.html { redirect_to @core_machine, notice: 'Machine was successfully updated.' }
+        format.html do
+          flash[:success] = 'Machine was successfully updated.'
+          redirect_to @core_machine
+        end
         format.json { head :ok }
       else
         format.html { render action: "edit" }

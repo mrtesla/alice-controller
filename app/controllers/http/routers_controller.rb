@@ -46,7 +46,10 @@ class Http::RoutersController < ApplicationController
 
     respond_to do |format|
       if @http_router.save
-        format.html { redirect_to @http_router, notice: 'Router was successfully created.' }
+        format.html do
+          flash[:success] = 'Router was successfully created.'
+          redirect_to @http_router
+        end
         format.json { render json: @http_router, status: :created, location: @http_router }
       else
         format.html { render action: "new" }
@@ -64,7 +67,10 @@ class Http::RoutersController < ApplicationController
 
     respond_to do |format|
       if @http_router.update_attributes(params[:http_router])
-        format.html { redirect_to @http_router, notice: 'Router was successfully updated.' }
+        format.html do
+          flash[:success] = 'Router was successfully updated.'
+          redirect_to @http_router
+        end
         format.json { head :ok }
       else
         format.html { render action: "edit" }

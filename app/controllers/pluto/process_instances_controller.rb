@@ -44,7 +44,10 @@ class Pluto::ProcessInstancesController < ApplicationController
 
     respond_to do |format|
       if @pluto_process_instance.save
-        format.html { redirect_to @pluto_process_instance, notice: 'Process instance was successfully created.' }
+        format.html do
+          flash[:success] = 'Process instance was successfully created.'
+          redirect_to @pluto_process_instance
+        end
         format.json { render json: @pluto_process_instance, status: :created, location: @pluto_process_instance }
       else
         format.html { render action: "new" }
@@ -60,7 +63,10 @@ class Pluto::ProcessInstancesController < ApplicationController
 
     respond_to do |format|
       if @pluto_process_instance.update_attributes(params[:pluto_process_instance])
-        format.html { redirect_to @pluto_process_instance, notice: 'Process instance was successfully updated.' }
+        format.html do
+          flash[:success] = 'Process instance was successfully updated.'
+          redirect_to @pluto_process_instance
+        end
         format.json { head :ok }
       else
         format.html { render action: "edit" }

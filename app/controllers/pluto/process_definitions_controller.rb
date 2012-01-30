@@ -45,7 +45,10 @@ class Pluto::ProcessDefinitionsController < ApplicationController
 
     respond_to do |format|
       if @pluto_process_definition.save
-        format.html { redirect_to @core_application, notice: 'Process definition was successfully created.' }
+        format.html do
+          flash[:success] = 'Process definition was successfully created.'
+          redirect_to @core_application
+        end
         format.json { render json: @pluto_process_definition, status: :created, location: @pluto_process_definition }
       else
         format.html { render action: "new" }
@@ -61,7 +64,10 @@ class Pluto::ProcessDefinitionsController < ApplicationController
 
     respond_to do |format|
       if @pluto_process_definition.update_attributes(params[:pluto_process_definition])
-        format.html { redirect_to @core_application, notice: 'Process definition was successfully updated.' }
+        format.html do
+          flash[:success] = 'Process definition was successfully updated.'
+          redirect_to @core_application
+        end
         format.json { head :ok }
       else
         format.html { render action: "edit" }

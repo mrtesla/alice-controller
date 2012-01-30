@@ -45,7 +45,10 @@ class Pluto::EnvironmentVariablesController < ApplicationController
 
     respond_to do |format|
       if @pluto_environment_variable.save
-        format.html { redirect_to @core_application, notice: 'Environment variable was successfully created.' }
+        format.html do
+          flash[:success] = 'Environment variable was successfully created.'
+          redirect_to @core_application
+        end
         format.json { render json: @pluto_environment_variable, status: :created, location: @pluto_environment_variable }
       else
         format.html { render action: "new" }
@@ -61,7 +64,10 @@ class Pluto::EnvironmentVariablesController < ApplicationController
 
     respond_to do |format|
       if @pluto_environment_variable.update_attributes(params[:pluto_environment_variable])
-        format.html { redirect_to @core_application, notice: 'Environment variable was successfully updated.' }
+        format.html do
+          flash[:success] = 'Environment variable was successfully updated.'
+          redirect_to @core_application
+        end
         format.json { head :ok }
       else
         format.html { render action: "edit" }

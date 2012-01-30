@@ -53,7 +53,10 @@ class Http::DomainRulesController < ApplicationController
 
     respond_to do |format|
       if @http_domain_rule.save
-        format.html { redirect_to @core_application, notice: 'Domain rule was successfully created.' }
+        format.html do
+          flash[:success] = 'Domain rule was successfully created.'
+          redirect_to @core_application
+        end
         format.json { render json: @http_domain_rule, status: :created, location: @http_domain_rule }
       else
         format.html { render action: "new" }
@@ -74,7 +77,10 @@ class Http::DomainRulesController < ApplicationController
 
     respond_to do |format|
       if @http_domain_rule.update_attributes(params[:http_domain_rule])
-        format.html { redirect_to @core_application, notice: 'Domain rule was successfully updated.' }
+        format.html do
+          flash[:success] = 'Domain rule was successfully updated.'
+          redirect_to @core_application
+        end
         format.json { head :ok }
       else
         format.html { render action: "edit" }

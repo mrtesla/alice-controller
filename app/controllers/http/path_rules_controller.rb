@@ -53,7 +53,10 @@ class Http::PathRulesController < ApplicationController
     respond_to do |format|
       if @http_path_rule.save
         @core_application.send_to_redis
-        format.html { redirect_to @core_application, notice: 'Path rule was successfully created.' }
+        format.html do
+          flash[:success] = 'Path rule was successfully created.'
+          redirect_to @core_application
+        end
         format.json { render json: @http_path_rule, status: :created, location: @http_path_rule }
       else
         format.html { render action: "new" }
@@ -75,7 +78,10 @@ class Http::PathRulesController < ApplicationController
     respond_to do |format|
       if @http_path_rule.update_attributes(params[:http_path_rule])
         @core_application.send_to_redis
-        format.html { redirect_to @core_application, notice: 'Path rule was successfully updated.' }
+        format.html do
+          flash[:success] = 'Path rule was successfully updated.'
+          redirect_to @core_application
+        end
         format.json { head :ok }
       else
         format.html { render action: "edit" }

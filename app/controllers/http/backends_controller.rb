@@ -46,7 +46,10 @@ class Http::BackendsController < ApplicationController
 
     respond_to do |format|
       if @http_backend.save
-        format.html { redirect_to @http_backend, notice: 'Backend was successfully created.' }
+        format.html do
+          flash[:success] = 'Backend was successfully created.'
+          redirect_to @http_backend
+        end
         format.json { render json: @http_backend, status: :created, location: @http_backend }
       else
         format.html { render action: "new" }
@@ -64,7 +67,10 @@ class Http::BackendsController < ApplicationController
 
     respond_to do |format|
       if @http_backend.update_attributes(params[:http_backend])
-        format.html { redirect_to @http_backend, notice: 'Backend was successfully updated.' }
+        format.html do
+          flash[:success] = 'Backend was successfully updated.'
+          redirect_to @http_backend
+        end
         format.json { head :ok }
       else
         format.html { render action: "edit" }

@@ -46,7 +46,10 @@ class Core::ReleasesController < ApplicationController
 
     respond_to do |format|
       if @core_release.save
-        format.html { redirect_to @core_release, notice: 'Release was successfully created.' }
+        format.html do
+          flash[:success] = 'Release was successfully created.'
+          redirect_to @core_release
+        end
         format.json { render json: @core_release, status: :created, location: @core_release }
       else
         format.html { render action: "new" }
@@ -62,7 +65,10 @@ class Core::ReleasesController < ApplicationController
 
     respond_to do |format|
       if @core_release.update_attributes(params[:core_release])
-        format.html { redirect_to @core_release, notice: 'Release was successfully updated.' }
+        format.html do
+          flash[:success] = 'Release was successfully updated.'
+          redirect_to @core_release
+        end
         format.json { head :ok }
       else
         format.html { render action: "edit" }

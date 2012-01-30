@@ -46,7 +46,10 @@ class Http::PassersController < ApplicationController
 
     respond_to do |format|
       if @http_passer.save
-        format.html { redirect_to @http_passer, notice: 'Passer was successfully created.' }
+        format.html do
+          flash[:success] = 'Passer was successfully created.'
+          redirect_to @http_passer
+        end
         format.json { render json: @http_passer, status: :created, location: @http_passer }
       else
         format.html { render action: "new" }
@@ -64,7 +67,10 @@ class Http::PassersController < ApplicationController
 
     respond_to do |format|
       if @http_passer.update_attributes(params[:http_passer])
-        format.html { redirect_to @http_passer, notice: 'Passer was successfully updated.' }
+        format.html do
+          flash[:success] = 'Passer was successfully updated.'
+          redirect_to @http_passer
+        end
         format.json { head :ok }
       else
         format.html { render action: "edit" }

@@ -46,7 +46,10 @@ class Core::ApplicationsController < ApplicationController
 
     respond_to do |format|
       if @core_application.save
-        format.html { redirect_to @core_application, notice: 'Application was successfully created.' }
+        format.html do
+          flash[:success] = 'Application was successfully created.'
+          redirect_to @core_application
+        end
         format.json { render json: @core_application, status: :created, location: @core_application }
       else
         format.html { render action: "new" }
@@ -62,7 +65,10 @@ class Core::ApplicationsController < ApplicationController
 
     respond_to do |format|
       if @core_application.update_attributes(params[:core_application])
-        format.html { redirect_to @core_application, notice: 'Application was successfully updated.' }
+        format.html do
+          flash[:success] = 'Application was successfully updated.'
+          redirect_to @core_application
+        end
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -78,7 +84,10 @@ class Core::ApplicationsController < ApplicationController
     @core_application.bust_cache!
 
     respond_to do |format|
-      format.html { redirect_to @core_application, notice: 'Cache was successfully busted.' }
+      format.html do
+        flash[:success] = 'Cache was successfully busted.'
+        redirect_to @core_application
+      end
       format.json { head :ok }
     end
   end
