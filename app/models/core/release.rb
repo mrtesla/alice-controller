@@ -48,19 +48,26 @@ class Core::Release < ActiveRecord::Base
   def populate_process_instances
     definitions = self.core_application.resolved_pluto_process_definitions(self)
     machines    = self.core_machines.all
+    instances   = Pluto::ProcessInstance.where(:pluto_process_definition_id => definitions.map(&:id)).all
+    instances   = instances.index_by(&:ui_name)
 
     definitions.each do |definition|
       (1..definition.concurrency).each do |instance|
         machine = machines.shift
         machines.push machine
-        definition.pluto_process_instances.create(
+
+        instance = definition.pluto_process_instances.build(
           core_machine:  machine,
           instance:      instance,
           running_since: nil,
           down_since:    Time.at(0),
           last_seen_at:  nil)
+
+        instances.delete instance.ui_name
       end
     end
+
+    instances.values.map(&:destroy)
   end
 
 private
