@@ -17,7 +17,10 @@ class Core::Release < ActiveRecord::Base
     dependent:   :nullify
 
   has_and_belongs_to_many :core_machines,
-    class_name:  'Core::Machine'
+    class_name:              'Core::Machine',
+    join_table:              'core_machines_core_releases',
+    foreign_key:             'core_release_id',
+    association_foreign_key: 'core_machine_id'
 
   has_many :http_path_rules,
     class_name:  'Http::PathRule',

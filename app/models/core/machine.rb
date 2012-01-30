@@ -5,7 +5,10 @@ class Core::Machine < ActiveRecord::Base
     uniqueness: true
 
   has_and_belongs_to_many :core_releases,
-    class_name:  'Core::Release'
+    class_name:              'Core::Release',
+    join_table:              'core_machines_core_releases',
+    foreign_key:             'core_machine_id',
+    association_foreign_key: 'core_release_id'
 
   has_many :http_routers,
     class_name:  'Http::Router',
