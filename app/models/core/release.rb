@@ -46,7 +46,7 @@ class Core::Release < ActiveRecord::Base
   end
 
   def populate_process_instances
-    definitions = self.core_applications.resolved_pluto_process_definitions(self)
+    definitions = self.core_application.resolved_pluto_process_definitions(self)
     machines    = self.core_machines.all
 
     definitions.each do |definition|
