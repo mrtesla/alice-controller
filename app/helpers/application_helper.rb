@@ -18,4 +18,20 @@ module ApplicationHelper
     raw "<ul class=\"breadcrumb\">" + items.join(' ') + "</ul>"
   end
 
+  def flash_messages
+    html = ""
+
+    %w( success error warning notice ).each do |key|
+      value = flash[key.to_sym]
+      key   = 'info' if key == 'notice'
+
+      html << "<div class=\"alert-message #{key}\">
+        <a class=\"close\" href=\"#\">×</a>
+        <p>#{h value}</p>
+      </div>"
+    end
+
+    raw html
+  end
+
 end

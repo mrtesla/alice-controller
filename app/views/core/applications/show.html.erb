@@ -5,6 +5,8 @@
     [@core_application.name, @core_application]
   ]) %>
 
+  <%= flash_messages %>
+
   <div class="row">
     <div class="span10">
       <h1>Application: <%= @core_application.name %></h1>
@@ -80,6 +82,3 @@
   </div>
 
 </div>
-
-
-<p id="notice"><%= notice %></p>

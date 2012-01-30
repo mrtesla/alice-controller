@@ -4,6 +4,8 @@
     [@core_machine.host, @core_machine]
   ]) %>
 
+  <%= flash_messages %>
+
   <h1>Machine: <%= @core_machine.host %></h1>
 
   <ul class="tabs" data-tabs="tabs">
@@ -28,8 +30,3 @@
   </div>
 
 </div>
-
-
-<p id="notice"><%= notice %></p>
-
-
