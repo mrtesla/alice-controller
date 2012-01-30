@@ -60,7 +60,7 @@ class Pluto::ProcessInstance < ActiveRecord::Base
     task    = [application.name, definition.name, self.instance].join(':')
     command = definition.command
 
-    ports = command.scan(/[$]([A-Z0-9_]+_)?PORT\b/).map do |match|
+    ports = command.scan(/[$](?:[A-Z0-9_]+_)?PORT\b/).map do |match|
       name = match[1..-1]
       type = name.sub(/_PORT$/, '').downcase
       port = nil
