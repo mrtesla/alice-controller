@@ -75,6 +75,6 @@ Alice::Application.routes.draw do
 
   end
 
-  mount FnordMetric.embedded, at: '/stats'
+  # mount FnordMetric.embedded, at: '/stats'
 
 end

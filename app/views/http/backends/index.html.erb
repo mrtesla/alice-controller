@@ -3,4 +3,5 @@
 </div>
 <div class="row">
   <%= render 'list', http_backends: @http_backends %>
+  <div class="span10"><%= paginate @http_backends %></div>
 </div>

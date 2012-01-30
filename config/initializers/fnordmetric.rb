@@ -1,1 +1,1 @@
-require 'stats/stats'
+# require 'stats/stats'

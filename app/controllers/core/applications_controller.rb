@@ -4,10 +4,10 @@ class Core::ApplicationsController < ApplicationController
   # GET /core/applications
   # GET /core/applications.json
   def index
-    @core_applications = Core::Application.all
+    @core_applications = Core::Application.scoped
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html { @core_applications = @core_applications.page(params[:page]) }
       format.json { render json: @core_applications }
     end
   end

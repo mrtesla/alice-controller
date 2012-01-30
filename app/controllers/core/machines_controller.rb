@@ -4,10 +4,10 @@ class Core::MachinesController < ApplicationController
   # GET /core/machines
   # GET /core/machines.json
   def index
-    @core_machines = Core::Machine.all
+    @core_machines = Core::Machine.scoped
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html { @core_machines = @core_machines.page(params[:page]) }
       format.json { render json: @core_machines }
     end
   end

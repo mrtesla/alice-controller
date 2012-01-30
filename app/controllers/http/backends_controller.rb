@@ -4,10 +4,10 @@ class Http::BackendsController < ApplicationController
   # GET /http/backends
   # GET /http/backends.json
   def index
-    @http_backends = Http::Backend.all
+    @http_backends = Http::Backend.scoped
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html { @http_backends = @http_backends.page(params[:page]) }
       format.json { render json: @http_backends }
     end
   end

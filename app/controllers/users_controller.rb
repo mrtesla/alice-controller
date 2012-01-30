@@ -4,10 +4,10 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    @users = User.scoped
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html { @users = @users.page(params[:page]) }
       format.json { render json: @users }
     end
   end

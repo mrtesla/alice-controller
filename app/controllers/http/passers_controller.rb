@@ -4,10 +4,10 @@ class Http::PassersController < ApplicationController
   # GET /http/passers
   # GET /http/passers.json
   def index
-    @http_passers = Http::Passer.all
+    @http_passers = Http::Passer.scoped
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html { @http_passers = @http_passers.page(params[:page]) }
       format.json { render json: @http_passers }
     end
   end

@@ -4,10 +4,10 @@ class Http::RoutersController < ApplicationController
   # GET /http/routers
   # GET /http/routers.json
   def index
-    @http_routers = Http::Router.all
+    @http_routers = Http::Router.scoped
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html { @http_routers = @http_routers.page(params[:page]) }
       format.json { render json: @http_routers }
     end
   end

@@ -7,9 +7,10 @@ gem 'devise'
 
 gem 'redis'
 gem 'thin'
-gem 'fnordmetric', git: 'git://github.com/paulasmuth/fnordmetric.git'
+# gem 'fnordmetric', git: 'git://github.com/paulasmuth/fnordmetric.git'
 # gem 'fnordmetric', git: 'git://github.com/fd/fnordmetric.git', ref: 'topics/middleware'
 # gem 'fnordmetric', path: ENV['HOME'] + '/Projects/fnordmetric'
+gem 'kaminari'
 gem "airbrake"
 
 # Gems used only for assets and not required
