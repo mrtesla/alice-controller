@@ -25,10 +25,9 @@ module ApplicationHelper
       value = flash[key.to_sym]
       key   = 'info' if key == 'notice'
 
-      html << "<div class=\"alert-message #{key}\">
-        <a class=\"close\" href=\"#\">×</a>
-        <p>#{h value}</p>
-      </div>"
+      if value
+        html << "<div class=\"alert-message #{key}\"><a class=\"close\" href=\"#\">&times;</a><p>#{h value}</p></div>"
+      end
     end
 
     raw html
