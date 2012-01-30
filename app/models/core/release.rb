@@ -63,9 +63,8 @@ class Core::Release < ActiveRecord::Base
           down_since:    Time.at(0),
           last_seen_at:  nil)
 
-        if instance.save
-          instances.delete instance.ui_name
-        end
+        instance.save
+        instances.delete instance.ui_name
       end
     end
 
