@@ -27,6 +27,7 @@ class ApiV1::ReleasesController < ApplicationController
         release.pluto_process_definitions.create(name: name, command: command)
       end
 
+      release.reload
       release.populate_process_instances
     end
 
