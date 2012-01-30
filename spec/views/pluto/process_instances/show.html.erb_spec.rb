@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "pluto_process_instances/show" do
   before(:each) do
     @process_instance = assign(:process_instance, stub_model(Pluto::ProcessInstance,
-      :pluto_process_defintion_id => 1,
+      :pluto_process_definition_id => 1,
       :core_machine_id => 1,
       :instance => 1,
       :state => "State",

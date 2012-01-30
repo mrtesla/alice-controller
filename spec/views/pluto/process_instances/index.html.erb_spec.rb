@@ -4,14 +4,14 @@ describe "pluto_process_instances/index" do
   before(:each) do
     assign(:pluto_process_instances, [
       stub_model(Pluto::ProcessInstance,
-        :pluto_process_defintion_id => 1,
+        :pluto_process_definition_id => 1,
         :core_machine_id => 1,
         :instance => 1,
         :state => "State",
         :requested_state => "Requested State"
       ),
       stub_model(Pluto::ProcessInstance,
-        :pluto_process_defintion_id => 1,
+        :pluto_process_definition_id => 1,
         :core_machine_id => 1,
         :instance => 1,
         :state => "State",

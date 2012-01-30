@@ -69,6 +69,10 @@ Alice::Application.routes.draw do
       to: 'machines#endpoints',
       constraints: { machine_host: /.*/ }
 
+    get 'machines/:machine_host/tasks',
+      to: 'machines#tasks',
+      constraints: { machine_host: /.*/ }
+
     post 'machines/:machine_host/probe_report',
       to: 'machines#probe_report',
       constraints: { machine_host: /.*/ }

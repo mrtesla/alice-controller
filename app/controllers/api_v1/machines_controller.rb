@@ -232,4 +232,15 @@ class ApiV1::MachinesController < ApplicationController
     end
   end
 
+  def tasks
+    machine = Core::Machine.where(host: params[:machine_host]).first
+
+    unless machine
+      render :json => { :status => 'FAIL' }, :status => 404
+      return
+    end
+
+    render :json => machine.pluto_process_instances
+  end
+
 end

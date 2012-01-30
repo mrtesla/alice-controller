@@ -3,7 +3,7 @@ class Pluto::ProcessInstance < ActiveRecord::Base
   # How ProcessInstances are managed:
   #
   # 1.  Capistrano deploys a new release and registers the processes and machines associated with the release.
-  # 2.  Alice analyses the environment and process defintions and builds a list of process instances.
+  # 2.  Alice analyses the environment and process definitions and builds a list of process instances.
   #      The instances are (currently) evenly distributed across all machines which have the new releases.
   # 3.  Capistrano activates the new releases.
   # 4.  Alice pings a the associated machines (including the machines of the deactivated release).
@@ -46,6 +46,50 @@ class Pluto::ProcessInstance < ActiveRecord::Base
       'up'
     else
       'down'
+    end
+  end
+
+  def as_json(*)
+    definition  = self.pluto_process_definition
+    release     = definition.owner
+    application = release.core_application
+    machine     = self.core_machine
+    environment = application.resolved_pluto_environment_variables(release)
+    environment = environment.index_by(&:name)
+
+    task    = [application.name, definition.name, self.instance].join(':')
+    command = definition.command
+
+    ports = command.scan(/[$]([A-Z0-9_]+_)?PORT\b/).map do |match|
+      name = match[1..-1]
+      type = name.sub(/_PORT$/, '').downcase
+      port = nil
+
+      if type == 'port' or type == ''
+        type = 'http'
+      end
+
+      if environment.key?(name)
+        port = environment[name].value.to_i
+        environment.delete(name)
+      end
+
+      { "name" => name, "type" => type }.tap do |p|
+        p["port"] = port if port
+      end
+    end
+
+    env = environment.values.map do |var|
+      { "name" => var.name, "value" => var.value }
+    end
+
+    {
+      "task"    => task,
+      "command" => command,
+      "ports"   => ports,
+      "env"     => env
+    }.tap do |task|
+      task["etag"] = Digest::SHA1.hexdigest(task.inspect)
     end
   end
 
