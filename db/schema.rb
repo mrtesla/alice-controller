@@ -11,126 +11,131 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120127105450) do
+ActiveRecord::Schema.define(:version => 20120130212152) do
 
   create_table "core_applications", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "maintenance_mode",       :default => false
-    t.boolean  "suspended_mode",         :default => false
-    t.integer  "active_core_release_id"
+    t.string    "name"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
+    t.boolean   "maintenance_mode",       :default => false
+    t.boolean   "suspended_mode",         :default => false
+    t.integer   "active_core_release_id"
   end
 
   create_table "core_machines", :force => true do |t|
-    t.string   "host"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string    "host"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
+  end
+
+  create_table "core_machines_core_releases", :id => false, :force => true do |t|
+    t.integer "core_machine_id"
+    t.integer "core_release_id"
   end
 
   create_table "core_releases", :force => true do |t|
-    t.integer  "core_application_id"
-    t.integer  "number"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer   "core_application_id"
+    t.integer   "number"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   create_table "http_backends", :force => true do |t|
-    t.integer  "core_machine_id"
-    t.integer  "core_application_id"
-    t.string   "process"
-    t.integer  "instance"
-    t.integer  "port"
-    t.datetime "last_seen_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "down_since"
-    t.string   "error_message"
+    t.integer   "core_machine_id"
+    t.integer   "core_application_id"
+    t.string    "process"
+    t.integer   "instance"
+    t.integer   "port"
+    t.timestamp "last_seen_at"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
+    t.timestamp "down_since"
+    t.string    "error_message"
   end
 
   create_table "http_domain_rules", :force => true do |t|
-    t.integer  "core_application_id"
-    t.string   "domain"
-    t.text     "actions"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer   "core_application_id"
+    t.string    "domain"
+    t.text      "actions"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   create_table "http_passers", :force => true do |t|
-    t.integer  "core_machine_id"
-    t.integer  "port"
-    t.datetime "last_seen_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "down_since"
-    t.string   "error_message"
+    t.integer   "core_machine_id"
+    t.integer   "port"
+    t.timestamp "last_seen_at"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
+    t.timestamp "down_since"
+    t.string    "error_message"
   end
 
   create_table "http_path_rules", :force => true do |t|
-    t.integer  "owner_id"
-    t.string   "path"
-    t.text     "actions"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "static",     :default => false
-    t.string   "owner_type"
+    t.integer   "owner_id"
+    t.string    "path"
+    t.text      "actions"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
+    t.boolean   "static",     :default => false
+    t.string    "owner_type"
   end
 
   create_table "http_routers", :force => true do |t|
-    t.integer  "core_machine_id"
-    t.integer  "port"
-    t.datetime "last_seen_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "down_since"
-    t.string   "error_message"
+    t.integer   "core_machine_id"
+    t.integer   "port"
+    t.timestamp "last_seen_at"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
+    t.timestamp "down_since"
+    t.string    "error_message"
   end
 
   create_table "pluto_environment_variables", :force => true do |t|
-    t.integer  "owner_id"
-    t.string   "owner_type"
-    t.string   "name"
-    t.string   "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer   "owner_id"
+    t.string    "owner_type"
+    t.string    "name"
+    t.string    "value"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   create_table "pluto_process_definitions", :force => true do |t|
-    t.integer  "owner_id"
-    t.string   "owner_type"
-    t.string   "name"
-    t.integer  "concurrency", :default => 1
-    t.string   "command"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.integer   "owner_id"
+    t.string    "owner_type"
+    t.string    "name"
+    t.integer   "concurrency", :default => 1
+    t.string    "command"
+    t.timestamp "created_at",                 :null => false
+    t.timestamp "updated_at",                 :null => false
   end
 
   create_table "pluto_process_instances", :force => true do |t|
-    t.integer  "pluto_process_defintion_id"
-    t.integer  "core_machine_id"
-    t.integer  "instance"
-    t.datetime "running_since"
-    t.datetime "down_since"
-    t.string   "state"
-    t.datetime "last_seen_at"
-    t.string   "requested_state"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.integer   "pluto_process_defintion_id"
+    t.integer   "core_machine_id"
+    t.integer   "instance"
+    t.timestamp "running_since"
+    t.timestamp "down_since"
+    t.string    "state"
+    t.timestamp "last_seen_at"
+    t.string    "requested_state"
+    t.timestamp "created_at",                 :null => false
+    t.timestamp "updated_at",                 :null => false
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                                 :default => "", :null => false
-    t.string   "encrypted_password",     :limit => 128, :default => "", :null => false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                         :default => 0
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string    "email",                                                :null => false
+    t.string    "encrypted_password",     :limit => 128,                :null => false
+    t.string    "reset_password_token"
+    t.timestamp "reset_password_sent_at"
+    t.timestamp "remember_created_at"
+    t.integer   "sign_in_count",                         :default => 0
+    t.timestamp "current_sign_in_at"
+    t.timestamp "last_sign_in_at"
+    t.string    "current_sign_in_ip"
+    t.string    "last_sign_in_ip"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

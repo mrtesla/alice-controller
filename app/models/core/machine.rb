@@ -4,6 +4,9 @@ class Core::Machine < ActiveRecord::Base
     presence:   true,
     uniqueness: true
 
+  has_and_belongs_to_many :core_releases,
+    class_name:  'Core::Release'
+
   has_many :http_routers,
     class_name:  'Http::Router',
     foreign_key: 'core_machine_id',

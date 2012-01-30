@@ -16,6 +16,9 @@ class Core::Release < ActiveRecord::Base
     foreign_key: 'active_core_release_id',
     dependent:   :nullify
 
+  has_and_belongs_to_many :core_machines,
+    class_name:  'Core::Machine'
+
   has_many :http_path_rules,
     class_name:  'Http::PathRule',
     dependent:   :destroy,
