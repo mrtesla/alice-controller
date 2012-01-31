@@ -95,6 +95,14 @@ class Pluto::ProcessInstance < ActiveRecord::Base
       "ports"   => ports,
       "env"     => env
     }.tap do |task|
+      if environment['ALICE_DEPLOY_REF']
+        task["deploy_reference"] = environment['ALICE_DEPLOY_REF'].value
+      end
+
+      if environment['ALICE_REPO_REF']
+        task["repository_reference"] = environment['ALICE_REPO_REF'].value
+      end
+
       task["etag"] = Digest::SHA1.hexdigest(task.inspect)
     end
   end

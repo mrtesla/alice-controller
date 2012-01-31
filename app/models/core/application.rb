@@ -105,6 +105,20 @@ class Core::Application < ActiveRecord::Base
         name:  'ALICE_RELEASE',
         value: release.number.to_s
       )
+
+      if release.deploy_reference
+        env['ALICE_DEPLOY_REF'] = Pluto::EnvironmentVariable.new(
+          name:  'ALICE_DEPLOY_REF',
+          value: release.deploy_reference
+        )
+      end
+
+      if release.repository_reference
+        env['ALICE_REPO_REF'] = Pluto::EnvironmentVariable.new(
+          name:  'ALICE_REPO_REF',
+          value: release.repository_reference
+        )
+      end
     end
 
     self.pluto_environment_variables.each do |var|

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120130223826) do
+ActiveRecord::Schema.define(:version => 20120131070315) do
 
   create_table "core_applications", :force => true do |t|
     t.string    "name"
@@ -38,6 +38,8 @@ ActiveRecord::Schema.define(:version => 20120130223826) do
     t.integer   "number"
     t.timestamp "created_at"
     t.timestamp "updated_at"
+    t.string    "deploy_reference"
+    t.string    "repository_reference"
   end
 
   create_table "http_backends", :force => true do |t|

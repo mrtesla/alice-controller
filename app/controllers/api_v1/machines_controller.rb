@@ -240,6 +240,12 @@ class ApiV1::MachinesController < ApplicationController
       return
     end
 
+    response.etag = [machine.updated_at.to_i]
+    if request.fresh?(response)
+      head :not_modified
+      return
+    end
+
     applications = Core::Application.all
     releases     = Core::Release.where(id: applications.map(&:active_core_release_id)).all
     definitions  = Pluto::ProcessDefinition.where(owner_type: 'Core::Release', owner_id: releases.map(&:id)).all

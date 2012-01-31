@@ -14,6 +14,8 @@ class ApiV1::ReleasesController < ApplicationController
     ActiveRecord::Base.transaction do
       release = application.core_releases.create!
       release.core_machines = Core::Machine.where(:host => (params[:machines] || [])).all
+      release.deploy_reference     = params[:deploy_reference]
+      release.repository_reference = params[:repository_reference]
 
       (params[:path_rules] || []).each do |(path, actions)|
         release.http_path_rules.create(path: path, actions: actions)
