@@ -1,0 +1,19 @@
+{
+  "author": "Simon Menke <simon.menke@gmail.com>",
+  "name": "alice-controller",
+  "description": "Alice controller application (rails)",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mrtesla/alice-controller.git"
+  },
+  "engines": {
+    "node": "~0.6.9"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "optionalDependencies": {}
+  "scripts" : {
+    "install" : "bash script/install.sh"
+  }
+}
