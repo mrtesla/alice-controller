@@ -12,7 +12,7 @@
   },
   "dependencies": {},
   "devDependencies": {},
-  "optionalDependencies": {}
+  "optionalDependencies": {},
   "scripts" : {
     "install" : "bash script/install.sh"
   }
