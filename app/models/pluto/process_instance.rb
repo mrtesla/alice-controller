@@ -57,7 +57,7 @@ class Pluto::ProcessInstance < ActiveRecord::Base
     environment = application.resolved_pluto_environment_variables(release)
     environment = environment.index_by(&:name)
 
-    task    = [application.name, definition.name, self.instance].join(':')
+    task    = [application.name, release.number, definition.name, self.instance].join(':')
     command = definition.command
 
     ports = command.scan(/[$](?:[A-Z0-9_]+_)?PORT\b/).map do |match|
@@ -82,6 +82,12 @@ class Pluto::ProcessInstance < ActiveRecord::Base
     env = environment.values.map do |var|
       { "name" => var.name, "value" => var.value }
     end
+
+    env.concat [
+      { "name" => "ALICE_PROCESS",  "value" => definition.name },
+      { "name" => "ALICE_INSTANCE", "value" => self.instance   },
+      { "name" => "ALICE_MACHINE",  "value" => machine.host    }
+    ]
 
     {
       "task"    => task,
