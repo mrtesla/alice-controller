@@ -6,9 +6,9 @@ export rvm_pretty_print=0
 
 . ./.rvmrc
 
-bundle install                \
-  --gemfile Gemfile           \
-  --path    vendor/bundle     \
-  --deployment                \
-  --quiet                     \
-  --without development test
+bundle install                          \
+  --gemfile     Gemfile                 \
+  --path        vendor/bundle           \
+  --deployment                          \
+  --quiet                               \
+  --without     development test deploy
