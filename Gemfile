@@ -12,7 +12,7 @@ gem 'thin'
 # gem 'fnordmetric', path: ENV['HOME'] + '/Projects/fnordmetric'
 gem 'kaminari'
 gem "airbrake"
-gem "chef", require: false
+gem "chef", require: false, git: 'git://github.com/opscode/chef.git', ref: '0.10.8'
 
 # Gems used only for assets and not required
 # in production environments by default.
