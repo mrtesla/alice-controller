@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/mrtesla/capistrano-alice.git
-  revision: 026e1beb40ea9916c19c5ea88014f05f1316d47e
+  revision: 62bccb1b151dbfbef6d503f22a09d6e597738f23
   specs:
     capistrano-alice (0.0.3)
       yajl-ruby
