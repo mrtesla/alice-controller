@@ -12,6 +12,7 @@ gem 'thin'
 # gem 'fnordmetric', path: ENV['HOME'] + '/Projects/fnordmetric'
 gem 'kaminari'
 gem "airbrake"
+gem "chef", require: false
 
 # Gems used only for assets and not required
 # in production environments by default.
