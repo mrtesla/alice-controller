@@ -13,7 +13,7 @@ module Alice::Chef
     end
 
     def update
-      application_key = Digest::SHA1.hexdigest(@release.application.name)
+      application_key = Digest::SHA1.hexdigest(@release.core_application.name)
 
       definitions   = Pluto::ProcessDefinition.where(owner_type: 'Core::Release', owner_id: @releases.id).all
       new_processes = Pluto::ProcessInstance.where(pluto_process_definition_id: definitions.map(&:id)).all
