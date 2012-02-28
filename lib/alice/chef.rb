@@ -24,10 +24,12 @@ module Alice::Chef
         new_process = new_processes.delete(process['id'])
 
         if new_process
+          machine     = new_process.core_machine
           new_process = new_process.as_json
           new_process.each do |key, value|
             process[key] = value
           end
+          process['node'] = machine.host
           process.save
         else
           process.destroy
