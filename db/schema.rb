@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120131070315) do
+ActiveRecord::Schema.define(:version => 20120403081203) do
 
   create_table "core_applications", :force => true do |t|
     t.string    "name"
@@ -55,6 +55,8 @@ ActiveRecord::Schema.define(:version => 20120131070315) do
     t.string    "error_message"
   end
 
+  add_index "http_backends", ["core_machine_id", "port"], :name => "index_http_backends_on_core_machine_id_and_port"
+
   create_table "http_domain_rules", :force => true do |t|
     t.integer   "core_application_id"
     t.string    "domain"
@@ -72,6 +74,8 @@ ActiveRecord::Schema.define(:version => 20120131070315) do
     t.timestamp "down_since"
     t.string    "error_message"
   end
+
+  add_index "http_passers", ["core_machine_id", "port"], :name => "index_http_passers_on_core_machine_id_and_port"
 
   create_table "http_path_rules", :force => true do |t|
     t.integer   "owner_id"
@@ -93,6 +97,8 @@ ActiveRecord::Schema.define(:version => 20120131070315) do
     t.string    "error_message"
   end
 
+  add_index "http_routers", ["core_machine_id", "port"], :name => "index_http_routers_on_core_machine_id_and_port"
+
   create_table "pluto_environment_variables", :force => true do |t|
     t.integer   "owner_id"
     t.string    "owner_type"
@@ -113,14 +119,14 @@ ActiveRecord::Schema.define(:version => 20120131070315) do
   end
 
   create_table "pluto_process_instances", :force => true do |t|
-    t.integer  "pluto_process_definition_id"
-    t.integer  "core_machine_id"
-    t.integer  "instance"
-    t.datetime "running_since"
-    t.datetime "down_since"
-    t.datetime "last_seen_at"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
+    t.integer   "pluto_process_definition_id"
+    t.integer   "core_machine_id"
+    t.integer   "instance"
+    t.timestamp "running_since"
+    t.timestamp "down_since"
+    t.timestamp "last_seen_at"
+    t.timestamp "created_at",                  :null => false
+    t.timestamp "updated_at",                  :null => false
   end
 
   create_table "users", :force => true do |t|
