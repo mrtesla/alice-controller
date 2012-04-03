@@ -249,7 +249,7 @@ class ApiV1::MachinesController < ApplicationController
     applications = Core::Application.all
     releases     = Core::Release.where(id: applications.map(&:active_core_release_id)).all
     definitions  = Pluto::ProcessDefinition.where(owner_type: 'Core::Release', owner_id: releases.map(&:id)).all
-    instances    = Pluto::ProcessInstance.where(pluto_process_definition_id: definitions.map(&:id)).all
+    instances    = Pluto::ProcessInstance.where(core_machine_id: machine.id, pluto_process_definition_id: definitions.map(&:id)).all
 
     render :json => instances
   end

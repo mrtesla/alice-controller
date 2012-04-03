@@ -62,11 +62,8 @@ class ApiV1::ReleasesController < ApplicationController
   end
 
   def activate
-    release     = Core::Release.find(params[:id])
-    application = release.core_application
-
-    application.active_core_release = release
-    application.save!
+    release = Core::Release.find(params[:id])
+    release.activate!
 
     render :json => { status: 'OK' }
   end

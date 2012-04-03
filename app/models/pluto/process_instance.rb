@@ -57,7 +57,7 @@ class Pluto::ProcessInstance < ActiveRecord::Base
     environment = application.resolved_pluto_environment_variables(release)
     environment = environment.index_by(&:name)
 
-    task    = [application.name, release.number, definition.name, self.instance].join(':')
+    task    = [application.name, definition.name, self.instance].join(':')
     command = definition.command
 
     ports = command.scan(/[$](?:[A-Z0-9_]+_)?PORT\b/).map do |match|
@@ -79,15 +79,15 @@ class Pluto::ProcessInstance < ActiveRecord::Base
       end
     end
 
-    env = environment.values.map do |var|
-      { "name" => var.name, "value" => var.value }
+    env = {}
+
+    environment.values.map do |var|
+      env[var.name] = var.value
     end
 
-    env.concat [
-      { "name" => "ALICE_PROCESS",  "value" => definition.name },
-      { "name" => "ALICE_INSTANCE", "value" => self.instance   },
-      { "name" => "ALICE_MACHINE",  "value" => machine.host    }
-    ]
+    env['ALICE_PROCESS']  = definition.name
+    env['ALICE_INSTANCE'] = self.instance.to_s
+    env['ALICE_MACHINE']  = machine.host
 
     {
       "task"    => task,
@@ -95,12 +95,12 @@ class Pluto::ProcessInstance < ActiveRecord::Base
       "ports"   => ports,
       "env"     => env
     }.tap do |task|
-      if environment['ALICE_DEPLOY_REF']
-        task["deploy_reference"] = environment['ALICE_DEPLOY_REF'].value
+      if env['ALICE_DEPLOY_REF']
+        task["deploy_reference"] = env['ALICE_DEPLOY_REF']
       end
 
-      if environment['ALICE_REPO_REF']
-        task["repository_reference"] = environment['ALICE_REPO_REF'].value
+      if env['ALICE_REPO_REF']
+        task["repository_reference"] = env['ALICE_REPO_REF']
       end
 
       task["etag"] = Digest::SHA1.hexdigest(task.inspect)

@@ -14,7 +14,12 @@ class Pluto::ProcessDefinition < ActiveRecord::Base
     uniqueness: { scope: [:owner_type, :owner_id] }
 
   validates :concurrency,
-    presence: true
+    presence: true,
+    numericality: {
+      greater_than_or_equal_to:  0,
+      less_than_or_equal_to:    10,
+      only_integer: true
+    }
 
   validates :command,
     presence: true,

@@ -45,6 +45,19 @@ class Core::Release < ActiveRecord::Base
     "##{number}"
   end
 
+  def activate!
+    application = self.core_application
+    application.active_core_release = self
+    application.save!
+
+    # update chef server
+    update_chef!
+  end
+
+  def update_chef!
+    Alice::Chef::ProcessUpdater.new(self).update
+  end
+
   def populate_process_instances
     definitions = self.core_application.resolved_pluto_process_definitions(self)
     machines    = self.core_machines.all
