@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120403081800) do
+ActiveRecord::Schema.define(:version => 20120403083330) do
 
   create_table "core_applications", :force => true do |t|
     t.string   "name"
@@ -94,6 +94,9 @@ ActiveRecord::Schema.define(:version => 20120403081800) do
     t.string   "owner_type"
   end
 
+  add_index "http_path_rules", ["owner_id", "owner_type", "path"], :name => "owner_path"
+  add_index "http_path_rules", ["owner_id", "owner_type"], :name => "owner"
+
   create_table "http_routers", :force => true do |t|
     t.integer  "core_machine_id"
     t.integer  "port"
@@ -104,7 +107,9 @@ ActiveRecord::Schema.define(:version => 20120403081800) do
     t.string   "error_message"
   end
 
+  add_index "http_routers", ["core_machine_id", "down_since", "port"], :name => "machine_down_port"
   add_index "http_routers", ["core_machine_id", "port"], :name => "index_http_routers_on_core_machine_id_and_port"
+  add_index "http_routers", ["down_since", "port"], :name => "down_port"
   add_index "http_routers", ["down_since"], :name => "index_http_routers_on_down_since"
   add_index "http_routers", ["port"], :name => "index_http_routers_on_port"
 
