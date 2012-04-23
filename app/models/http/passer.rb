@@ -13,7 +13,8 @@ class Http::Passer < ActiveRecord::Base
 
   default_scope order(:port)
 
-  after_save :reclaim_port
+  after_save  :reclaim_port
+  before_save :cache_ui_name
 
   def self.send_to_redis
     Core::Machine.all.each do |machine|
@@ -73,6 +74,12 @@ class Http::Passer < ActiveRecord::Base
 
   def rpm(start, window)
     request_count(start, window).to_f / (window / (24 * 60))
+  end
+
+private
+
+  def cache_ui_name
+    self.ui_name = "#{self.core_machine.host}:#{self.port}"
   end
 
 end

@@ -1,7 +1,9 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.1'
-gem 'formtastic-bootstrap'
+gem 'rails', '3.2.3'
+
+gem 'formtastic', '~> 2.0.0'
+gem 'formtastic-bootstrap', require: 'formtastic-bootstrap'
 gem 'jquery-rails'
 gem 'devise'
 

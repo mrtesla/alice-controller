@@ -147,9 +147,11 @@ class ApiV1::MachinesController < ApplicationController
         backend.error_message = nil
       else
         if backend.down_since
-          REDIS.multi do
-            REDIS.srem("#{prefix}|backends.up",         id.to_s)
-            REDIS.sadd("#{prefix}|backends.still_down", id.to_s)
+          unless backend.core_application.suspended_mode
+            REDIS.multi do
+              REDIS.srem("#{prefix}|backends.up",         id.to_s)
+              REDIS.sadd("#{prefix}|backends.still_down", id.to_s)
+            end
           end
         else
           REDIS.multi do
@@ -223,6 +225,19 @@ class ApiV1::MachinesController < ApplicationController
       end
 
       return if changes.empty?
+
+      changes.each do |key, groups|
+        groups.each do |g, ids|
+          case key
+          when :routers
+            groups[g] = Http::Router.find(ids)
+          when :passers
+            groups[g] = Http::Passer.find(ids)
+          when :backends
+            groups[g] = Http::Backend.find(ids)
+          end
+        end
+      end
 
       REDIS.set("alice.http|last_process_changes_email", Time.now.to_i)
       Http::ProcessStateMailer.changes(changes).deliver

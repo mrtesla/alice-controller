@@ -23,7 +23,8 @@ class Http::Backend < ActiveRecord::Base
     class_name:  'Core::Application',
     foreign_key: 'core_application_id'
 
-  after_save :reclaim_port
+  after_save  :reclaim_port
+  before_save :cache_ui_name
 
   def self.send_to_redis
     by_lookup_key = {}
@@ -89,6 +90,12 @@ class Http::Backend < ActiveRecord::Base
 
   def rpm(start, window)
     request_count(start, window).to_f / (window / (24 * 60))
+  end
+
+private
+
+  def cache_ui_name
+    self.ui_name = "#{self.core_application.name}:#{self.process}:#{self.instance}"
   end
 
 end
