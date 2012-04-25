@@ -6,7 +6,7 @@
   <% end %>
   <%= f.buttons do %>
     <%= f.commit_button button_html: {class: "primary"} %>
-    <% unless @pluto_environment_variable.new_record? %>
+    <% unless @pluto_process_definition.new_record? %>
       <%= link_to 'Revert to default', [@core_application, @pluto_process_definition], method: 'delete', class: 'btn danger' %>
     <% end %>
   <% end %>
