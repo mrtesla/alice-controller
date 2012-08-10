@@ -13,21 +13,21 @@
           <th>Name</th>
           <th>State</th>
         </tr>
-        <% (@changes[:routers][:up] || []).each do |name| %>
+        <% (@changes[:routers][:up] || []).each do |r| %>
           <tr>
-            <td><%= name %></td>
+            <td><%= r.ui_name %></td>
             <td>up</td>
           </tr>
         <% end %>
-        <% (@changes[:routers][:down] || []).each do |name| %>
+        <% (@changes[:routers][:down] || []).each do |r| %>
           <tr>
-            <td><%= name %></td>
+            <td><%= r.ui_name %></td>
             <td>down</td>
           </tr>
         <% end %>
-        <% (@changes[:routers][:still_down] || []).each do |name| %>
+        <% (@changes[:routers][:still_down] || []).each do |r| %>
           <tr>
-            <td><%= name %></td>
+            <td><%= r.ui_name %></td>
             <td>still down</td>
           </tr>
         <% end %>
@@ -41,21 +41,21 @@
           <th>Name</th>
           <th>State</th>
         </tr>
-        <% (@changes[:passers][:up] || []).each do |name| %>
+        <% (@changes[:passers][:up] || []).each do |p| %>
           <tr>
-            <td><%= name %></td>
+            <td><%= p.ui_name %></td>
             <td>up</td>
           </tr>
         <% end %>
-        <% (@changes[:passers][:down] || []).each do |name| %>
+        <% (@changes[:passers][:down] || []).each do |p| %>
           <tr>
-            <td><%= name %></td>
+            <td><%= p.ui_name %></td>
             <td>down</td>
           </tr>
         <% end %>
-        <% (@changes[:passers][:still_down] || []).each do |name| %>
+        <% (@changes[:passers][:still_down] || []).each do |p| %>
           <tr>
-            <td><%= name %></td>
+            <td><%= p.ui_name %></td>
             <td>still down</td>
           </tr>
         <% end %>
@@ -69,21 +69,21 @@
           <th>Name</th>
           <th>State</th>
         </tr>
-        <% (@changes[:backends][:up] || []).each do |name| %>
+        <% (@changes[:backends][:up] || []).each do |b| %>
           <tr>
-            <td><%= name %></td>
+            <td><%= b.ui_name %></td>
             <td>up</td>
           </tr>
         <% end %>
-        <% (@changes[:backends][:down] || []).each do |name| %>
+        <% (@changes[:backends][:down] || []).each do |b| %>
           <tr>
-            <td><%= name %></td>
+            <td><%= b.ui_name %></td>
             <td>down</td>
           </tr>
         <% end %>
-        <% (@changes[:backends][:still_down] || []).each do |name| %>
+        <% (@changes[:backends][:still_down] || []).each do |b| %>
           <tr>
-            <td><%= name %></td>
+            <td><%= b.ui_name %></td>
             <td>still down</td>
           </tr>
         <% end %>

@@ -12,7 +12,7 @@
     <tbody>
       <% http_routers.each do |http_router| %>
         <tr>
-          <td><%= link_to "#{http_router.core_machine.host}:#{http_router.port}", http_router %></td>
+          <td><%= link_to http_router.ui_name, http_router %></td>
           <td><%= http_router.rpm(Time.now, 24 * 60 * 60).round(2) %></td>
           <td><span class="label <%= http_router.error_level %>"><%= http_router.state_message %></span></td>
         </tr>

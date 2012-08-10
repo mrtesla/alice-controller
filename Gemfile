@@ -1,7 +1,9 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.1'
-gem 'formtastic-bootstrap'
+gem 'rails', '3.2.3'
+
+gem 'formtastic', '~> 2.0.0'
+gem 'formtastic-bootstrap', require: 'formtastic-bootstrap'
 gem 'jquery-rails'
 gem 'devise'
 
@@ -20,7 +22,7 @@ group :assets do
   gem 'sass-rails',   '~> 3.2'
   gem 'coffee-rails', '~> 3.2'
   gem 'uglifier', '>= 1.0.3'
-  gem 'bootstrap-sass'
+  gem 'bootstrap-sass', '~> 1.4'
 end
 
 # To use ActiveModel has_secure_password

@@ -10,6 +10,7 @@ class JSONColumn
 
   # this should only be nil or an object that serializes to JSON (like a hash or array)
   def dump(o)
+    o = load(o) if String === o
     JSON.dump(o || @default)
   end
 end
