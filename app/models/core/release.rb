@@ -55,7 +55,7 @@ class Core::Release < ActiveRecord::Base
   end
 
   def update_chef!
-    Alice::Chef::ProcessUpdater.new(self).update
+    # Alice::Chef::ProcessUpdater.new(self).update
   end
 
   def populate_process_instances
